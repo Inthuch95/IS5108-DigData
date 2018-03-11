@@ -29,7 +29,7 @@
 	{
 			$valid=true;
 			$_SESSION['loginerror']="Login successful";
-				$admin=mysqli_query($connect,"SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administration'");
+				$admin=mysqli_query($connect,"SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administrator'");
 				$ad=mysqli_num_rows($admin);
 				//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administration'";
 				if($ad)$_SESSION['admin']=true;
