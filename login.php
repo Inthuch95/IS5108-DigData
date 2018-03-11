@@ -67,7 +67,7 @@ session_start();
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
 		  <?php 
-		  if($_SESSION['loginerror']!=''){
+		  if(isset($_SESSION['loginerror'])and$_SESSION['loginerror']!=''){
 			echo $_SESSION['loginerror']; 
 			print "<br>";
 			$_SESSION['loginerror']="";
