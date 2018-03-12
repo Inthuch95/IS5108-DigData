@@ -33,14 +33,7 @@ session_start();
           <ul class="nav navbar-nav navbar-right">
             <li class="active">
 			<?php
-			if(isset($_SESSION['user'])and $_SESSION['user']!=''){
-				print '<a>';
-				echo $_SESSION['user'];
-				print '</a>';
-			}
-			else{
-				print '<a href="login.php"> <span class="glyphicon glyphicon-log-in"></span> Login</a>';
-			}
+		  include 'PHP/LoginButton.php';
 			?>
 			</li>
           </ul>
