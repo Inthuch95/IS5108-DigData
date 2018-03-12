@@ -37,7 +37,7 @@
 				
 	}else
 	{
-		$_SESSION['loginerror']="Wrong Username or Password";
+		$_SESSION['loginerror']="Invalid Username or Password";
 	}
 	
 	?>

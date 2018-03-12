@@ -61,9 +61,9 @@ session_start();
           <div class="col-sm-offset-2 col-sm-10">
 		  <?php 
 		  if(isset($_SESSION['loginerror'])and$_SESSION['loginerror']!=''){
-			echo $_SESSION['loginerror']; 
-			print "<br>";
+			print '<div class="alert alert-danger">'.$_SESSION['loginerror'];
 			$_SESSION['loginerror']="";
+			print '</div>';
 		  }
 			?>
             <button type="submit" class="btn btn-default">Login</button>
