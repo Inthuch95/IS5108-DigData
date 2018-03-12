@@ -54,6 +54,24 @@ session_start();
         
       </div>
     </div>
+	 <div class="form-group">
+      <label class="control-label col-sm-2" for="finder">Finder:</label>
+      <div class="col-sm-3">
+	  <?php
+		
+		if(isset($_SESSION['user'])and $_SESSION['user']!=''){
+			print '<input class="form-control" type="" name="finder" value="'.$_SESSION["user"].'" readonly>';
+		}
+		else{
+			$_SESSION['loginerror'] = "You have to login first";
+			$_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+			echo $_SESSION["currentPage"];
+			header("Location:login.php");
+		}
+		?>
+		
+      </div>
+    </div>
     
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Date:</label>

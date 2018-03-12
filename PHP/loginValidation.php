@@ -53,8 +53,9 @@
 							$_SESSION['user']=$LOGusername;
 							
 							$_SESSION['loginerror']="";
-							header("Location:../index.php");
-					
+							
+							header("Location:../".$_SESSION["currentPage"]);
+							//header('Location: ' . $_SERVER['HTTP_REFERER']);
 						}else{
 							
 							header("Location:../login.php"); /* Redirect browser */
