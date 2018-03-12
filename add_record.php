@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
+$_SESSION["currentPage"] = '';
 ?>
 <html lang="en">
 <head>
@@ -65,7 +66,7 @@ session_start();
 		else{
 			$_SESSION['loginerror'] = "You have to login first";
 			$_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
-			echo $_SESSION["currentPage"];
+			
 			header("Location:login.php");
 		}
 		?>

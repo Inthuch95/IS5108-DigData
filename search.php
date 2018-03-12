@@ -33,6 +33,7 @@ session_start();
         <ul class="nav navbar-nav navbar-right">
           <li>
 		  <?php
+		  $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 		  include 'PHP/LoginButton.php';
 			?>
 		</li>

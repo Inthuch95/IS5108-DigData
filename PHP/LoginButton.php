@@ -1,4 +1,5 @@
 	<?php
+			
 			if(isset($_SESSION['user'])and $_SESSION['user']!=''){
 			print '<li class="dropdown">';
 			print '<a class="dropdown-toggle" data-toggle="dropdown" href="#">'.$_SESSION["user"];

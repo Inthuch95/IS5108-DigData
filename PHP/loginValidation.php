@@ -53,8 +53,9 @@
 							$_SESSION['user']=$LOGusername;
 							
 							$_SESSION['loginerror']="";
-							
-							header("Location:../".$_SESSION["currentPage"]);
+							$prevPage = $_SESSION["currentPage"];
+							$_SESSION["currentPage"] ='';
+							header("Location:../".$prevPage);
 							//header('Location: ' . $_SERVER['HTTP_REFERER']);
 						}else{
 							
