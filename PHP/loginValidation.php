@@ -33,6 +33,7 @@
 				$ad=mysqli_num_rows($admin);
 				//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administration'";
 				if($ad)$_SESSION['admin']=true;
+				else $_SESSION['admin']=false;
 				
 				
 	}else

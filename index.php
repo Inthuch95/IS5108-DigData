@@ -2,6 +2,11 @@
 <?php
 session_start();
 
+$username="is5108group-4";
+$password="b9iVc.9gS8c7NJ";
+$host="is5108group-4.host.cs.st-andrews.ac.uk";
+$db="is5108group-4__digdata";
+$tb = "Finds";
 //session_unset();
 //$_SESSION['user'] = '';
 ?>
@@ -42,11 +47,38 @@ session_start();
     </div>
   </nav>
 
-  <div class="container">
+  
+  <?php
+  $connect= mysqli_connect($host,$username,$password);
+	if (!$connect )
+		{
+			echo "Can't connect to SQLdatabase ";
+			exit();
+		}
+	else
+	{
+		mysqli_select_db($connect,$db) or die("Can't select Database");
+		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
+			$find = mysqli_query($connect,"SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC");
+			$found = mysqli_num_rows($find);
+		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
+		//echo $found;
+	}
+	
+  ?>
+   <div class="container">
     <h3>Welcome to Dig Data</h3>
     <p>In this template, bootstrap is used to make the website responsive.</p>
-    <div class="row">
-        <div class="col-sm-12">
+   
+        
+  <?php 
+  $i =0;
+	  while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC) and $i<5) {
+		  $i=$i+1;
+	  
+		//printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
+   <div class="row">
+		<div class="col-sm-12">
             <table class="table table-hover table-bordered">
                 <tbody>
                 <tr>
@@ -58,21 +90,15 @@ session_start();
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <td><strong>ID: </strong>0000</td>
+                                <td><strong>ID: </strong><?php printf ("%s", $row["FindID"])?></td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Location: </strong>.........<strong>Founder: </strong>.........<strong>Date: </strong>xx/xx/xxxx
+                                    <strong>Location: </strong><?php printf ("%s", $row["SiteName"])?> <strong>Founder: </strong><?php printf ("%s", $row["UserID"])?> <strong>Date: </strong><?php printf ("%s", $row["Date"])?>
                                 </td>
                             </tr>
                             <tr>
-                                <td><strong>Description: </strong>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit. Integer in nunc mattis, consectetur nunc at, blandit metus. Cras faucibus
-                                    facilisis malesuada. Donec in tellus vitae tortor convallis pulvinar blandit id
-                                    ligula. Fusce sodales maximus libero sed viverra. Aenean blandit aliquam tortor a
-                                    finibus. Ut rutrum neque non interdum aliquam. Suspendisse erat eros, rhoncus eu
-                                    erat et, luctus faucibus tellus. Fusce quis fermentum sem. Proin sagittis vel justo
-                                    sed auctor. Curabitur ultrices magna ut erat condimentum, quis pulvinar nibh auctor.
+                                <td><strong>Description: </strong><?php printf ("%s", $row["FDESC"])?>
                                 </td>
                             </tr>
                             <tr>
@@ -87,7 +113,9 @@ session_start();
             </table>
         </div>
     </div>
+	 <?php }?>
 </div>
+ 
 
 </body>
 </html>

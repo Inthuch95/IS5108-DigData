@@ -2,6 +2,28 @@
 <?php
 session_start();
 $_SESSION["currentPage"] = '';
+$username="is5108group-4";
+$password="b9iVc.9gS8c7NJ";
+$host="is5108group-4.host.cs.st-andrews.ac.uk";
+$db="is5108group-4__digdata";
+$tb = "Site";
+
+$connect= mysqli_connect($host,$username,$password);
+	if (!$connect )
+		{
+			echo "Can't connect to SQLdatabase ";
+			exit();
+		}
+	else
+	{
+		mysqli_select_db($connect,$db) or die("Can't select Database");
+		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
+			$find = mysqli_query($connect,"SELECT * FROM $tb");
+			$found = mysqli_num_rows($find);
+		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
+		//echo $found;
+	}
+
 ?>
 <html lang="en">
 <head>
@@ -12,6 +34,40 @@ $_SESSION["currentPage"] = '';
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <script>
+	function showContext(site) {
+		
+	var xhttp; 
+	if (site == "") {
+		document.getElementById("context").innerHTML = "<option> Select site first</option>";
+		return;
+	}else { 
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+			
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		
+		xmlhttp.onreadystatechange = function() {
+			
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("context").innerHTML = this.responseText;
+				document.getElementById("contextDesc").style.display = "none";
+			}
+		};
+		
+	xmlhttp.open("GET", "PHP/getContextBySite.php?q="+site, true);
+	xmlhttp.send();
+	}
+}
+  
+  
+  </script>
 </head>
 <body>
 
@@ -46,18 +102,22 @@ $_SESSION["currentPage"] = '';
   <form class="form-horizontal" action="/action_page.php">
     <div class="form-group">
       <label class="control-label col-sm-2" for="location">Location:</label>
-      <div class="col-sm-3">
-        <select class="form-control" id="location" placeholder="Select location" name="site">
-          <option value="Site 1">Site 1</option>
-          <option value="Site 2">Site 2</option>
-          <option value="Site 3">Site 3</option>
+      <div class="col-sm-4">
+        <select class="form-control" id="location" placeholder="Select location" name="site" onchange="showContext(this.value)">
+		<option value="">Select a site</option>
+		<?php
+		 while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC)) {
+			 print '<option value="'.$row["SiteCode"].'">'.$row["SiteCode"]." - ".$row["SiteName"].'</option>';
+		 }
+		?>
+          
         </select>
         
       </div>
     </div>
 	 <div class="form-group">
       <label class="control-label col-sm-2" for="finder">Finder:</label>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
 	  <?php
 		
 		if(isset($_SESSION['user'])and $_SESSION['user']!=''){
@@ -76,14 +136,14 @@ $_SESSION["currentPage"] = '';
     
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Date:</label>
-      <div class="col-sm-3">          
-            <input class="form-control" type="date" name="date">
+      <div class="col-sm-4">          
+            <input class="form-control" type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
       </div>
       
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="type">Type:</label>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <select class="form-control" id="type" name="type">
           <option value="Metal">Metal</option>
           <option value="Wood">Wood</option>
@@ -92,20 +152,26 @@ $_SESSION["currentPage"] = '';
         
       </div>
     </div>
+	
+	<?php
+		mysqli_select_db($connect,$db) or die("Can't select Database");
+		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
+		$find = mysqli_query($connect,"SELECT * FROM Context_Records");
+		$found = mysqli_num_rows($find);
+	?>
 	 <div class="form-group">
       <label class="control-label col-sm-2" for="context">Context:</label>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <select class="form-control" id="context" name="context">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+		<option value = "">Select site first</option>
         
+        </select>
+        <p id="contextDesc" hidden>sfghsdfgh</p>
       </div>
     </div>
 	<div class="form-group">
       <label class="control-label col-sm-2" for="trench">Area:</label>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <select class="form-control" id="trench" name="trench">
           <option value="1">trench 1</option>
           <option value="2">trench 2</option>
@@ -137,6 +203,9 @@ $_SESSION["currentPage"] = '';
     </div>
     
   </form>
+  	<?php
+					mysqli_close($connect);
+					?>
 </div>
 
 </body>
