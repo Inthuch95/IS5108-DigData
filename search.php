@@ -1,50 +1,223 @@
-<!DOCTYPE html>
 <?php
 session_start();
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>DigData - Search</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>DigData - Search</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+            integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.php">Dig Data</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-		<li><a href="index.php">Home</a></li>
-          <li><a href="add_record.php">Add Record</a></li>
-          <li class="active"><a href="search.php">Search</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-		  <?php
-		  $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
-		  include 'PHP/LoginButton.php';
-			?>
-		</li>
-        </ul>
-      </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.php">Dig Data</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="add_record.php">Add Record</a></li>
+                <li class="active"><a href="search.php">Search</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <?php
+                    $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+                    include 'PHP/LoginButton.php';
+                    ?>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <div class="container">
-    <h3>Search</h3>
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3 class="text-center">Filter&nbsp;<i class="fas fa-filter"></i></h3>
+                    <form class="form-horizontal" action="#">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="id">ID:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="id" placeholder="Enter ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="location">Location:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="location">
+                                    <option>John Honey Building</option>
+                                    <option>Thanon - Thai Restaurant</option>
+                                    <option>The Tailend Restaurant and Fish Bar</option>
+                                    <option>Little Italy</option>
+                                    <option>Tesco</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="founder">Founder:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="founder">
+                                    <option>Nattasan</option>
+                                    <option>Inthuch</option>
+                                    <option>Turk</option>
+                                    <option>Anna</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="from">From:</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="date" id="from">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="from-butt">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="to">To:</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="date" id="to">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="to-butt">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-default pull-right">Apply</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <form action="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-4">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Found:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">xxxx records</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-default pull-right">
+                                Sort&nbsp;<i class="fas fa-sort-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-bordered noBottomMargin">
+                        <tbody>
+                        <tr>
+                            <td width="100">
+                                <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100"
+                                     width="100"
+                                     class="center-block" alt="Cinque Terre">
+                            </td>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td><strong>ID: </strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Location: </strong>
+                                            <strong>Founder: </strong>
+                                            <strong>Date: </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Description: </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lorem ipsum donec id elit non mi porta gravida at eget
+                                            metus.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-default pull-right" type="submit">Detail</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
+
+<script type="text/javascript">
+    $(function () {
+        $('#from').datepicker({
+            onSelect: function (selectedDate) {
+                var min = $('#from').datepicker('getDate');
+                min.setDate(min.getDate() + 1);
+                $('#to').datepicker("option", "minDate", min).datepicker("setDate", min);
+            }
+        });
+        $('#to').datepicker({
+            onSelect: function (selectedDate) {
+                var max = $('#to').datepicker('getDate');
+                max.setDate(max.getDate() - 1);
+                $('#from').datepicker("option", "maxDate", max);
+            }
+        });
+        $("#from-butt").click(function () {
+            $('#from').datepicker("show");
+        });
+        $("#to-butt").click(function () {
+            $('#to').datepicker("show");
+        });
+    });
+</script>
