@@ -52,8 +52,8 @@ session_start();
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-default">
+                <div class="panel-heading"><h4 class="text-center">Search Filter&nbsp;<i class="fas fa-filter"></i></h4></div>
                 <div class="panel-body">
-                    <h3 class="text-center">Filter&nbsp;<i class="fas fa-filter"></i></h3>
                     <form class="form-horizontal" action="#">
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="id">ID:</label>
@@ -110,7 +110,7 @@ session_start();
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group noBottomMargin">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-default pull-right">Apply</button>
                             </div>
@@ -138,8 +138,8 @@ session_start();
                         <div class="col-sm-4">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Found:</label>
-                                    <div class="col-sm-10">
+                                    <label class="control-label col-sm-3">Found:</label>
+                                    <div class="col-sm-9">
                                         <p class="form-control-static">xxxx records</p>
                                     </div>
                                 </div>
