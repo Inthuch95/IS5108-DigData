@@ -133,14 +133,7 @@ $connect= mysqli_connect($host,$username,$password);
       <textarea class="form-control" rows="5" id="description" name="description"></textarea>
        </div>
     </div>
-
-
-
-
-
-
-
-
+		
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Submit</button>

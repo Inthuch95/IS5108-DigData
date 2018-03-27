@@ -68,9 +68,6 @@ $tb = "Finds";
   ?>
    <div class="container">
     <h3>Welcome to Dig Data</h3>
-    <p>In this template, bootstrap is used to make the website responsive.</p>
-
-
   <?php
   $i =0;
 	  while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC) and $i<5) {
@@ -118,7 +115,5 @@ $tb = "Finds";
   </form>
 	 <?php }?>
 </div>
-
-
 </body>
 </html>
