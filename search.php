@@ -26,21 +26,17 @@ session_start();
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="index.php">Home</a></li>
+		<li><a href="index.php">Home</a></li>
           <li><a href="add_record.php">Add Record</a></li>
           <li class="active"><a href="search.php">Search</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><?php
-			if(isset($_SESSION['user'])and $_SESSION['user']!=''){
-				print '<a>';
-				echo $_SESSION['user'];
-				print '</a>';
-			}
-			else{
-				print '<a href="login.php"> <span class="glyphicon glyphicon-log-in"></span> Login</a>';
-			}
-			?></li>
+          <li>
+		  <?php
+		  $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+		  include 'PHP/LoginButton.php';
+			?>
+		</li>
         </ul>
       </div>
     </div>

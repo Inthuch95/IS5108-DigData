@@ -33,11 +33,12 @@
 				$ad=mysqli_num_rows($admin);
 				//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administration'";
 				if($ad)$_SESSION['admin']=true;
+				else $_SESSION['admin']=false;
 				
 				
 	}else
 	{
-		$_SESSION['loginerror']="Wrong Username or Password";
+		$_SESSION['loginerror']="Invalid Username or Password";
 	}
 	
 	?>
@@ -53,8 +54,10 @@
 							$_SESSION['user']=$LOGusername;
 							
 							$_SESSION['loginerror']="";
-							header("Location:../index.php");
-					
+							$prevPage = $_SESSION["currentPage"];
+							$_SESSION["currentPage"] ='';
+							header("Location:../".$prevPage);
+							//header('Location: ' . $_SERVER['HTTP_REFERER']);
 						}else{
 							
 							header("Location:../login.php"); /* Redirect browser */
