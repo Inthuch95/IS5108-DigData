@@ -47,7 +47,7 @@ $tb = "Finds";
     </div>
   </nav>
 
-
+  
   <?php
   $connect= mysqli_connect($host,$username,$password);
 	if (!$connect )
@@ -64,21 +64,19 @@ $tb = "Finds";
 		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
 		//echo $found;
 	}
-
+	
   ?>
    <div class="container">
     <h3>Welcome to Dig Data</h3>
     <p>In this template, bootstrap is used to make the website responsive.</p>
-
-
-  <?php
+   
+        
+  <?php 
   $i =0;
 	  while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC) and $i<5) {
 		  $i=$i+1;
-
+	  
 		//printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
-  <form action="view_record.php" method="get">
-    <input type="hidden" id="id" name="id"  value="<?php printf("%s", $row["FindID"]) ?>" />
    <div class="row">
 		<div class="col-sm-12">
             <table class="table table-hover table-bordered">
@@ -115,10 +113,9 @@ $tb = "Finds";
             </table>
         </div>
     </div>
-    </form>
 	 <?php }?>
 </div>
-
+ 
 
 </body>
 </html>
