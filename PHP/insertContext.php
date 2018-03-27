@@ -1,7 +1,11 @@
 <?php
 session_start();
 $site = $_GET["site"];
-$trench = $_GET["trench"];
+if ($_GET["trench"] == "New trench"){
+  $trench = $_GET["newTrench"];
+} else {
+  $trench = $_GET["trench"];
+}
 $description = $_GET["description"];
 
 $username="is5108group-4";
