@@ -1,122 +1,119 @@
+<!DOCTYPE html>
 <?php
 session_start();
 
-$username = "is5108group-4";
-$password = "b9iVc.9gS8c7NJ";
-$host = "is5108group-4.host.cs.st-andrews.ac.uk";
-$db = "is5108group-4__digdata";
+$username="is5108group-4";
+$password="b9iVc.9gS8c7NJ";
+$host="is5108group-4.host.cs.st-andrews.ac.uk";
+$db="is5108group-4__digdata";
 $tb = "Finds";
 //session_unset();
 //$_SESSION['user'] = '';
 ?>
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DigData</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>DigData</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.php">Dig Data</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="add_record.php">Add Record</a></li>
-                <li><a href="search.php">Search</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><?php
-                    include 'PHP/LoginButton.php';
-                    ?>
-            </ul>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.php">Dig Data</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="index.php">Home</a></li>
+          <li><a href="add_record.php">Add Record</a></li>
+          <li><a href="search.php">Search</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><?php
+		  include 'PHP/LoginButton.php';
+			?>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <?php
+  $connect= mysqli_connect($host,$username,$password);
+	if (!$connect )
+		{
+			echo "Can't connect to SQLdatabase ";
+			exit();
+		}
+	else
+	{
+		mysqli_select_db($connect,$db) or die("Can't select Database");
+		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
+			$find = mysqli_query($connect,"SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC");
+			$found = mysqli_num_rows($find);
+		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
+		//echo $found;
+	}
+
+  ?>
+   <div class="container">
+    <h3>Welcome to Dig Data</h3>
+  <?php
+  $i =0;
+	  while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC) and $i<5) {
+		  $i=$i+1;
+
+		//printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
+    <form action="view_record.php" method="get">
+      <input type="hidden" name="id" value= "<?php printf ("%s", $row["FindID"])?>"/>
+   <div class="row">
+		<div class="col-sm-12">
+            <table class="table table-hover table-bordered">
+                <tbody>
+                <tr>
+                    <td width="100">
+                        <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
+                             class="center-block" alt="Cinque Terre">
+                    </td>
+                    <td>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td><strong>ID: </strong><?php printf ("%s", $row["FindID"])?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Location: </strong><?php printf ("%s", $row["SiteName"])?> <strong>Founder: </strong><?php printf ("%s", $row["UserID"])?> <strong>Date: </strong><?php printf ("%s", $row["Date"])?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description: </strong><?php printf ("%s", $row["FDESC"])?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-default pull-right" type="submit">Detail</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</nav>
-
-
-<?php
-$connect = mysqli_connect($host, $username, $password);
-if (!$connect) {
-    echo "Can't connect to SQLdatabase ";
-    exit();
-} else {
-    mysqli_select_db($connect, $db) or die("Can't select Database");
-    //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $find = mysqli_query($connect, "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC");
-    $found = mysqli_num_rows($find);
-    //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
-    //echo $found;
-}
-
-?>
-<div class="container">
-    <h3>Welcome to Dig Data</h3>
-    <p>In this template, bootstrap is used to make the website responsive.</p>
-
-
-    <?php
-    $i = 0;
-    while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC) and $i < 5) {
-        $i = $i + 1;
-
-        //printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
-        <form action="view_record.php" method="get">
-            <input type="hidden" id="id" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table table-hover table-bordered">
-                        <tbody>
-                        <tr>
-                            <td width="100">
-                                <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
-                                     class="center-block" alt="Cinque Terre">
-                            </td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <td><strong>ID: </strong><?php printf("%s", $row["FindID"]) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?> <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
-                                            <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-default pull-right" type="submit">Details</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </form>
-    <?php } ?>
+  </form>
+	 <?php }?>
 </div>
-
-
 </body>
 </html>

@@ -63,10 +63,31 @@ $connect= mysqli_connect($host,$username,$password);
     </div>
   </nav>
 
-  
+
 <div class="container">
   <h2>Add record</h2>
-  <form class="form-horizontal" action="/action_page.php">
+  <form class="form-horizontal" action="PHP/addRecord.php">
+
+		<div class="form-group">
+			 <label class="control-label col-sm-2" for="finder">Finder:</label>
+			 <div class="col-sm-4">
+
+		 <?php
+
+		 if(isset($_SESSION['user'])and $_SESSION['user']!=''){
+			 print '<input class="form-control" type="" value="'.$_SESSION["user"].'" readonly>';
+			 print '<input class="form-control" type="hidden" name="user" value="'.$_SESSION["UserID"].'" display="">';
+		 }
+		 else{
+			 $_SESSION['loginerror'] = "You have to login first";
+			 $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+
+			 header("Location:login.php");
+		 }
+		 ?>
+
+			 </div>
+		 </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="location">Location:</label>
       <div class="col-sm-4">
@@ -77,36 +98,37 @@ $connect= mysqli_connect($host,$username,$password);
 			 print '<option value="'.$row["SiteCode"].'">'.$row["SiteCode"]." - ".$row["SiteName"].'</option>';
 		 }
 		?>
-          
-        </select>
-        
+
+	</select>
+
       </div>
     </div>
-	 <div class="form-group">
-      <label class="control-label col-sm-2" for="finder">Finder:</label>
-      <div class="col-sm-4">
-	  <?php
-		
-		if(isset($_SESSION['user'])and $_SESSION['user']!=''){
-			print '<input class="form-control" type="" name="finder" value="'.$_SESSION["user"].'" readonly>';
-		}
-		else{
-			$_SESSION['loginerror'] = "You have to login first";
-			$_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
-			
-			header("Location:login.php");
-		}
-		?>
-		
-      </div>
-    </div>
-    
+
+		<div class="form-group">
+				<label class="control-label col-sm-2" for="trench">Trench:</label>
+				<div class="col-sm-4">
+					<select class="form-control" id="trench" name="trench" onchange="showContext(this.value)">
+				<option value="">Select Site first</option>
+					</select>
+
+				</div>
+			</div>
+
+		<div class="form-group">
+				<label class="control-label col-sm-2" for="context">Context:</label>
+				<div class="col-sm-4">
+					<select class="form-control" id="context" name="context" onchange="showContextDesc(this.value)">
+			<option value = "">Select site first</option>
+					</select>
+					<div id="contextDesc" hidden></div>
+				</div>
+			</div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Date:</label>
-      <div class="col-sm-4">          
+      <div class="col-sm-4">
             <input class="form-control" type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
       </div>
-      
+
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="type">Type:</label>
@@ -116,50 +138,29 @@ $connect= mysqli_connect($host,$username,$password);
           <option value="Wood">Wood</option>
           <option value="Rock">Rock</option>
         </select>
-        
       </div>
     </div>
 
-	<div class="form-group">
-      <label class="control-label col-sm-2" for="trench">Trench:</label>
-      <div class="col-sm-4">
-        <select class="form-control" id="trench" name="trench" onchange="showContext(this.value)">
-		  <option value="">Select Site first</option>
-        </select>
-        
-      </div>
-    </div>
-	
-	<div class="form-group">
-      <label class="control-label col-sm-2" for="context">Context:</label>
-      <div class="col-sm-4">
-        <select class="form-control" id="context" name="context" onchange="showContextDesc(this.value)">
-		<option value = "">Select site first</option>
-        </select>
-        <div id="contextDesc" hidden></div>
-      </div>
-    </div>
-	
+
+
     <div class="form-group">
       <label class="control-label col-sm-2" for="description">Description:</label>
-      <div class="col-sm-10">    
-      <textarea class="form-control" rows="5" id="description"></textarea>
+      <div class="col-sm-10">
+      <textarea class="form-control" rows="5" id="description" name="description"></textarea>
        </div>
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="form-group">        
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Submit</button>
+				<div id="addResult"><?php
+					if(isset($_SESSION["addResult"]) and $_SESSION["addResult"]!="" ){
+						print $_SESSION["addResult"];
+						$_SESSION["addResult"] = "";
+					}
+				?></div>
       </div>
     </div>
-    
+
   </form>
   	<?php
 					mysqli_close($connect);
