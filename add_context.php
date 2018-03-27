@@ -28,7 +28,7 @@ $connect= mysqli_connect($host,$username,$password);
 ?>
 <html lang="en">
 <head>
-  <title>DigData - Add New Record</title>
+  <title>DigData - Add New Context</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -72,7 +72,7 @@ $connect= mysqli_connect($host,$username,$password);
 		if(isset($_SESSION['admin']) and $_SESSION['admin']==true){
 	?>
   <h2>Add new context</h2>
-   <form class="form-horizontal" >
+   <form class="form-horizontal" action="PHP/insertContext.php">
     <div class="form-group">
       <label class="control-label col-sm-2" for="location">Location:</label>
       <div class="col-sm-4">
@@ -145,6 +145,14 @@ $connect= mysqli_connect($host,$username,$password);
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Submit</button>
       </div>
+			<div id="addResult">
+				<?php
+				if(isset($_SESSION["addResult"]) and $_SESSION["addResult"]!="" ){
+					print $_SESSION["addResult"];
+					$_SESSION["addResult"] = "";
+				}
+				?>
+			</div>
     </div>
 
   </form>
