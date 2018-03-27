@@ -20,6 +20,7 @@ $connect= mysqli_connect($host,$username,$password);
 		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
 			$find = mysqli_query($connect,"SELECT * FROM $tb");
 			$found = mysqli_num_rows($find);
+			//new branch
 		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
 		//echo $found;
 	}
@@ -65,7 +66,7 @@ $connect= mysqli_connect($host,$username,$password);
     </div>
   </nav>
 
-  
+
 <div class="container">
 	<?php
 		if(isset($_SESSION['admin']) and $_SESSION['admin']==true){
@@ -82,9 +83,9 @@ $connect= mysqli_connect($host,$username,$password);
 			 print '<option value="'.$row["SiteCode"].'">'.$row["SiteCode"]." - ".$row["SiteName"].'</option>';
 		 }
 		?>
-          
+
         </select>
-        
+
       </div>
     </div>
 
@@ -95,21 +96,21 @@ $connect= mysqli_connect($host,$username,$password);
         <select class="form-control" id="trench" name="trench" onchange="showNewTrench_Addcontext(this.value)">
 		  <option value="">Select Site first</option>
         </select>
-        
+
       </div>
     </div>
-	
+
 	<div class="form-group" id="newTrench" hidden>
       <label class="control-label col-sm-2" ></label>
       <div class="col-sm-4">
 		<input class="form-control" type="" name="newTrench" value="">
-      
-        
+
+
       </div>
     </div>
 
-	
-	
+
+
 	<div class="form-group">
       <label class="control-label col-sm-2" for="context">Context:</label>
       <div class="col-sm-4">
@@ -117,50 +118,50 @@ $connect= mysqli_connect($host,$username,$password);
 	  $find = mysqli_query($connect,"SELECT MAX(ContextID) as maxID FROM Context_Records ");
 	  $row=mysqli_fetch_array($find,MYSQLI_ASSOC);
 	  $id = intval($row["maxID"])+1;
-	 
+
 		print '<input class="form-control" type="" name="context"value="'.$id.'" readonly>';
-		?> 
+		?>
 
       </div>
     </div>
-	
-	
-	
+
+
+
     <div class="form-group">
       <label class="control-label col-sm-2" for="description">Description:</label>
-      <div class="col-sm-10">    
+      <div class="col-sm-10">
       <textarea class="form-control" rows="5" id="description" name="description"></textarea>
        </div>
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="form-group">        
+
+
+
+
+
+
+
+
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Submit</button>
       </div>
     </div>
-    
+
   </form>
   	<?php
 		}
 		else{
-			
-			
+
+
 	?>
 		<h2>You are not allowed on this page</h2>
 	<?php
 		}	//INSERT INTO `Site` (`SiteCode`, `SiteName`, `Description`) VALUES (NULL, 'Olympus', 'This is where the gods live');
-	
-	
+
+
 	?>
 
-	
+
 </div>
 
 </body>
