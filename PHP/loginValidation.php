@@ -9,7 +9,7 @@
 	$valid=false;
 	$db="is5108group-4__digdata";
 	$tb = "Users";
-	
+
 	$connect= mysqli_connect($host,$username,$password);
 	if (!$connect )
 		{
@@ -24,23 +24,25 @@
 		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
 		//echo $found;
 	}
-		
-	if ($found) 
+
+	if ($found)
 	{
 			$valid=true;
 			$_SESSION['loginerror']="Login successful";
 				$admin=mysqli_query($connect,"SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administrator'");
 				$ad=mysqli_num_rows($admin);
 				//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword' AND Position='Administration'";
+				$_SESSION['UserID'] = mysqli_fetch_array($find,MYSQLI_ASSOC)['UserID'];
+
 				if($ad)$_SESSION['admin']=true;
 				else $_SESSION['admin']=false;
-				
-				
+
+
 	}else
 	{
 		$_SESSION['loginerror']="Invalid Username or Password";
 	}
-	
+
 	?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,32 +50,32 @@
 
 </head>
 <?php 	// assume correct user pass word
-							
+
 						if($valid==true){ //general user
 							$_SESSION['loginpass']=true;
 							$_SESSION['user']=$LOGusername;
-							
+
 							$_SESSION['loginerror']="";
 							$prevPage = $_SESSION["currentPage"];
 							$_SESSION["currentPage"] ='';
 							header("Location:../".$prevPage);
 							//header('Location: ' . $_SERVER['HTTP_REFERER']);
 						}else{
-							
+
 							header("Location:../login.php"); /* Redirect browser */
 						exit();
 							?>
-							
-							<?php 
-							echo $_SESSION['loginerror']; 
+
+							<?php
+							echo $_SESSION['loginerror'];
 							?>
 							</font>
 							<?php
 							}
-						
+
 						if($_SESSION['loginerror']=="Wrong Username or Password")$_SESSION['loginerror']="";?>
-						
-						
+
+
 						<?php
 					mysqli_close($connect);
 					?>
