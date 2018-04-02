@@ -20,7 +20,7 @@ $connect= mysqli_connect($host,$username,$password);
 		//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
 			$find = mysqli_query($connect,"SELECT * FROM $tb where SiteCode=$site and Trench =$trench");
 			$found = mysqli_num_rows($find);
-		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
+		//echo "SELECT * FROM $tb where SiteCode=$site and Trench =$trench";
 		//echo $found;
 	}
 	if($found){

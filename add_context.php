@@ -14,8 +14,8 @@ if (!$connect) {
 } else {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $find = mysqli_query($connect, "SELECT * FROM $tb");
-    $found = mysqli_num_rows($find);
+
+  ///  $found = mysqli_num_rows($find);
     //new branch
     //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
     //echo $found;
@@ -32,7 +32,7 @@ if (!$connect) {
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="Script/Script.js"></script>
+    <script src="Script/Script.js"></script> 
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
@@ -72,6 +72,21 @@ if (!$connect) {
         ?>
         <h2>Add new context</h2>
         <form class="form-horizontal" action="PHP/insertContext.php">
+
+          <div class="form-group">
+              <label class="control-label col-sm-2" for="context">Context:</label>
+              <div class="col-sm-4">
+                  <?php
+                  $find = mysqli_query($connect, "SELECT MAX(ContextID) as maxID FROM Context_Records ");
+                  $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
+                  $id = intval($row["maxID"]) + 1;
+
+                  print '<input class="form-control" type="" name="context"value="' . $id . '" readonly>';
+                  ?>
+
+              </div>
+          </div>
+
             <div class="form-group">
                 <label class="control-label col-sm-2" for="location">Location:</label>
                 <div class="col-sm-4">
@@ -79,6 +94,7 @@ if (!$connect) {
                             onchange="showTrench_AddContext(this.value)">
                         <option value="">Select a site</option>
                         <?php
+                        $find = mysqli_query($connect, "SELECT * FROM $tb");
                         while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
                             print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
                         }
@@ -105,25 +121,12 @@ if (!$connect) {
                 <label class="control-label col-sm-2"></label>
                 <div class="col-sm-4">
                     <input class="form-control" type="" name="newTrench" value="">
-
-
                 </div>
             </div>
 
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="context">Context:</label>
-                <div class="col-sm-4">
-                    <?php
-                    $find = mysqli_query($connect, "SELECT MAX(ContextID) as maxID FROM Context_Records ");
-                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
-                    $id = intval($row["maxID"]) + 1;
 
-                    print '<input class="form-control" type="" name="context"value="' . $id . '" readonly>';
-                    ?>
 
-                </div>
-            </div>
 
 
             <div class="form-group">

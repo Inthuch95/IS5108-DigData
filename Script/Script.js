@@ -72,12 +72,13 @@ function showContextDesc(context) {
 
 
 function showTrench(site) {
-
 	var xhttp;
 	if (site == "") {
 		document.getElementById("trench").innerHTML = "<option>Select site first</option>";
 		document.getElementById("context").innerHTML = "<option>Select site first</option>";
 		document.getElementById("contextDesc").style.display = "none";
+		document.getElementById("trench").disabled = true;
+		document.getElementById("context").disabled = true;
 		return;
 	}else {
 		if (window.XMLHttpRequest) {
@@ -96,13 +97,19 @@ function showTrench(site) {
 
 				if(this.responseText != "No trench"){
 					document.getElementById("trench").innerHTML = this.responseText;
+					document.getElementById("trench").disabled = false;
+					document.getElementById("context").disabled = false;
+					document.getElementById("context").innerHTML = "<option>Select trench first</option>";
 				}
 				else{
 
 					document.getElementById("trench").innerHTML  = "<option>No trench available</option>";
+					document.getElementById("context").innerHTML  = "<option>No context available</option>";
+					document.getElementById("trench").disabled = true;
+					document.getElementById("context").disabled = true;
 				}
 
-				document.getElementById("context").innerHTML = "<option>Select trench first</option>";
+				//document.getElementById("context").innerHTML = "<option>Select trench first</option>";
 				document.getElementById("contextDesc").style.display = "none";
 			}
 		};
@@ -167,7 +174,7 @@ function showNewTrench_Addcontext(trench){
 function addRecord(){
 
 
-	
+
 }
 
 function confirmAddSite() {

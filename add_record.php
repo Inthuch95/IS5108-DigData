@@ -113,8 +113,8 @@ if (!$connect) {
                             <label class="control-label col-sm-2" for="trench">Trench:</label>
                             <div class="col-sm-4">
                                 <select class="form-control" id="trench" name="trench"
-                                        onchange="showContext(this.value)">
-                                    <option value="">Select Site first</option>
+                                        onchange="showContext(this.value)" disabled='true'>
+                                    <option value="">Select site first</option>
                                 </select>
 
                             </div>
@@ -124,7 +124,7 @@ if (!$connect) {
                             <label class="control-label col-sm-2" for="context">Context:</label>
                             <div class="col-sm-4">
                                 <select class="form-control" id="context" name="context"
-                                        onchange="showContextDesc(this.value)">
+                                        onchange="showContextDesc(this.value)" disabled='true'>
                                     <option value="">Select site first</option>
                                 </select>
                                 <div id="contextDesc" hidden></div>
