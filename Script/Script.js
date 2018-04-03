@@ -1,5 +1,4 @@
 function showContext(trench) {
-
 	var site = document.getElementById("location").value;
 	var xhttp;
 	if (site == "") {
@@ -29,7 +28,6 @@ function showContext(trench) {
 				document.getElementById("contextDesc").style.display = "none";
 			}
 		};
-
 	xmlhttp.open("GET", "PHP/getContextBySite.php?q="+site+"&q1="+trench, true);
 	xmlhttp.send();
 	}
