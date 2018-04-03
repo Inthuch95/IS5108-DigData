@@ -71,92 +71,101 @@ if (!$connect) {
     if (isset($_SESSION['admin']) and $_SESSION['admin'] == true) {
         ?>
         <h2>Add new context</h2>
-        <form class="form-horizontal" action="PHP/insertContext.php">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="PHP/insertContext.php">
 
-          <div class="form-group">
-              <label class="control-label col-sm-2" for="context">Context:</label>
-              <div class="col-sm-4">
-                  <?php
-                  $find = mysqli_query($connect, "SELECT MAX(ContextID) as maxID FROM Context_Records ");
-                  $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
-                  $id = intval($row["maxID"]) + 1;
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="context">Context:</label>
+                                <div class="col-sm-3">
+                                    <?php
+                                    $find = mysqli_query($connect, "SELECT MAX(ContextID) as maxID FROM Context_Records ");
+                                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
+                                    $id = intval($row["maxID"]) + 1;
 
-                  print '<input class="form-control" type="" name="context"value="' . $id . '" readonly>';
-                  ?>
+                                    print '<input class="form-control" type="" name="context"value="' . $id . '" readonly>';
+                                    ?>
 
-              </div>
-          </div>
+                                </div>
+                            </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="location">Location:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="location" placeholder="Select location" name="site"
-                            onchange="showTrench_AddContext(this.value)">
-                        <option value="">Select a site</option>
-                        <?php
-                        $find = mysqli_query($connect, "SELECT * FROM $tb");
-                        while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
-                            print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
-                        }
-                        ?>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="location">Location:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="location" placeholder="Select location" name="site"
+                                            onchange="showTrench_AddContext(this.value)">
+                                        <option value="">Select a site</option>
+                                        <?php
+                                        $find = mysqli_query($connect, "SELECT * FROM $tb");
+                                        while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
+                                            print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                        }
+                                        ?>
 
-                    </select>
+                                    </select>
 
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="trench">Trench:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="trench" name="trench"
+                                            onchange="showNewTrench_Addcontext(this.value)">
+                                        <option value="">Select Site first</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="newTrench" hidden>
+                                <label class="control-label col-sm-2"></label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="" name="newTrench" value="">
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="description">Description:</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success pull-right">Submit</button>
+                                </div>
+                                <div id="addResult">
+                                    <?php
+                                    if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
+                                        print $_SESSION["addResult"];
+                                        $_SESSION["addResult"] = "";
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="trench">Trench:</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="trench" name="trench"
-                            onchange="showNewTrench_Addcontext(this.value)">
-                        <option value="">Select Site first</option>
-                    </select>
-
-                </div>
-            </div>
-
-            <div class="form-group" id="newTrench" hidden>
-                <label class="control-label col-sm-2"></label>
-                <div class="col-sm-4">
-                    <input class="form-control" type="" name="newTrench" value="">
-                </div>
-            </div>
-
-
-
-
-
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="description">Description:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="5" id="description" name="description"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-                <div id="addResult">
-                    <?php
-                    if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
-                        print $_SESSION["addResult"];
-                        $_SESSION["addResult"] = "";
-                    }
-                    ?>
-                </div>
-            </div>
-
-        </form>
         <?php
     } else {
 
 
         ?>
-        <h2>You are not allowed on this page</h2>
+        <h2>You are not allowed to access to this page</h2>
         <?php
     }    //INSERT INTO `Site` (`SiteCode`, `SiteName`, `Description`) VALUES (NULL, 'Olympus', 'This is where the gods live');
 
