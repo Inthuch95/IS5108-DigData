@@ -74,9 +74,9 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="founder">Founder:</label>
+                            <label class="control-label col-sm-3" for="finder">Finder:</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="founder">
+                                <select class="form-control" id="finder">
                                     <option>Nattasan</option>
                                     <option>Inthuch</option>
                                     <option>Turk</option>
@@ -112,7 +112,7 @@ session_start();
                         </div>
                         <div class="form-group noBottomMargin">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-default pull-right">Apply</button>
+                                <button type="submit" class="btn btn-primary pull-right">Apply</button>
                             </div>
                         </div>
                     </form>
@@ -183,7 +183,7 @@ session_start();
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-default pull-right" type="submit">Detail</button>
+                                <button class="btn btn-info pull-right" type="submit">Details</button>
                             </td>
                         </tr>
                         </tbody>

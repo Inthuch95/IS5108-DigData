@@ -107,7 +107,7 @@ if (!$connect) {
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-default pull-right" type="submit">Detail</button>
+                                <button class="btn btn-info pull-right" type="submit">Details</button>
                             </td>
                         </tr>
                         </tbody>
