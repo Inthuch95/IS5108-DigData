@@ -122,9 +122,14 @@ function showTrench_AddContext(site) {
 	var xhttp;
 	if (site == "") {
 		document.getElementById("trench").innerHTML = "<option>Select site first</option>";
+		document.getElementById("trench").disabled = true;
+		document.getElementById("context").value = "Select site first"
 		document.getElementById("newTrench").style.display = "none";
+		document.getElementById("newTrenchInput").value = "";
+		//showNewTrench_Addcontext("");
 		return;
 	}else {
+		
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp = new XMLHttpRequest();
@@ -141,12 +146,16 @@ function showTrench_AddContext(site) {
 
 			if (this.readyState == 4 && this.status == 200) {
 				if(this.responseText != "No trench"){
+					document.getElementById("trench").disabled = false;
 					document.getElementById("trench").innerHTML = this.responseText+"<option value ='New trench'>New trench</option>";
 					document.getElementById("newTrench").style.display = "none";
+					showNewTrench_Addcontext("");
 				}
 				else{
+					document.getElementById("trench").disabled = false;
 					document.getElementById("trench").innerHTML  = "<option value ='New trench'>New trench</option>";
 					document.getElementById("newTrench").style.display = "block";
+					showNewTrench_Addcontext("New trench");
 				}
 
 				//document.getElementById("trench").innerHTML = this.responseText+"<option value ='New trench'>New trench</option>";
@@ -161,16 +170,48 @@ function showTrench_AddContext(site) {
 function showNewTrench_Addcontext(trench){
 	if (trench == "New trench") {
 		document.getElementById("newTrench").style.display = "block";
+		document.getElementById("context").value = 1;
 		return;
 	}
 	else{
-
 		document.getElementById("newTrench").style.display = "none";
+		
+		var site = document.getElementById("location").value;
+		var xhttp;
+		if (site == "") {
+			document.getElementById("context").value = "Select site first";
+			return;
+		}
+		else if(trench == ""){
+			document.getElementById("context").value = "Select trench first";
+			return;
+		}else {
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+
+			xmlhttp.onreadystatechange = function() {
+
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("context").value = this.responseText;
+					
+				}
+			};
+		xmlhttp.open("GET", "PHP/getNextContextBySiteTrench.php?q="+site+"&q1="+trench, true);
+		xmlhttp.send();
+		}
+		
 	}
 }
 
-function addRecord(){
-
+function showNextContextNum_Addcontext(trench){
+	
 
 
 }

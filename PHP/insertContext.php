@@ -6,6 +6,7 @@ if ($_GET["trench"] == "New trench"){
 } else {
   $trench = $_GET["trench"];
 }
+$contextNum = $_GET["contextNum"]
 $description = $_GET["description"];
 
 $username="is5108group-4";
@@ -19,7 +20,7 @@ $connect = new mysqli($host, $username, $password, $db);
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
-$sql = "INSERT INTO `is5108group-4__digdata`.Context_Records (ContextID,SiteCode,Trench,Description) VALUES (NULL,$site,'".$trench."','".$description."')";
+$sql = "INSERT INTO `is5108group-4__digdata`.Context_Records (ContextID,SiteCode,Trench,ContextNum,Description) VALUES (NULL,$site,'".$trench."',".$contextNum.",'".$description."')";
 if ($connect->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {

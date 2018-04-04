@@ -77,19 +77,7 @@ if (!$connect) {
                     <div class="panel-body">
                         <form class="form-horizontal" action="PHP/insertContext.php">
 
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="context">Context:</label>
-                                <div class="col-sm-3">
-                                    <?php
-                                    $find = mysqli_query($connect, "SELECT MAX(ContextID) as maxID FROM Context_Records ");
-                                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
-                                    $id = intval($row["maxID"]) + 1;
-
-                                    print '<input class="form-control" type="" name="context"value="' . $id . '" readonly>';
-                                    ?>
-
-                                </div>
-                            </div>
+                            
 
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="location">Location:</label>
@@ -114,8 +102,8 @@ if (!$connect) {
                                 <label class="control-label col-sm-2" for="trench">Trench:</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="trench" name="trench"
-                                            onchange="showNewTrench_Addcontext(this.value)">
-                                        <option value="">Select Site first</option>
+                                            onchange="showNewTrench_Addcontext(this.value)" disabled>
+                                        <option value="">Select site first</option>
                                     </select>
 
                                 </div>
@@ -124,11 +112,16 @@ if (!$connect) {
                             <div class="form-group" id="newTrench" hidden>
                                 <label class="control-label col-sm-2"></label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="" name="newTrench" value="">
+                                    <input class="form-control" type="" name="newTrench" id="newTrenchInput" value="">
                                 </div>
                             </div>
 
-
+							<div class="form-group">
+                                <label class="control-label col-sm-2" for="context">Context:</label>
+                                <div class="col-sm-3">
+									<input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
+                                </div>
+                            </div>
 
 
 

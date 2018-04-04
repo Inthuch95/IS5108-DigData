@@ -60,9 +60,10 @@ if (!$connect) {
 } else {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $find = mysqli_query($connect, "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC");
+    $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode INNER JOIN Users ON Finds.UserID = Users.UserID ORDER BY `Date` DESC ";
+	$find = mysqli_query($connect, $sql);
     $found = mysqli_num_rows($find);
-    //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
+    //echo $sql;
     //echo $found;
 }
 
@@ -94,7 +95,7 @@ if (!$connect) {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?> <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
+                                            <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?> <strong>Finder: </strong><?php printf("%s", $row["First Name"]) ?>
                                             <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                         </td>
                                     </tr>
