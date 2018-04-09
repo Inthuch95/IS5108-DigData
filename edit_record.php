@@ -1,6 +1,18 @@
 <?php
 session_start();
-$findID = $_GET["id"];
+$_SESSION["currentPage"] = '';
+$findID = 0;
+if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
+  if (isset($_GET["id"])) {
+    $_SESSION["currentID"] = intval($_GET["id"]);
+  }
+  $findID = $_SESSION["currentID"];
+} else {
+  $_SESSION["currentID"] = intval($_GET["id"]);
+  $_SESSION['loginerror'] = "You have to login first";
+  $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+  header("Location:login.php");
+}
 $username="is5108group-4";
 $password="b9iVc.9gS8c7NJ";
 $host="is5108group-4.host.cs.st-andrews.ac.uk";
@@ -84,6 +96,7 @@ $sites = $connect->query($sitesSQL);
                                 $user = $connect->query($userSQL);
                                 $currentUser = $user->fetch_assoc();
                                 if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
+
                                     print '<input class="form-control" type="" value="' . $currentUser["Username"] . '" readonly>';
                                     print '<input class="form-control" type="hidden" name="user" value="' . $currentUser["UserID"] . '" display="">';
                                     print '<input class="form-control" type="hidden" name="FindID" value="' . $currentRecord["FindID"] . '" display="">';
