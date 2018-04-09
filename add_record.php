@@ -128,7 +128,7 @@ if (!$connect) {
                             <label class="control-label col-sm-2" for="date">From:</label>
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="date"
+                                    <input type="text" class="form-control" name="date" id="date"
                                            value="<?php echo date('Y-m-d'); ?>">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="date-butt">

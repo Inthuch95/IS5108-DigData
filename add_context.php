@@ -33,23 +33,39 @@ if (!$connect) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="Script/Script.js"></script>
+	<!-- jQuery UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
     <script>
-    function moreImage(){
-      console.log("more image box");
-      $("#imageArray").append('<input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload2">') ;
+    function moreImage(id){
+      console.log("more image box"+direction);
+      $("#"+id).append('\
+	  <div class="row">\
+		<div class="col-sm-4">\
+			<input class="form-control" type="file" name="'+id+'[]" >\
+		</div>\
+		<div class="col-sm-1">\
+			<input class="btn" type=button  value ="X">\
+		</div>\
+	  </div>\
+	  ') ;
     }
 
-    $('selector_for_your_form input[type=file]').change(fileChangeHandler);
-    function fileChangeHandler() {
-      var form = $(this).closest('form');
-      $('<input type="file">').change(fileChangeHandler).appendTo(form);
-    }
+	function showUploadBox(thisID,showid){
+		
+		if($("#"+thisID).is(":checked")){
+			$("#"+showid).show();
+		}
+		else{
+			$("#"+showid).hide();
+		}
+	}
     </script>
-</head>fileToUpload
+</head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -110,7 +126,7 @@ if (!$connect) {
 
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="trench">Trench:</label>
-                                <div class="col-sm-3">orm-control
+                                <div class="col-sm-3">
                                     <select class="form-control" id="trench" name="trench"
                                             onchange="showNewTrench_Addcontext(this.value)" disabled>
                                         <option value="">Select site first</option>
@@ -125,10 +141,10 @@ if (!$connect) {
                                 </div>
                             </div>
 
-							              <div class="form-group">
+							    <div class="form-group">
                                 <label class="control-label col-sm-2" for="context">Context:</label>
                                 <div class="col-sm-3">
-									              <input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
+								<input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
                                 </div>
                             </div>
 
@@ -140,22 +156,74 @@ if (!$connect) {
                                     <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                              <label class="control-label col-sm-2" for="fileToUpload">Select images to upload:</label>
-                              <div class="col-sm-3" id="imageArray">
-                                <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload1">
-
-                              </div>
-                               <input type=button onclick=moreImage() value ="Add">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="description">Direction:</label>
-                                <div class="col-sm-3">
-                                    <input class="form-control" rows="5" id="description" name="description"></textarea>
+							<div class="form-group">
+                                <label class="control-label col-sm-2" for="interpretation">Interpretation:</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" id="Interpretation" name="Interpretation"></textarea>
                                 </div>
                             </div>
+
+                      
+							<div class="form-group">
+							
+							<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
+							<div class="col-sm-10">
+								<div class="checkbox">
+									  <label><input type="checkbox" name="cbEast" id="cbEast" onchange=showUploadBox(this.id,"imgsEast")>East</label>
+									  <div id="imgsEast" hidden>
+										<div class="row">
+											<div class="col-sm-4">
+												<input class="form-control" type="file" name="imgsEast[]">
+											</div>
+											
+											<label class="control-label col-sm-1" for="date">Date:</label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<input type="text" class="form-control" id="date"
+														   value="<?php echo date('Y-m-d'); ?>">
+													<div class="input-group-btn">
+														<button class="btn btn-default" type="button" id="date-butt">
+															<i class="far fa-calendar-alt"></i>
+														</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-1">
+												<input class="btn" type=button onclick=moreImage("imgsEast") value ="Add">
+											</div>
+										</div>
+									  </div>
+								</div>
+								<div class="checkbox">
+									  <label><input type="checkbox" name="cbWest" id="cbWest" onchange=showUploadBox(this.id,"imgsWest")>West</label>
+									  <div id="imgsWest" hidden>
+									  <div class="row">
+											<div class="col-sm-4">
+												<input class="form-control" type="file" name="imgsWest[]">
+											</div>
+											<div class="col-sm-1">
+												<input class="btn" type=button onclick=moreImage("imgsWest") value ="Add">
+											</div>
+									  </div>
+									  </div>
+								</div>
+								<div class="checkbox">
+									  <label><input type="checkbox" name="cbNorth" id="cbNorth" onchange=showUploadBox(this.id,"imgsNorth")>North</label>
+									  <div id="imgsNorth" hidden>
+									  <div class="row">
+											<div class="col-sm-4">
+												<input class="form-control" type="file" name="imgsNorth[]">
+											</div>
+											<div class="col-sm-1">
+												<input class="btn" type=button onclick=moreImage("imgsNorth") value ="Add">
+											</div>
+									  </div>
+									  </div>
+								</div>
+							</div>
+							</div>
+							
+                           
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
