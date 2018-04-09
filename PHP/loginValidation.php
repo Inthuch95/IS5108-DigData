@@ -24,7 +24,7 @@
 			$found = mysqli_num_rows($find);
 		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
 		//echo $found;
-	}$
+	}
 
 	if ($found)
 	{
