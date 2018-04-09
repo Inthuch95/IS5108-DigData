@@ -42,7 +42,7 @@ if (!$connect) {
             crossorigin="anonymous"></script>
     <script>
     function moreImage(id){
-      console.log("more image box"+direction);
+      console.log("more image box"+id);
       $("#"+id).append('\
 	  <div class="row">\
 		<div class="col-sm-4">\
