@@ -2,6 +2,7 @@
 	session_start();
 	$LOGusername=$_POST["user"];
 	$LOGpassword=$_POST["pass"];
+
 	$host="is5108group-4.host.cs.st-andrews.ac.uk";
 	//$host="localhost";
 	$username="is5108group-4";
@@ -18,7 +19,7 @@
 		}
 	else
 	{
-		mysqli_select_db($connect,$db) or die("Can't select Database");
+		  mysqli_select_db($connect,$db) or die("Can't select Database");
 			$find = mysqli_query($connect,"SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'");
 			$found = mysqli_num_rows($find);
 		//echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";

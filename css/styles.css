@@ -1,6 +1,7 @@
 body, html {
     height: 100%;
 }
+
 .bg {
     /* The image used */
     background-image: url("../images/sample-login-bg.jpg");
@@ -15,13 +16,118 @@ body, html {
 
 #sign-in {
     background-color: white;
-    margin:0 auto;
+    margin: 0 auto;
     width: 450px;
 }
 
-@media only screen and (max-width: 479px){
-    #sign-in { width: 90%; }
+@media only screen and (max-width: 479px) {
+    #sign-in {
+        width: 90%;
+    }
 }
-nav{
-  opacity: 0.95;
+
+nav {
+    opacity: 0.95;
+}
+
+/* ******************************************************************************** */
+/* ************************************ Border ************************************ */
+/* ******************************************************************************** */
+.noBorder {
+    border: none;
+    box-shadow: none;
+}
+
+.noLeftRightBorder {
+    border-left: none;
+    border-right: none;
+
+    box-shadow: none;
+}
+
+.noTopBottomBorder {
+    border-left: none;
+    border-right: none;
+
+    box-shadow: none;
+}
+
+.noLeftBorder {
+    border-left: none;
+
+    box-shadow: none;
+}
+
+.noRightBorder {
+    border-right: none;
+
+    box-shadow: none;
+}
+
+.noTopBorder {
+    border-top: none;
+
+    box-shadow: none;
+}
+
+.noBottomBorder {
+    border-bottom: none;
+
+    box-shadow: none;
+}
+
+/* ******************************************************************************** */
+/* ************************************ Margin ************************************ */
+/* ******************************************************************************** */
+.noLeftMargin {
+    margin-left: 0 !important;
+}
+
+.noRightMargin {
+    margin-right: 0 !important;
+}
+
+.noTopMargin {
+    margin-top: 0 !important;
+}
+
+.noBottomMargin {
+    margin-bottom: 0 !important;
+}
+
+.noMargin {
+    margin: 0 !important;
+}
+
+/* ******************************************************************************** */
+/* ************************************ Padding *********************************** */
+/* ******************************************************************************** */
+.noLeftPadding {
+    padding-left: 0 !important;
+}
+
+.noRightPadding {
+    padding-right: 0 !important;
+}
+
+.noTopPadding {
+    padding-top: 0 !important;
+}
+
+.noBottomPadding {
+    padding-bottom: 0 !important;
+}
+
+.noPadding {
+    padding: 0 !important;
+}
+
+.noLeftRightPadding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.noTopBottomPadding {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
