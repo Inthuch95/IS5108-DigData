@@ -31,6 +31,7 @@ if (!$connect) {
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script src="Script/Script.js"></script>
     <!-- jQuery UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
@@ -74,9 +75,9 @@ if (!$connect) {
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="PHP/addRecord.php">
+                    <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/addRecord.php">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="finder">Finder:</label>
+                            <label class="control-label col-sm-2" for="finder">Finder</label>
                             <div class="col-sm-3">
                                 <?php
                                 if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
@@ -91,11 +92,11 @@ if (!$connect) {
                                 ?>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="location">Location:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="location">Location*</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="location" placeholder="Select location" name="site"
-                                        onchange="showTrench(this.value)">
+                                        onchange="showTrench(this.value)" required>
                                     <option value="">Select a site</option>
                                     <?php
                                     while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
@@ -105,31 +106,31 @@ if (!$connect) {
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="trench">Trench:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="trench">Trench*</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="trench" name="trench"
-                                        onchange="showContext(this.value)" disabled='true'>
+                                        onchange="showContext(this.value)" disabled='true' required>
                                     <option value="">Select site first</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="context">Context:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="context">Context*</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="context" name="context"
-                                        onchange="showContextDesc(this.value)" disabled='true'>
+                                        onchange="showContextDesc(this.value)" disabled='true' required>
                                     <option value="">Select site first</option>
                                 </select>
-                                <div id="contextDesc" hidden></div>
+                                <h5 class="text-info" id="contextDesc" hidden></h5>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="date">From:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="date">From*</label>
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="date"
-                                           value="<?php echo date('Y-m-d'); ?>">
+                                           value="<?php echo date('Y-m-d'); ?>" required>
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="date-butt">
                                             <i class="far fa-calendar-alt"></i>
@@ -138,20 +139,22 @@ if (!$connect) {
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="type">Type:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="type">Type*</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="type" name="type">
+                                <select class="form-control" id="type" name="type" required>
                                     <option value="Metal">Metal</option>
                                     <option value="Wood">Wood</option>
                                     <option value="Rock">Rock</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="description">Description:</label>
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="description">Description*</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                <textarea class="form-control" rows="5" id="description" name="description" data-error="Please fill in this field" required></textarea>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -182,6 +185,7 @@ if (!$connect) {
 <script type="text/javascript">
     $(function () {
         $('#date').datepicker({
+            dateFormat: 'yy-mm-dd',
             maxDate: 0
         });
         $("#date-butt").click(function () {

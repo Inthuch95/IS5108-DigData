@@ -12,6 +12,7 @@ session_start();
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script src="Script/Script.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
@@ -48,30 +49,33 @@ session_start();
 
 <div class="container" style="margin-top:50px">
     <?php
-    if ($_SESSION['admin'] == true && isset($_SESSION['admin'])) {
+    if (($_SESSION['admin'] == true && isset($_SESSION['admin']))) {
         ?>
         <h2>Add new site</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="name">Name:</label>
+                        <form class="form-horizontal" data-toggle="validator" role="form">
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-2" for="name">Name*</label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" id="name" placeholder="Site name" name="name">
+                                    <input class="form-control" id="name" placeholder="Site name" name="name" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="description">Description:</label>
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-2" for="description">Description*</label>
                                 <div class="col-sm-10">
-                    <textarea class="form-control" placeholder="Site description" rows="5" id="description"
-                              name="description"></textarea>
+                                 <textarea class="form-control" placeholder="Site description" rows="5" id="description"
+                                           name="description" required></textarea>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-success pull-right" onclick="confirmAddSite()">Submit</button>
+                                    <button type="submit" class="btn btn-success pull-right" onclick="confirmAddSite()">Submit
+                                    </button>
                                     <div id="addResult"><?php
                                         if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
                                             print $_SESSION["addResult"];

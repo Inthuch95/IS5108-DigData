@@ -15,7 +15,7 @@ if (!$connect) {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
 
-  ///  $found = mysqli_num_rows($find);
+    ///  $found = mysqli_num_rows($find);
     //new branch
     //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
     //echo $found;
@@ -32,24 +32,27 @@ if (!$connect) {
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script src="Script/Script.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
     <script>
-    function moreImage(){
-      console.log("more image box");
-      $("#imageArray").append('<input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload2">') ;
-    }
+        function moreImage() {
+            console.log("more image box");
+            $("#imageArray").append('<input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload2">');
+        }
 
-    $('selector_for_your_form input[type=file]').change(fileChangeHandler);
-    function fileChangeHandler() {
-      var form = $(this).closest('form');
-      $('<input type="file">').change(fileChangeHandler).appendTo(form);
-    }
+        $('selector_for_your_form input[type=file]').change(fileChangeHandler);
+
+        function fileChangeHandler() {
+            var form = $(this).closest('form');
+            $('<input type="file">').change(fileChangeHandler).appendTo(form);
+        }
     </script>
-</head>fileToUpload
+</head>
+fileToUpload
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -80,22 +83,22 @@ if (!$connect) {
 
 <div class="container" style="margin-top:50px">
     <?php
-    if (isset($_SESSION['admin']) and $_SESSION['admin'] == true) {
+    if ((isset($_SESSION['admin']) and $_SESSION['admin'] == true)) {
         ?>
         <h2>Add new context</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form class="form-horizontal" action="PHP/insertContext.php" method='post' enctype="multipart/form-data">
-
+                        <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/insertContext.php"
+                              method='post' enctype="multipart/form-data">
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="location">Location:</label>
+                                <label class="control-label col-sm-2" for="location">Location</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
-                                            onchange="showTrench_AddContext(this.value)">
+                                            onchange="showTrench_AddContext(this.value)" required>
                                         <option value="">Select a site</option>
                                         <?php
                                         $find = mysqli_query($connect, "SELECT * FROM $tb");
@@ -109,10 +112,10 @@ if (!$connect) {
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="trench">Trench:</label>
-                                <div class="col-sm-3">orm-control
+                                <label class="control-label col-sm-2" for="trench">Trench</label>
+                                <div class="col-sm-3">
                                     <select class="form-control" id="trench" name="trench"
-                                            onchange="showNewTrench_Addcontext(this.value)" disabled>
+                                            onchange="showNewTrench_Addcontext(this.value)" disabled required>
                                         <option value="">Select site first</option>
                                     </select>
                                 </div>
@@ -121,39 +124,43 @@ if (!$connect) {
                             <div class="form-group" id="newTrench" hidden>
                                 <label class="control-label col-sm-2"></label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="" name="newTrench" id="newTrenchInput" value="">
+                                    <input class="form-control" type="" name="newTrench" id="newTrenchInput" value=""
+                                           required>
                                 </div>
                             </div>
-
-							              <div class="form-group">
-                                <label class="control-label col-sm-2" for="context">Context:</label>
-                                <div class="col-sm-3">
-									              <input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
-                                </div>
-                            </div>
-
-
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="description">Description:</label>
+                                <label class="control-label col-sm-2" for="context">Context</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" name="contextNum" id="context" value="Select site first"
+                                           readonly>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-2" for="description">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                    <textarea class="form-control" rows="5" id="description" name="description" required></textarea>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="control-label col-sm-2" for="fileToUpload">Select images to upload:</label>
-                              <div class="col-sm-3" id="imageArray">
-                                <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload1">
-
-                              </div>
-                               <input type=button onclick=moreImage() value ="Add">
+                                <label class="control-label col-sm-2" for="fileToUpload">Select images to upload</label>
+                                <div class="col-sm-3" id="imageArray">
+                                    <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload1" required>
+                                </div>
+                                <input type=button class="btn btn-primary" onclick=moreImage() value="Add">
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="description">Direction:</label>
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-2" for="description">Direction</label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" rows="5" id="description" name="description"></textarea>
+                                    <input class="form-control" rows="5" id="direction" name="direction" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 </div>
                             </div>
 
@@ -179,8 +186,6 @@ if (!$connect) {
 
         <?php
     } else {
-
-
         ?>
         <h2>You are not allowed to access to this page</h2>
         <?php

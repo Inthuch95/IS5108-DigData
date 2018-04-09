@@ -11,6 +11,7 @@ session_start();
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <!-- jQuery UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -56,13 +57,13 @@ session_start();
                 <div class="panel-body">
                     <form class="form-horizontal" action="#">
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="id">ID:</label>
+                            <label class="control-label col-sm-3" for="id">ID</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="id" placeholder="Enter ID">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="location">Location:</label>
+                            <label class="control-label col-sm-3" for="location">Location</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="location">
                                     <option>John Honey Building</option>
@@ -74,7 +75,7 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="finder">Finder:</label>
+                            <label class="control-label col-sm-3" for="finder">Finder</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="finder">
                                     <option>Nattasan</option>
@@ -85,7 +86,7 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="from">From:</label>
+                            <label class="control-label col-sm-3" for="from">From</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="date" id="from">
@@ -98,7 +99,7 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="to">To:</label>
+                            <label class="control-label col-sm-3" for="to">To</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="date" id="to">
