@@ -130,7 +130,7 @@ if (!$connect) {
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="date" id="date"
-                                           value="<?php echo date('Y-m-d'); ?>">
+                                           value="<?php echo date('Y-m-d'); ?>" required>
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="date-butt">
                                             <i class="far fa-calendar-alt"></i>
