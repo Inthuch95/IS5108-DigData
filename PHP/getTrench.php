@@ -1,4 +1,5 @@
 <?php
+session_start();
 $site = intval($_GET['q']);
 
 
@@ -26,10 +27,14 @@ $connect= mysqli_connect($host,$username,$password);
 	if($found){
 		echo '<option value = "">Select trench</option>';
 		while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC)) {
-			echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
+			if (isset($_SESSION['currentSite']) and $_SESSION['currentSite'] == $site) {
+					echo '<option selected="selected" value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
+			} else {
+					echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
+			}
 		}
 	}
 	else{
 		printf("No trench");
-	}	
+	}
 ?>

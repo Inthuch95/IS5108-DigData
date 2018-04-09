@@ -1,30 +1,29 @@
 <?php
 session_start();
-$_SESSION["currentPage"] = '';
-$username = "is5108group-4";
-$password = "b9iVc.9gS8c7NJ";
-$host = "is5108group-4.host.cs.st-andrews.ac.uk";
-$db = "is5108group-4__digdata";
-$tb = "Site";
+$findID = $_GET["id"];
+$username="is5108group-4";
+$password="b9iVc.9gS8c7NJ";
+$host="is5108group-4.host.cs.st-andrews.ac.uk";
+$db="is5108group-4__digdata";
+$recordTB = "Finds";
+$siteTB = "Site";
+$userTB = "Users";
 
-$connect = mysqli_connect($host, $username, $password);
-if (!$connect) {
-    echo "Can't connect to SQLdatabase ";
-    exit();
-} else {
-    mysqli_select_db($connect, $db) or die("Can't select Database");
-    //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $find = mysqli_query($connect, "SELECT * FROM $tb");
-    $found = mysqli_num_rows($find);
-    //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
-    //echo $found;
+$connect = new mysqli($host, $username, $password, $db);
+// Check connection
+if ($connect->connect_error) {
+  die("Connection failed: " . $connect->connect_error);
 }
-
+$recordSQL = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $recordTB INNER JOIN Context_Records cr
+  ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode WHERE $recordTB.FindID = $findID";
+$sitesSQL = "SELECT * FROM $siteTB";
+$record = $connect->query($recordSQL);
+$sites = $connect->query($sitesSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DigData - Add New Record</title>
+    <title>DigData - Edit Record</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -55,7 +54,7 @@ if (!$connect) {
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
-                <li class="active"><a href="add_record.php">Add Record</a></li>
+                <li><a href="add_record.php">Add Record</a></li>
                 <li><a href="search.php">Search</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -69,19 +68,25 @@ if (!$connect) {
 
 
 <div class="container" style="margin-top:50px">
-    <h2>Add record</h2>
+    <h2>Edit record</h2>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="PHP/addRecord.php">
+                    <form class="form-horizontal" action="PHP/updateRecord.php">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="finder">Finder:</label>
                             <div class="col-sm-3">
                                 <?php
+                                $currentRecord = $record->fetch_assoc();
+                                $LOGusername = $currentRecord["UserID"];
+                                $userSQL = "SELECT * FROM $userTB WHERE UserID='$LOGusername'";
+                                $user = $connect->query($userSQL);
+                                $currentUser = $user->fetch_assoc();
                                 if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
-                                    print '<input class="form-control" type="" value="' . $_SESSION["user"] . '" readonly>';
-                                    print '<input class="form-control" type="hidden" name="user" value="' . $_SESSION["UserID"] . '" display="">';
+                                    print '<input class="form-control" type="" value="' . $currentUser["Username"] . '" readonly>';
+                                    print '<input class="form-control" type="hidden" name="user" value="' . $currentUser["UserID"] . '" display="">';
+                                    print '<input class="form-control" type="hidden" name="FindID" value="' . $currentRecord["FindID"] . '" display="">';
                                 } else {
                                     $_SESSION['loginerror'] = "You have to login first";
                                     $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
@@ -98,8 +103,13 @@ if (!$connect) {
                                         onchange="showTrench(this.value)">
                                     <option value="">Select a site</option>
                                     <?php
-                                    while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
-                                        print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                    $_SESSION['currentSite'] = $currentRecord["SiteCode"];
+                                    while ($row = $sites->fetch_assoc()) {
+                                        if ($row["SiteCode"] == $currentRecord["SiteCode"]) {
+                                            print '<option selected="selected" value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                        } else{
+                                            print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                        }
                                     }
                                     ?>
                                 </select>
@@ -187,5 +197,14 @@ if (!$connect) {
         $("#date-butt").click(function () {
             $('#date').datepicker("show");
         });
+        var currentTrench = <?php echo json_encode($currentRecord["Trench"]); ?>;
+        var date = "<?php echo $currentRecord["Date"]; ?>";
+        var type = "<?php echo $currentRecord["Type"]; ?>";
+        var description = "<?php echo $currentRecord["FDESC"]; ?>";
+        showTrench(document.getElementById("location").value);
+        showContext(currentTrench);
+        $('#date').val(date);
+        $('#type').val(type);
+        $('#description').val(description);
     });
 </script>
