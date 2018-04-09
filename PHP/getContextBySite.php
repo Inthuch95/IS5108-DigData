@@ -1,4 +1,5 @@
 <?php
+session_start();
 $site = intval($_GET['q']);
 $trench = $_GET['q1'];
 
@@ -26,7 +27,11 @@ $connect= mysqli_connect($host,$username,$password);
 	if($found){
 		echo '<option value = "">Select context</option>';
 		while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC)) {
-			echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
+			if (isset($_SESSION['currentSite']) and $_SESSION['currentSite'] == $site) {
+					echo '<option selected="selected" value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
+			} else {
+					echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
+			}
 		}
 	}
 	else{
