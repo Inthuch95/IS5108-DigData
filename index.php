@@ -109,6 +109,7 @@ if (!$connect) {
                                     </tbody>
                                 </table>
                                 <button class="btn btn-info pull-right" type="submit">Details</button>
+                                <button class="btn btn-info pull-right" type="submit" formaction="edit_record.php">Edit</button>
                             </td>
                         </tr>
                         </tbody>
