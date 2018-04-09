@@ -32,12 +32,24 @@ if (!$connect) {
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="Script/Script.js"></script> 
+    <script src="Script/Script.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
-</head>
+    <script>
+    function moreImage(){
+      console.log("more image box");
+      $("#imageArray").append('<input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload2">') ;
+    }
+
+    $('selector_for_your_form input[type=file]').change(fileChangeHandler);
+    function fileChangeHandler() {
+      var form = $(this).closest('form');
+      $('<input type="file">').change(fileChangeHandler).appendTo(form);
+    }
+    </script>
+</head>fileToUpload
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -75,9 +87,9 @@ if (!$connect) {
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form class="form-horizontal" action="PHP/insertContext.php">
+                        <form class="form-horizontal" action="PHP/insertContext.php" method='post' enctype="multipart/form-data">
 
-                            
+
 
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="location">Location:</label>
@@ -91,21 +103,18 @@ if (!$connect) {
                                             print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
                                         }
                                         ?>
-
                                     </select>
-
                                 </div>
                             </div>
 
 
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="trench">Trench:</label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3">orm-control
                                     <select class="form-control" id="trench" name="trench"
                                             onchange="showNewTrench_Addcontext(this.value)" disabled>
                                         <option value="">Select site first</option>
                                     </select>
-
                                 </div>
                             </div>
 
@@ -116,13 +125,12 @@ if (!$connect) {
                                 </div>
                             </div>
 
-							<div class="form-group">
+							              <div class="form-group">
                                 <label class="control-label col-sm-2" for="context">Context:</label>
                                 <div class="col-sm-3">
-									<input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
+									              <input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
                                 </div>
                             </div>
-
 
 
 
@@ -130,6 +138,22 @@ if (!$connect) {
                                 <label class="control-label col-sm-2" for="description">Description:</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="control-label col-sm-2" for="fileToUpload">Select images to upload:</label>
+                              <div class="col-sm-3" id="imageArray">
+                                <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload1">
+
+                              </div>
+                               <input type=button onclick=moreImage() value ="Add">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="description">Direction:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" rows="5" id="description" name="description"></textarea>
                                 </div>
                             </div>
 
