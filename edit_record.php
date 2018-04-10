@@ -116,7 +116,8 @@ $sites = $connect->query($sitesSQL);
                                         onchange="showTrench(this.value)">
                                     <option value="">Select a site</option>
                                     <?php
-                                    $_SESSION['currentSite'] = $currentRecord["SiteCode"];
+                                    $_SESSION['currentTrench'] = $currentRecord["Trench"];
+                                    $_SESSION['currentContext'] = $currentRecord["ContextID"];
                                     while ($row = $sites->fetch_assoc()) {
                                         if ($row["SiteCode"] == $currentRecord["SiteCode"]) {
                                             print '<option selected="selected" value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
