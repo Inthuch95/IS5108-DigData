@@ -141,9 +141,6 @@ function showTrench_AddContext(site) {
 
 
 		xmlhttp.onreadystatechange = function() {
-
-
-
 			if (this.readyState == 4 && this.status == 200) {
 				if(this.responseText != "No trench"){
 					document.getElementById("trench").disabled = false;
@@ -194,10 +191,7 @@ function showNewTrench_Addcontext(trench){
 				// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-
-
 			xmlhttp.onreadystatechange = function() {
-
 				if (this.readyState == 4 && this.status == 200) {
 					document.getElementById("context").value = this.responseText;
 					

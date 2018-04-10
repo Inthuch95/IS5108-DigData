@@ -1,26 +1,14 @@
 <?php
 session_start();
 $site = $_POST["site"];
-if ($_POST["trench"] == "New trench"){
-  $trench = $_POST["newTrench"];
-} else {
-  $trench = $_POST["trench"];
-}
+$trench = $_POST["trench"];
+
 $contextNum = $_POST["contextNum"];
 $contextID = $_POST["contextID"];
 $description = $_POST["description"];
-$cbEast =$_POST["cbEast"];
-$dateEast = $_POST["dateEast"];
-$cbWest =$_POST["cbWest"];
-$dateWest = $_POST["dateWest"];
-$cbNorth =$_POST["cbNorth"];
-$dateNorth = $_POST["dateNorth"];
-$cbSouth =$_POST["cbSouth"];
-$dateSouth = $_POST["dateSouth"];
 
-
-$direction = "";
-$addingDate = "";
+$direction = $_POST["direction"];
+$addingDate = $_POST["date"];
 $photoSetID =0;
 
 $username="is5108group-4";
@@ -34,34 +22,7 @@ if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
 
-insertContext();
-//echo $cbEast.$cbWest.$cbNorth.$cbSouth;
-if(isset($cbEast)&&$cbEast=="on"){
-	echo "cbEast";
-	$direction = "East";
-	$addingDate = $dateEast;
-	uploadImg("imgsEast");
-}
-if(isset($cbWest)&&$cbWest=="on"){
-	echo "cbWest";
-	$direction = "West";
-	$addingDate = $dateWest;
-	uploadImg("imgsWest");
-}
-if(isset($cbNorth)&&$cbNorth=="on"){
-	echo "cbNorth";
-	$direction = "North";
-	$addingDate = $dateNorth;
-	uploadImg("imgsNorth");
-}
-if(isset($cbSouth)&&$cbSouth=="on"){
-	echo "cbSouth";
-	$direction = "South";
-	$addingDate = $dateSouth;
-	uploadImg("imgsSouth");
-}
-
-
+uploadImg("imgs");
 
 function uploadImg($id){
 	global $photoSetID,$connect;
@@ -78,18 +39,17 @@ function uploadImg($id){
 
 		$check = getimagesize($_FILES[$id]["tmp_name"][$f]);
 		 if($check !== false) {
+			 /*
 			 echo $target_file;
 			 echo "<br>".$path."<br>";
 			 echo "File is an image - " . $check["mime"] . ".";
-			 $sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
-			 echo "<br>".$sql."<br>";
-			 mysqli_query($connect,$sql);
+			 */
+			
 			 $uploadOk = 1;
 		 } else {
 			 echo "File is not an image.";
 			 $uploadOk = 0;
 		 }
-
 		if ($_FILES["fileToUpload"]["size"] > 8388608) {
 			echo "Sorry, your file is too large.";
 			$uploadOk = 0;
@@ -98,6 +58,7 @@ function uploadImg($id){
 			$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
 			mysqli_query($connect,$sql);
 		}
+
 		// Check if file already exists
 		if (file_exists($target_file)) {
 		   echo "Sorry, file already exists.";
@@ -116,7 +77,6 @@ function uploadImg($id){
 		} else {
 			if (move_uploaded_file($_FILES[$id]["tmp_name"][$f], $target_file)) {
 				echo "The file ". basename( $_FILES[$id]["name"][$f]). " has been uploaded.";
-				
 				//
 				//INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '1', '/context images/Batman.jpeg');
 			} else {
@@ -130,9 +90,9 @@ function uploadImg($id){
 
 
 function insertPhotoSet(){
-	global $site, $contextID, $trench, $connect, $direction, $addingDate, $photoSetID;
+	global $site, $contextID, $trench, $connect, $description, $direction, $addingDate, $photoSetID;
 	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
-	VALUES (NULL, '$site', '$trench', '', '$direction', '$addingDate')";
+	VALUES (NULL, '$site', '$trench', '$description', '$direction', '$addingDate')";
 	echo "<br>".$sql."<br>";
 	
 	if ($connect->query($sql) === TRUE) {
@@ -160,23 +120,8 @@ function insertPhotoSet(){
 	
 }
 
-function insertContext(){
-	global $site, $contextNum, $trench, $connect, $description;
-	$sql = "INSERT INTO `is5108group-4__digdata`.Context_Records (ContextID,SiteCode,Trench,ContextNum,Description) VALUES (NULL,$site,'".$trench."',".$contextNum.",'".$description."')";
-	
-	if ($connect->query($sql) === TRUE) {
-		echo "New record created successfully";
-		$_SESSION["addResult"] =  "A new context was added successfully";
-	} else {
-		echo "Error: " . $sql . "<br>" . $connect->error;
-		$_SESSION["addResult"] =  "Error can't add a new context";
-	}
-	
-
-
-}
 
 
 $connect->close();
-#header("Location:../add_context.php");
+#header("Location:../add_photo.php");
 ?>
