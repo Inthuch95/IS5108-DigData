@@ -61,7 +61,7 @@ if (!$connect) {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
     $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode INNER JOIN Users ON Finds.UserID = Users.UserID ORDER BY `Date` DESC ";
-	$find = mysqli_query($connect, $sql);
+    $find = mysqli_query($connect, $sql);
     $found = mysqli_num_rows($find);
     //echo $sql;
     //echo $found;
@@ -108,9 +108,21 @@ if (!$connect) {
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-info pull-right" type="submit">Details</button>
-                                <button class="btn btn-info pull-right" type="submit" formaction="edit_record.php">Edit</button>
-                                <button class="btn btn-info pull-right" type="submit" formaction="PHP/deleteRecord.php">Delete</button>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-warning" type="submit" formaction="edit_record.php"><i
+                                                    class="fas fa-edit"></i>&nbsp;Edit
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2 col-sm-offset-3 text-center">
+                                        <button class="btn btn-info" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2 col-sm-offset-3">
+                                        <button class="btn btn-danger pull-right" type="submit" formaction="PHP/deleteRecord.php"><i
+                                                    class="fas fa-trash-alt"></i>&nbsp;Delete</button>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         </tbody>

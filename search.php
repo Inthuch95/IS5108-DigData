@@ -184,7 +184,7 @@ session_start();
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-info pull-right" type="submit">Details</button>
+                                <button class="btn btn-info pull-right" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details</button>
                             </td>
                         </tr>
                         </tbody>

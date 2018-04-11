@@ -159,7 +159,7 @@ if (!$connect) {
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-success pull-right">Submit</button>
+                                <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>
                                 <div id="addResult"><?php
                                     if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
                                         print $_SESSION["addResult"];

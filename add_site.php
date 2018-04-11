@@ -74,7 +74,7 @@ session_start();
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success pull-right" onclick="confirmAddSite()">Submit
+                                    <button type="submit" class="btn btn-success pull-right" onclick="confirmAddSite()"><i class="fas fa-upload"></i>&nbsp;Submit
                                     </button>
                                     <div id="addResult"><?php
                                         if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {

@@ -11,6 +11,7 @@ session_start();
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
@@ -45,32 +46,44 @@ session_start();
 
     <div class="container" style="margin-top:50px" id="sign-in">
         <h3>Sign In</h3>
-        <form class="form-horizontal" action="PHP/loginValidation.php" method="POST">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="email">Username:</label>
-                <div class="col-sm-10">
-                    <input name="user" class="form-control" id="username" placeholder="Enter username">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default noBorder noBottomMargin">
+                    <div class="panel-body">
+                        <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/loginValidation.php" method="POST">
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-1 col-sm-offset-1" for="email"><i class="fas fa-user"></i></label>
+                                <div class="col-sm-10">
+                                    <input name="user" class="form-control" id="username" placeholder="Enter Username" data-error="Please fill in this field" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label class="control-label col-sm-1 col-sm-offset-1" for="pwd"><i class="fas fa-key"></i></label>
+                                <div class="col-sm-10">
+                                    <input name="pass" type="password" class="form-control" id="pwd" placeholder="Enter Password" data-error="Please fill in this field" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <?php
+                                    if (isset($_SESSION['loginerror']) and $_SESSION['loginerror'] != '') {
+                                        print '<div class="alert alert-danger">' . $_SESSION['loginerror'];
+                                        $_SESSION['loginerror'] = "";
+                                        print '</div>';
+                                    }
+                                    ?>
+                                    <button type="submit" class="btn btn-success pull-right"><i class="fas fa-sign-in-alt fa-lg"></i>&nbsp;Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Password:</label>
-                <div class="col-sm-10">
-                    <input name="pass" type="password" class="form-control" id="pwd" placeholder="Enter password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <?php
-                    if (isset($_SESSION['loginerror']) and $_SESSION['loginerror'] != '') {
-                        print '<div class="alert alert-danger">' . $_SESSION['loginerror'];
-                        $_SESSION['loginerror'] = "";
-                        print '</div>';
-                    }
-                    ?>
-                    <button type="submit" class="btn btn-default">Login</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>
