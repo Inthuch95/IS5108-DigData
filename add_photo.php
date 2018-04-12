@@ -15,7 +15,7 @@ if (!$connect) {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
 
-    ///  $found = mysqli_num_rows($find);
+  ///  $found = mysqli_num_rows($find);
     //new branch
     //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
     //echo $found;
@@ -32,7 +32,6 @@ if (!$connect) {
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script src="Script/Script.js"></script>
 	<!-- jQuery UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
@@ -57,7 +56,7 @@ if (!$connect) {
     }
 
 	function showUploadBox(thisID,showid){
-
+		
 		if($("#"+thisID).is(":checked")){
 			$("#"+showid).show();
 		}
@@ -97,22 +96,20 @@ if (!$connect) {
 
 <div class="container" style="margin-top:50px">
     <?php
-    if ((isset($_SESSION['admin']) and $_SESSION['admin'] == true)) {
+    if (isset($_SESSION['admin']) and $_SESSION['admin'] == true) {
         ?>
         <h2>Add new context</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/insertContext.php"
-                              method='post' enctype="multipart/form-data">
-
+                        <form class="form-horizontal" action="PHP/insertPhotoSet.php" method='post' enctype="multipart/form-data">
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="location">Location</label>
+                                <label class="control-label col-sm-2" for="location">Location:</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
-                                            onchange="showTrench_AddContext(this.value)" required>
+                                            onchange="showTrench(this.value)">
                                         <option value="">Select a site</option>
                                         <?php
                                         $find = mysqli_query($connect, "SELECT * FROM $tb");
@@ -126,130 +123,83 @@ if (!$connect) {
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="trench">Trench</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control" id="trench" name="trench"
-                                            onchange="showNewTrench_Addcontext(this.value)" disabled required>
-                                        <option value="">Select site first</option>
-                                    </select>
+                            <label class="control-label col-sm-2" for="trench">Trench:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" id="trench" name="trench"
+                                        onchange="showContext(this.value)" disabled='true'>
+                                    <option value="">Select site first</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="context">Context:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" id="context" name="context"
+                                        onchange="showContextDesc(this.value)" disabled='true'>
+                                    <option value="">Select site first</option>
+                                </select>
+                                <div id="contextDesc" hidden></div>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="control-label col-sm-2" for="date">Date:</label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="date" id="date"
+                                           value="<?php echo date('Y-m-d'); ?>">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="date-butt">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group" id="newTrench" hidden>
-                                <label class="control-label col-sm-2"></label>
+                        </div>
+							<div class="form-group">
+                                <label class="control-label col-sm-2" for="direction">Direction:</label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="" name="newTrench" id="newTrenchInput" value=""
-                                           required>
+									<select class="form-control" id="direction" name="direction"
+											onchange="">
+										<option value="East">East</option>
+										<option value="West">West</option>
+										<option value="North">North</option>
+										<option value="South">South</option>
+									</select>
+                                   
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="context">Context</label>
-                                <div class="col-sm-3">
-									<input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
-									<?php
-									$find = mysqli_query($connect, "SELECT MAX(ContextID) AS maxContextID FROM Context_Records");
-                                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
-									$num = intval($row["maxContextID"]+1);
-									?>
-									<input type="hidden" class="form-control" name="contextID" id="contextID" value="<?php echo $num?>">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="description">Description</label>
+						
+							 <div class="form-group">
+                                <label class="control-label col-sm-2" for="description">Description:</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" id="description" name="description" required></textarea>
-                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                    <div class="help-block with-errors"></div>
+                                    <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                                 </div>
                             </div>
+                      
 							<div class="form-group">
-                                <label class="control-label col-sm-2" for="interpretation">Interpretation:</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" id="Interpretation" name="Interpretation"></textarea>
-                                </div>
-                            </div>
-
-
-							<div class="form-group">
-
-							<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
-							<div class="col-sm-10">
-								<div class="checkbox">
-									  <label><input type="checkbox" name="cbEast" id="cbEast" onchange=showUploadBox(this.id,"imgsEast")>East</label>
-									  <div id="imgsEast" hidden>
-										<div class="row">
-											<div class="col-sm-4">
-												<input class="form-control" type="file" name="imgsEast[]">
-											</div>
-
-											<label class="control-label col-sm-1" for="date">Date:</label>
-											<div class="col-sm-3">
-												<div class="input-group">
-													<input type="text" class="form-control" name="dateEast" id="dateEast"
-														   value="<?php echo date('Y-m-d'); ?>">
-													<div class="input-group-btn">
-														<button class="btn btn-default" type="button" id="date-butt">
-															<i class="far fa-calendar-alt"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-1">
-												<input class="btn" type=button onclick=moreImage("imgsEast") value ="Add">
-											</div>
+							
+								<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
+								<div class="col-sm-10" id="imgs">
+									<div class="row">
+										<div class="col-sm-4">
+											<input class="form-control" type="file" name="imgs[]">
 										</div>
-									  </div>
-								</div>
-								<div class="checkbox">
-									  <label><input type="checkbox" name="cbWest" id="cbWest" onchange=showUploadBox(this.id,"imgsWest")>West</label>
-									  <div id="imgsWest" hidden>
-									  <div class="row">
-											<div class="col-sm-4">
-												<input class="form-control" type="file" name="imgsWest[]">
-											</div>
-											<div class="col-sm-1">
-												<input class="btn" type=button onclick=moreImage("imgsWest") value ="Add">
-											</div>
-									  </div>
-									  </div>
-								</div>
-								<div class="checkbox">
-									  <label><input type="checkbox" name="cbNorth" id="cbNorth" onchange=showUploadBox(this.id,"imgsNorth")>North</label>
-									  <div id="imgsNorth" hidden>
-									  <div class="row">
-											<div class="col-sm-4">
-												<input class="form-control" type="file" name="imgsNorth[]">
-											</div>
-											<div class="col-sm-1">
-												<input class="btn" type=button onclick=moreImage("imgsNorth") value ="Add">
-											</div>
-									  </div>
-									  </div>
-								</div>
-								<div class="checkbox">
-									  <label><input type="checkbox" name="cbSouth" id="cbSouth" onchange=showUploadBox(this.id,"imgsSouth")>South</label>
-									  <div id="imgsSouth" hidden>
-									  <div class="row">
-											<div class="col-sm-4">
-												<input class="form-control" type="file" name="imgsSouth[]">
-											</div>
-											<div class="col-sm-1">
-												<input class="btn" type=button onclick=moreImage("imgsSouth") value ="Add">
-											</div>
-									  </div>
-									  </div>
+										
+										
+										<div class="col-sm-1">
+											<input class="btn" type=button onclick=moreImage("imgs") value ="Add">
+										</div>
+									</div>
+								
+									
 								</div>
 							</div>
-							</div>
-
-
+							
+                           
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>
+                                    <button type="submit" class="btn btn-success pull-right">Submit</button>
                                 </div>
                                 <div id="addResult">
                                     <?php
