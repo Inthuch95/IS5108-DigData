@@ -48,44 +48,50 @@ if (!$connect) {
         var numSouth = 0;
         var butID = "";
 
+        var num;
         function moreImage(id) {
             console.log("more image box" + id);
             switch (id) {
                 case "imgsEast":
                     butID = "moreImgEast" + numEast;
                     numEast++;
+                    num = numEast;
                     break;
                 case "imgsWest":
                     butID = "moreImgWest" + numWest;
                     numWest++;
+                    num = numWest;
                     break;
                 case "imgsNorth":
                     butID = "moreImgNorth" + numNorth;
                     numNorth++;
+                    num = numNorth;
                     break;
                 case "imgsSouth":
                     butID = "moreImgSouth" + numSouth;
                     numSouth++;
+                    num = numSouth;
                     break;
             }
-            $("#" + id).append('\
-	  <div class="row" >\
-		<div class="col-sm-4">\
-			<input class="form-control" type="file" name="' + id + '[]" >\
-		</div>\
-		<div class="col-sm-1">\
-			<input class="btn" type=button id=' + butID + ' onclick=removeImg("' + butID + '") value ="X">\
-		</div>\
-	  </div>\
-	  ');
-
+            $("#" + id + " .panel-body").append('\
+              <div class="form-group" id="' + butID + '-form">\
+                <label class="control-label col-sm-2" for="">Image ' + (num + 1) + '.</label>\
+                <div class="col-sm-4">\
+                  <input class="form-control" type="file" name="\' + id + \'[]">\
+                </div>\
+                <div class="col-sm-1">\
+                  <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID +'-form") >\
+                    <i class="fas fa-trash-alt"></i>\
+                  </button>\
+                </div>\
+              </div>\
+	        ');
 
         }
 
         function removeImg(id) {
-            console.log("remove" + id);
-            $("#" + id).parent().parent().remove();
-
+            console.log("remove " + id);
+            $("#" + id).remove();
         }
 
         function showUploadBox(thisID, showid) {
@@ -138,7 +144,6 @@ if (!$connect) {
                     <div class="panel-body">
                         <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/insertContext.php"
                               method='post' enctype="multipart/form-data">
-
 
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="location">Location*</label>
@@ -209,170 +214,244 @@ if (!$connect) {
                                 </div>
                             </div>
 
-
                             <div class="form-group">
 
-                                <label class="control-label col-sm-2" for="fileToUpload">Uploaded images</label>
+                                <label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
                                 <div class="col-sm-10">
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="cbEast" id="cbEast"
-                                                      onchange=showUploadBox(this.id,"imgsEast")>East</label>
+                                                      onchange=showUploadBox(this.id,"imgsEast")>East
+                                        </label>
                                         <div id="imgsEast" hidden>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="descriptionEast">Image
-                                                        description:</label>
-                                                    <div class="col-sm-7">
-                                                        <textarea class="form-control" rows="5" id="descriptionEast"
-                                                                  name="descriptionEast"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" type="file" name="imgsEast[]">
-                                                </div>
-                                                <label class="control-label col-sm-1" for="date">Date:</label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="dateEast"
-                                                               id="dateEast"
-                                                               value="<?php echo date('Y-m-d'); ?>">
-                                                        <div class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"
-                                                                    id="date-butt">
-                                                                <i class="far fa-calendar-alt"></i>
-                                                            </button>
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="descriptionEast">Description</label>
+                                                                <div class="col-sm-7">
+                                                                        <textarea class="form-control" rows="5"
+                                                                                  id="descriptionEast"
+                                                                                  name="descriptionEast"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="date">Date</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               name="dateEast"
+                                                                               id="dateEast"
+                                                                               value="<?php echo date('Y-m-d'); ?>">
+                                                                        <div class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    type="button"
+                                                                                    id="dateEast-butt">
+                                                                                <i class="far fa-calendar-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="">Image 1.</label>
+                                                                <div class="col-sm-4">
+                                                                    <input class="form-control" type="file"
+                                                                           name="imgsEast[]">
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-success pull-right"
+                                                                            onclick=moreImage("imgsEast")>
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <input class="btn" type=button onclick=moreImage("imgsEast")
-                                                           value="Add">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="cbWest" id="cbWest"
-                                                      onchange=showUploadBox(this.id,"imgsWest")>West</label>
+                                                      onchange=showUploadBox(this.id,"imgsWest")>West
+                                        </label>
                                         <div id="imgsWest" hidden>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="descriptionWest">Image
-                                                        description:</label>
-                                                    <div class="col-sm-7">
-                                                        <textarea class="form-control" rows="5" id="descriptionWest"
-                                                                  name="descriptionWest"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" type="file" name="imgsWest[]">
-                                                </div>
-                                                <label class="control-label col-sm-1" for="date">Date:</label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="dateWest"
-                                                               id="dateWest"
-                                                               value="<?php echo date('Y-m-d'); ?>">
-                                                        <div class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"
-                                                                    id="date-butt">
-                                                                <i class="far fa-calendar-alt"></i>
-                                                            </button>
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="descriptionWest">Description</label>
+                                                                <div class="col-sm-7">
+                                                                        <textarea class="form-control" rows="5"
+                                                                                  id="descriptionWest"
+                                                                                  name="descriptionWest"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="date">Date</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               name="dateWest"
+                                                                               id="dateWest"
+                                                                               value="<?php echo date('Y-m-d'); ?>">
+                                                                        <div class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    type="button"
+                                                                                    id="dateWest-butt">
+                                                                                <i class="far fa-calendar-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="">Image 1.</label>
+                                                                <div class="col-sm-4">
+                                                                    <input class="form-control" type="file"
+                                                                           name="imgsWest[]">
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-success pull-right"
+                                                                            onclick=moreImage("imgsWest")>
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <input class="btn" type=button onclick=moreImage("imgsWest")
-                                                           value="Add">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="cbNorth" id="cbNorth"
-                                                      onchange=showUploadBox(this.id,"imgsNorth")>North</label>
+                                                      onchange=showUploadBox(this.id,"imgsNorth")>North
+                                        </label>
                                         <div id="imgsNorth" hidden>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="descriptionNorth">Image
-                                                        description:</label>
-                                                    <div class="col-sm-7">
-                                                        <textarea class="form-control" rows="5" id="descriptionNorth"
-                                                                  name="descriptionNorth"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" type="file" name="imgsNorth[]">
-                                                </div>
-                                                <label class="control-label col-sm-1" for="date">Date:</label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="dateNorth"
-                                                               id="dateNorth"
-                                                               value="<?php echo date('Y-m-d'); ?>">
-                                                        <div class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"
-                                                                    id="date-butt">
-                                                                <i class="far fa-calendar-alt"></i>
-                                                            </button>
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="descriptionNorth">Description</label>
+                                                                <div class="col-sm-7">
+                                                                        <textarea class="form-control" rows="5"
+                                                                                  id="descriptionNorth"
+                                                                                  name="descriptionNorth"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="date">Date</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               name="dateNorth"
+                                                                               id="dateNorth"
+                                                                               value="<?php echo date('Y-m-d'); ?>">
+                                                                        <div class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    type="button"
+                                                                                    id="dateNorth-butt">
+                                                                                <i class="far fa-calendar-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="">Image 1.</label>
+                                                                <div class="col-sm-4">
+                                                                    <input class="form-control" type="file"
+                                                                           name="imgsNorth[]">
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-success pull-right"
+                                                                            onclick=moreImage("imgsNorth")>
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <input class="btn" type=button onclick=moreImage("imgsNorth")
-                                                           value="Add">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="cbSouth" id="cbSouth"
-                                                      onchange=showUploadBox(this.id,"imgsSouth")>South</label>
+                                                      onchange=showUploadBox(this.id,"imgsSouth")>South
+                                        </label>
                                         <div id="imgsSouth" hidden>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="descriptionSouth">Image
-                                                        description:</label>
-                                                    <div class="col-sm-7">
-                                                        <textarea class="form-control" rows="5" id="descriptionSouth"
-                                                                  name="descriptionSouth"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" type="file" name="imgsSouth[]">
-                                                </div>
-                                                <label class="control-label col-sm-1" for="date">Date:</label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="dateSouth"
-                                                               id="dateSouth"
-                                                               value="<?php echo date('Y-m-d'); ?>">
-                                                        <div class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"
-                                                                    id="date-butt">
-                                                                <i class="far fa-calendar-alt"></i>
-                                                            </button>
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="descriptionSouth">Description</label>
+                                                                <div class="col-sm-7">
+                                                                        <textarea class="form-control" rows="5"
+                                                                                  id="descriptionSouth"
+                                                                                  name="descriptionSouth"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="date">Date</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               name="dateSouth"
+                                                                               id="dateSouth"
+                                                                               value="<?php echo date('Y-m-d'); ?>">
+                                                                        <div class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    type="button"
+                                                                                    id="dateSouth-butt">
+                                                                                <i class="far fa-calendar-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2"
+                                                                       for="">Image 1.</label>
+                                                                <div class="col-sm-4">
+                                                                    <input class="form-control" type="file"
+                                                                           name="imgsSouth[]">
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-success pull-right"
+                                                                            onclick=moreImage("imgsSouth")>
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <input class="btn" type=button onclick=moreImage("imgsSouth")
-                                                           value="Add">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
@@ -413,3 +492,40 @@ if (!$connect) {
 
 </body>
 </html>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#dateEast').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0
+        });
+        $("#dateEast-butt").click(function () {
+            $('#dateEast').datepicker("show");
+        });
+
+        $('#dateWest').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0
+        });
+        $("#dateWest-butt").click(function () {
+            $('#dateWest').datepicker("show");
+        });
+
+        $('#dateNorth').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0
+        });
+        $("#dateNorth-butt").click(function () {
+            $('#dateNorth').datepicker("show");
+        });
+
+        $('#dateSouth').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0
+        });
+        $("#dateSouth-butt").click(function () {
+            $('#dateSouth').datepicker("show");
+        });
+    });
+</script>
