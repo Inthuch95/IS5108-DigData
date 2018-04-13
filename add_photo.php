@@ -41,22 +41,31 @@ if (!$connect) {
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
     <script>
+	var numPic = 0;
     function moreImage(id){
-      console.log("more image box"+id);
-      $("#"+id).append('\
-	  <div class="row">\
+		butID = "moreImg" + numPic;
+		numPic++;
+		console.log("more image box"+id);
+		$("#"+id).append('\
+		<div class="row">\
 		<div class="col-sm-4">\
 			<input class="form-control" type="file" name="'+id+'[]" >\
 		</div>\
 		<div class="col-sm-1">\
-			<input class="btn" type=button  value ="X">\
+			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
 		</div>\
-	  </div>\
-	  ') ;
+		</div>\
+		') ;
     }
 
+	function removeImg(id){
+		console.log("remove"+id);
+		$("#"+id).parent().parent().remove();
+
+	}
+
 	function showUploadBox(thisID,showid){
-		
+
 		if($("#"+thisID).is(":checked")){
 			$("#"+showid).show();
 		}
@@ -165,37 +174,37 @@ if (!$connect) {
 										<option value="North">North</option>
 										<option value="South">South</option>
 									</select>
-                                   
+
                                 </div>
                             </div>
-						
+
 							 <div class="form-group">
                                 <label class="control-label col-sm-2" for="description">Description:</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                                 </div>
                             </div>
-                      
+
 							<div class="form-group">
-							
+
 								<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
 								<div class="col-sm-10" id="imgs">
 									<div class="row">
 										<div class="col-sm-4">
 											<input class="form-control" type="file" name="imgs[]">
 										</div>
-										
-										
+
+
 										<div class="col-sm-1">
 											<input class="btn" type=button onclick=moreImage("imgs") value ="Add">
 										</div>
 									</div>
-								
-									
+
+
 								</div>
 							</div>
-							
-                           
+
+
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">

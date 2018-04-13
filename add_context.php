@@ -42,19 +42,50 @@ if (!$connect) {
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
     <script>
+    var numEast = 0;
+	var numWest = 0;
+	var numNorth = 0;
+	var numSouth = 0;
+	var butID = "";
     function moreImage(id){
       console.log("more image box"+id);
+	   switch(id) {
+		case "imgsEast":
+		    butID = "moreImgEast" + numEast;
+			numEast++;
+			break;
+		case "imgsWest":
+			butID = "moreImgWest" + numWest;
+			numWest++;
+			break;
+		case "imgsNorth":
+			butID = "moreImgNorth" + numNorth;
+			numNorth++;
+			break;
+		case "imgsSouth":
+			butID = "moreImgSouth" + numSouth;
+			numSouth++;
+			break;
+	   }
       $("#"+id).append('\
-	  <div class="row">\
+	  <div class="row" >\
 		<div class="col-sm-4">\
 			<input class="form-control" type="file" name="'+id+'[]" >\
 		</div>\
 		<div class="col-sm-1">\
-			<input class="btn" type=button  value ="X">\
+			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
 		</div>\
 	  </div>\
 	  ') ;
-    }
+
+
+	}
+
+	function removeImg(id){
+		console.log("remove"+id);
+		$("#"+id).parent().parent().remove();
+
+	}
 
 	function showUploadBox(thisID,showid){
 
@@ -168,7 +199,9 @@ if (!$connect) {
 							<div class="form-group">
                                 <label class="control-label col-sm-2" for="interpretation">Interpretation:</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" id="Interpretation" name="Interpretation"></textarea>
+                                    <input class="form-control" id="Interpretation" name="Interpretation" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
                                 </div>
                             </div>
 
@@ -177,9 +210,17 @@ if (!$connect) {
 
 							<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
 							<div class="col-sm-10">
-								<div class="checkbox">
+                <div class="checkbox">
 									  <label><input type="checkbox" name="cbEast" id="cbEast" onchange=showUploadBox(this.id,"imgsEast")>East</label>
 									  <div id="imgsEast" hidden>
+									    <div class="row">
+											<div class="form-group">
+												<label class="control-label col-sm-2" for="descriptionEast">Image description:</label>
+												<div class="col-sm-7">
+													<textarea class="form-control" rows="5" id="descriptionEast" name="descriptionEast"></textarea>
+												</div>
+											</div>
+										</div>
 										<div class="row">
 											<div class="col-sm-4">
 												<input class="form-control" type="file" name="imgsEast[]">
@@ -207,8 +248,28 @@ if (!$connect) {
 									  <label><input type="checkbox" name="cbWest" id="cbWest" onchange=showUploadBox(this.id,"imgsWest")>West</label>
 									  <div id="imgsWest" hidden>
 									  <div class="row">
+											<div class="form-group">
+												<label class="control-label col-sm-2" for="descriptionWest">Image description:</label>
+												<div class="col-sm-7">
+													<textarea class="form-control" rows="5" id="descriptionWest" name="descriptionWest"></textarea>
+												</div>
+											</div>
+									 </div>
+									  <div class="row">
 											<div class="col-sm-4">
 												<input class="form-control" type="file" name="imgsWest[]">
+											</div>
+											<label class="control-label col-sm-1" for="date">Date:</label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<input type="text" class="form-control" name="dateWest" id="dateWest"
+														   value="<?php echo date('Y-m-d'); ?>">
+													<div class="input-group-btn">
+														<button class="btn btn-default" type="button" id="date-butt">
+															<i class="far fa-calendar-alt"></i>
+														</button>
+													</div>
+												</div>
 											</div>
 											<div class="col-sm-1">
 												<input class="btn" type=button onclick=moreImage("imgsWest") value ="Add">
@@ -220,8 +281,28 @@ if (!$connect) {
 									  <label><input type="checkbox" name="cbNorth" id="cbNorth" onchange=showUploadBox(this.id,"imgsNorth")>North</label>
 									  <div id="imgsNorth" hidden>
 									  <div class="row">
+											<div class="form-group">
+												<label class="control-label col-sm-2" for="descriptionNorth">Image description:</label>
+												<div class="col-sm-7">
+													<textarea class="form-control" rows="5" id="descriptionNorth" name="descriptionNorth"></textarea>
+												</div>
+											</div>
+									  </div>
+									  <div class="row">
 											<div class="col-sm-4">
 												<input class="form-control" type="file" name="imgsNorth[]">
+											</div>
+											<label class="control-label col-sm-1" for="date">Date:</label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<input type="text" class="form-control" name="dateNorth" id="dateNorth"
+														   value="<?php echo date('Y-m-d'); ?>">
+													<div class="input-group-btn">
+														<button class="btn btn-default" type="button" id="date-butt">
+															<i class="far fa-calendar-alt"></i>
+														</button>
+													</div>
+												</div>
 											</div>
 											<div class="col-sm-1">
 												<input class="btn" type=button onclick=moreImage("imgsNorth") value ="Add">
@@ -233,8 +314,28 @@ if (!$connect) {
 									  <label><input type="checkbox" name="cbSouth" id="cbSouth" onchange=showUploadBox(this.id,"imgsSouth")>South</label>
 									  <div id="imgsSouth" hidden>
 									  <div class="row">
+											<div class="form-group">
+												<label class="control-label col-sm-2" for="descriptionSouth">Image description:</label>
+												<div class="col-sm-7">
+													<textarea class="form-control" rows="5" id="descriptionSouth" name="descriptionSouth"></textarea>
+												</div>
+											</div>
+									  </div>
+									  <div class="row">
 											<div class="col-sm-4">
 												<input class="form-control" type="file" name="imgsSouth[]">
+											</div>
+											<label class="control-label col-sm-1" for="date">Date:</label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<input type="text" class="form-control" name="dateSouth" id="dateSouth"
+														   value="<?php echo date('Y-m-d'); ?>">
+													<div class="input-group-btn">
+														<button class="btn btn-default" type="button" id="date-butt">
+															<i class="far fa-calendar-alt"></i>
+														</button>
+													</div>
+												</div>
 											</div>
 											<div class="col-sm-1">
 												<input class="btn" type=button onclick=moreImage("imgsSouth") value ="Add">

@@ -26,14 +26,14 @@ uploadImg("imgs");
 
 function uploadImg($id){
 	global $photoSetID,$connect;
-	
+
 	insertPhotoSet();
 	echo "<br>PhotoSetID:".$photoSetID."</br>";
 	$target_dir = "../context images/";
 	foreach($_FILES[$id]["name"] as $f => $name){
 		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
 		$path = "/context images/".basename($_FILES[$id]["name"][$f]);
-		
+
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -44,7 +44,7 @@ function uploadImg($id){
 			 echo "<br>".$path."<br>";
 			 echo "File is an image - " . $check["mime"] . ".";
 			 */
-			
+
 			 $uploadOk = 1;
 		 } else {
 			 echo "File is not an image.";
@@ -70,7 +70,7 @@ function uploadImg($id){
 			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
 			$uploadOk = 0;
 		}
-		
+
 		if ($uploadOk == 0) {
 			echo "Sorry, your file was not uploaded.";
 		// if everything is ok, try to upload file
@@ -84,7 +84,7 @@ function uploadImg($id){
 			}
 		}
 
-		
+
 	}
 }
 
@@ -94,34 +94,35 @@ function insertPhotoSet(){
 	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
 	VALUES (NULL, '$site', '$trench', '$description', '$direction', '$addingDate')";
 	echo "<br>".$sql."<br>";
-	
+
 	if ($connect->query($sql) === TRUE) {
+		$_SESSION["addResult"] = "New photoset was added successfully";
 		echo "New photoset created successfully";
-		
+
 	} else {
 		echo "Error: " . $sql . "<br>" . $connect->error;
 	}
-	
-	
-	
+
+
+
 	// Get the latest photosetID
 	$sql = "SELECT MAX(PhotoSetID) AS maxPhotoSetID FROM PhotoSets";
-	
+
 	$find = mysqli_query($connect,$sql);
-	
+
 	$row=mysqli_fetch_array($find,MYSQLI_ASSOC);
 	$photoSetID = intval($row["maxPhotoSetID"]);
 	//echo "<br>PhotoSetID:".$photoSetID."</br>";
-	
+
 	$sql = "INSERT INTO `PhotoSet-Context Links` (`LinkID`, `PhotoSetID`, `ContextID`) VALUES (NULL, '$photoSetID', '$contextID')";
 	mysqli_query($connect,$sql);
 	echo "<br>".$sql."<br>";
-	
-	
+
+
 }
 
 
 
 $connect->close();
-#header("Location:../add_photo.php");
+header("Location:../add_photo.php");
 ?>
