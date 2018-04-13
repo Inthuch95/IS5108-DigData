@@ -140,7 +140,7 @@ if (!$connect) {
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="location">Location</label>
+                                <label class="control-label col-sm-2" for="location">Location*</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
                                             onchange="showTrench_AddContext(this.value)" required>
@@ -157,7 +157,7 @@ if (!$connect) {
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="trench">Trench</label>
+                                <label class="control-label col-sm-2" for="trench">Trench*</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="trench" name="trench"
                                             onchange="showNewTrench_Addcontext(this.value)" disabled required>
@@ -175,7 +175,7 @@ if (!$connect) {
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="context">Context</label>
+                                <label class="control-label col-sm-2" for="context">Context*</label>
                                 <div class="col-sm-3">
 									<input class="form-control" name="contextNum" id="context" value="Select site first" readonly>
 									<?php
@@ -189,15 +189,15 @@ if (!$connect) {
 
 
                             <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="description">Description</label>
+                                <label class="control-label col-sm-2" for="description">Description*</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" rows="5" id="description" name="description" required></textarea>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
-							<div class="form-group">
-                                <label class="control-label col-sm-2" for="interpretation">Interpretation:</label>
+							                  <div class="form-group has-feedback">
+                                <label class="control-label col-sm-2" for="interpretation">Interpretation*</label>
                                 <div class="col-sm-4">
                                     <input class="form-control" id="Interpretation" name="Interpretation" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -208,7 +208,7 @@ if (!$connect) {
 
 							<div class="form-group">
 
-							<label class="control-label col-sm-2" for="fileToUpload">Select images:</label>
+							<label class="control-label col-sm-2" for="fileToUpload">Uploaded images</label>
 							<div class="col-sm-10">
                 <div class="checkbox">
 									  <label><input type="checkbox" name="cbEast" id="cbEast" onchange=showUploadBox(this.id,"imgsEast")>East</label>
