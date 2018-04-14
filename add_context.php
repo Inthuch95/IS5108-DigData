@@ -77,7 +77,7 @@ if (!$connect) {
               <div class="form-group" id="' + butID + '-form">\
                 <label class="control-label col-sm-2" for="">Image ' + (num + 1) + '.</label>\
                 <div class="col-sm-4">\
-                  <input class="form-control" type="file" name="\' + id + \'[]">\
+                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="\' + id + \'[]">\
                 </div>\
                 <div class="col-sm-1">\
                   <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID +'-form") >\
@@ -94,6 +94,12 @@ if (!$connect) {
             $("#" + id).remove();
         }
 
+		function checkSize(input){
+			if(input.files[0].size>8388608){
+				input.value="";
+				alert('This file is too large');
+			}
+		}
         function showUploadBox(thisID, showid) {
 
             if ($("#" + thisID).is(":checked")) {
@@ -259,7 +265,7 @@ if (!$connect) {
                                                                 <label class="control-label col-sm-2"
                                                                        for="">Image 1.</label>
                                                                 <div class="col-sm-4">
-                                                                    <input class="form-control" type="file"
+                                                                    <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file"
                                                                            name="imgsEast[]">
                                                                 </div>
                                                                 <div class="col-sm-1">
@@ -317,7 +323,7 @@ if (!$connect) {
                                                                 <label class="control-label col-sm-2"
                                                                        for="">Image 1.</label>
                                                                 <div class="col-sm-4">
-                                                                    <input class="form-control" type="file"
+                                                                    <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file"
                                                                            name="imgsWest[]">
                                                                 </div>
                                                                 <div class="col-sm-1">
@@ -375,7 +381,7 @@ if (!$connect) {
                                                                 <label class="control-label col-sm-2"
                                                                        for="">Image 1.</label>
                                                                 <div class="col-sm-4">
-                                                                    <input class="form-control" type="file"
+                                                                    <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file"
                                                                            name="imgsNorth[]">
                                                                 </div>
                                                                 <div class="col-sm-1">
@@ -433,7 +439,7 @@ if (!$connect) {
                                                                 <label class="control-label col-sm-2"
                                                                        for="">Image 1.</label>
                                                                 <div class="col-sm-4">
-                                                                    <input class="form-control" type="file"
+                                                                    <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file"
                                                                            name="imgsSouth[]">
                                                                 </div>
                                                                 <div class="col-sm-1">

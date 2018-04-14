@@ -41,6 +41,13 @@ if (!$connect) {
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
     <script>
+	
+	function checkSize(input){
+		if(input.files[0].size>8388608){
+		input.value="";
+		alert('This file is too large');
+		}
+	}
 	var numPic = 0;
     function moreImage(id){
 		butID = "moreImg" + numPic;
@@ -49,7 +56,7 @@ if (!$connect) {
 		$("#"+id).append('\
 		<div class="row">\
 		<div class="col-sm-4">\
-			<input class="form-control" type="file" name="'+id+'[]" >\
+			<input class="form-control" accept="image/*" onchange="checkSize(this)" type="file" name="'+id+'[]" >\
 		</div>\
 		<div class="col-sm-1">\
 			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
@@ -107,7 +114,7 @@ if (!$connect) {
     <?php
     if (isset($_SESSION['admin']) and $_SESSION['admin'] == true) {
         ?>
-        <h2>Add new context</h2>
+        <h2>Add new Photo</h2>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
@@ -120,7 +127,13 @@ if (!$connect) {
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
                                             onchange="showTrench(this.value)">
                                         <option value="">Select a site</option>
-                                       
+                                       <?php
+									   $find = mysqli_query($connect, "SELECT * FROM $tb");
+										$found = mysqli_num_rows($find);
+										while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
+											print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+										}
+										?>
                                     </select>
                                 </div>
                             </div>
@@ -138,18 +151,12 @@ if (!$connect) {
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="context">Context:</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="context" name="contextNum"
+                                <select class="form-control" id="context" name="contextID"
                                         onchange="showContextDesc(this.value)" disabled='true'>
                                     <option value="">Select site first</option>
                                 </select>
                                 <div id="contextDesc" hidden></div>
-								<?php
-                                    $find = mysqli_query($connect, "SELECT MAX(ContextID) AS maxContextID FROM Context_Records");
-                                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
-                                    $num = intval($row["maxContextID"]);
-                                    ?>
-                                <input type="hidden" class="form-control" name="contextID" id="contextID"
-                                           value="<?php echo $num ?>">
+								
                             </div>
                         </div>
 						<div class="form-group">
@@ -193,7 +200,7 @@ if (!$connect) {
 								<div class="col-sm-10" id="imgs">
 									<div class="row">
 										<div class="col-sm-4">
-											<input class="form-control" type="file" name="imgs[]">
+											<input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="imgs[]">
 										</div>
 
 

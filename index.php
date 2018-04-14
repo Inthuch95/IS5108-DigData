@@ -60,11 +60,19 @@ if (!$connect) {
 } else {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode INNER JOIN Users ON Finds.UserID = Users.UserID ORDER BY `Date` DESC ";
+    $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds 
+	INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID 
+	INNER JOIN Site s ON s.SiteCode = cr.SiteCode 
+	INNER JOIN Users ON Finds.UserID = Users.UserID 
+	ORDER BY `Date` DESC ";
+	
+	
+	
     $find = mysqli_query($connect, $sql);
     $found = mysqli_num_rows($find);
     //echo $sql;
     //echo $found;
+	
 }
 
 ?>
@@ -84,8 +92,23 @@ if (!$connect) {
                         <tbody>
                         <tr>
                             <td width="100">
-                                <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
-                                     class="center-block" alt="Cinque Terre">
+							<?php
+							$findID = $row["FindID"];
+							$sql1 = "SELECT * FROM `PhotoSet-Find Links` as link INNER JOIN Photos on link.PhotoSetID = Photos.PhotoSetID WHERE FindID = $findID";
+							$findPics = mysqli_query($connect, $sql1);
+							$numrow = mysqli_num_rows($findPics);
+							if($numrow>0){
+								$pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
+								print '<img src="'.$pic["Directory Path"].'" height="100" width="100"
+								class="center-block" alt="Cinque Terre">';
+							}
+							else{
+								print '<img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
+                                     class="center-block" alt="Cinque Terre">';
+								
+							}
+							?>
+                                
                             </td>
                             <td>
                                 <table class="table table-bordered">

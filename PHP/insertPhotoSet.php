@@ -3,8 +3,8 @@ session_start();
 $site = $_POST["site"];
 $trench = $_POST["trench"];
 
-$contextNum = $_POST["contextNum"];
-//$contextID = $_POST["contextID"];
+//$contextNum = $_POST["contextNum"];
+$contextID = $_POST["contextID"];
 $description = $_POST["description"];
 
 $direction = $_POST["direction"];
@@ -32,7 +32,7 @@ function uploadImg($id){
 	$target_dir = "../context images/";
 	foreach($_FILES[$id]["name"] as $f => $name){
 		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
-		$path = "/context images/".basename($_FILES[$id]["name"][$f]);
+		$path = "context images/".basename($_FILES[$id]["name"][$f]);
 
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -50,14 +50,11 @@ function uploadImg($id){
 			 echo "File is not an image.";
 			 $uploadOk = 0;
 		 }
-		if ($_FILES["fileToUpload"]["size"] > 8388608) {
-			echo "Sorry, your file is too large.";
-			$uploadOk = 0;
-		}
-		else{
-			$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
-			mysqli_query($connect,$sql);
-		}
+		
+		$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
+		mysqli_query($connect,$sql);
+		
+		echo "<br>".$sql."<br>";
 
 		// Check if file already exists
 		if (file_exists($target_file)) {
@@ -90,7 +87,7 @@ function uploadImg($id){
 
 
 function insertPhotoSet(){
-	global $site, $trench,$contextNum, $connect, $description, $direction, $addingDate, $photoSetID;
+	global $site, $trench,$contextID, $connect, $description, $direction, $addingDate, $photoSetID;
 	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
 	VALUES (NULL, '$site', '$trench', '$description', '$direction', '$addingDate')";
 	echo "<br>".$sql."<br>";
@@ -113,11 +110,7 @@ function insertPhotoSet(){
 	$row=mysqli_fetch_array($find,MYSQLI_ASSOC);
 	$photoSetID = intval($row["maxPhotoSetID"]);
 	
-	// Get the contextID
-	$sql = "SELECT ContextID FROM Context_Records where SiteCode=$site and Trench='$trench' and ContextNum=$ContextNum";
-	
-	$row=mysqli_fetch_array($find,MYSQLI_ASSOC);
-	$contextID = intval($row["maxPhotoSetID"]);
+
 	
 	//echo "<br>PhotoSetID:".$photoSetID."</br>";
 	$sql = "INSERT INTO `PhotoSet-Context Links` (`LinkID`, `PhotoSetID`, `ContextID`) VALUES (NULL, '$photoSetID', '$contextID')";

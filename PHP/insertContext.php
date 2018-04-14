@@ -86,7 +86,7 @@ function uploadImg($id){
 	$target_dir = "../context images/";
 	foreach($_FILES[$id]["name"] as $f => $name){
 		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
-		$path = "/context images/".basename($_FILES[$id]["name"][$f]);
+		$path = "context images/".basename($_FILES[$id]["name"][$f]);
 
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));

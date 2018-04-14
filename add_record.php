@@ -42,6 +42,13 @@ if (!$connect) {
             crossorigin="anonymous"></script>
 			
 	<script>
+	
+	function checkSize(input){
+		if(input.files[0].size>8388608){
+		input.value="";
+		alert('This file is too large');
+		}
+	}
 	var numPic = 0;
     function moreImage(id){
 		butID = "moreImg" + numPic;
@@ -50,13 +57,15 @@ if (!$connect) {
 		$("#"+id).append('\
 		<div class="row">\
 		<div class="col-sm-4">\
-			<input class="form-control" type="file" name="'+id+'[]" >\
+			<input class="form-control" accept="image/*" onchange="checkSize(this)" type="file" name="'+id+'[]" >\
 		</div>\
 		<div class="col-sm-1">\
 			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
 		</div>\
 		</div>\
 		') ;
+		
+		
     }
 
 	function removeImg(id){
@@ -109,7 +118,7 @@ if (!$connect) {
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/addRecord.php">
+                    <form class="form-horizontal" data-toggle="validator" method="post" role="form" action="PHP/addRecord.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="finder">Finder</label>
                             <div class="col-sm-3">
@@ -180,7 +189,7 @@ if (!$connect) {
                                     <option value="Metal">Metal</option>
                                     <option value="Wood">Wood</option>
                                     <option value="Baked">Baked clay</option>
-                                    <option value="Rock">Rock</option>
+                                    <option value="Stone">Stone</option>
                                 </select>
                             </div>
                         </div>
@@ -198,7 +207,7 @@ if (!$connect) {
                             <div class="col-sm-10" id="imgs">
 								<div class="row">
 									<div class="col-sm-4">
-										<input class="form-control" type="file" name="imgs[]">
+										<input class="form-control" onchange="checkSize(this)" accept="image/*" type="file" name="imgs[]">
 									</div>
 									<div class="col-sm-1">
 										<input class="btn" type=button onclick=moreImage("imgs") value ="Add">
