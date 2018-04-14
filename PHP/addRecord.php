@@ -111,7 +111,7 @@ function insertPhotoSet(){
 	echo "<br>".$sql."<br>";
 
 	if ($connect->query($sql) === TRUE) {
-		$_SESSION["addResult"] = "New photoset was added successfully";
+		
 		echo "New photoset created successfully";
 
 	} else {
