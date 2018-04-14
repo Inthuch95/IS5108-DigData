@@ -120,12 +120,7 @@ if (!$connect) {
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
                                             onchange="showTrench(this.value)">
                                         <option value="">Select a site</option>
-                                        <?php
-                                        $find = mysqli_query($connect, "SELECT * FROM $tb");
-                                        while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC)) {
-                                            print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
-                                        }
-                                        ?>
+                                       
                                     </select>
                                 </div>
                             </div>
@@ -143,11 +138,18 @@ if (!$connect) {
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="context">Context:</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="context" name="context"
+                                <select class="form-control" id="context" name="contextNum"
                                         onchange="showContextDesc(this.value)" disabled='true'>
                                     <option value="">Select site first</option>
                                 </select>
                                 <div id="contextDesc" hidden></div>
+								<?php
+                                    $find = mysqli_query($connect, "SELECT MAX(ContextID) AS maxContextID FROM Context_Records");
+                                    $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
+                                    $num = intval($row["maxContextID"]);
+                                    ?>
+                                <input type="hidden" class="form-control" name="contextID" id="contextID"
+                                           value="<?php echo $num ?>">
                             </div>
                         </div>
 						<div class="form-group">

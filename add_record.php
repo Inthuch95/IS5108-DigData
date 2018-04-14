@@ -40,6 +40,40 @@ if (!$connect) {
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
+			
+	<script>
+	var numPic = 0;
+    function moreImage(id){
+		butID = "moreImg" + numPic;
+		numPic++;
+		console.log("more image box"+id);
+		$("#"+id).append('\
+		<div class="row">\
+		<div class="col-sm-4">\
+			<input class="form-control" type="file" name="'+id+'[]" >\
+		</div>\
+		<div class="col-sm-1">\
+			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
+		</div>\
+		</div>\
+		') ;
+    }
+
+	function removeImg(id){
+		console.log("remove"+id);
+		$("#"+id).parent().parent().remove();
+
+	}
+
+	function showUploadBox(thisID,showid){
+
+		if($("#"+thisID).is(":checked")){
+			$("#"+showid).show();
+		}
+		else{
+			$("#"+showid).hide();
+		}
+	}</script>
 </head>
 <body>
 
@@ -145,6 +179,7 @@ if (!$connect) {
                                 <select class="form-control" id="type" name="type" required>
                                     <option value="Metal">Metal</option>
                                     <option value="Wood">Wood</option>
+                                    <option value="Baked">Baked clay</option>
                                     <option value="Rock">Rock</option>
                                 </select>
                             </div>
@@ -157,6 +192,21 @@ if (!$connect) {
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
+                            <div class="col-sm-10" id="imgs">
+								<div class="row">
+									<div class="col-sm-4">
+										<input class="form-control" type="file" name="imgs[]">
+									</div>
+									<div class="col-sm-1">
+										<input class="btn" type=button onclick=moreImage("imgs") value ="Add">
+									</div>
+								</div>
+							</div>
+                        </div>
+						
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>
