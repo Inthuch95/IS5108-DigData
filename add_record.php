@@ -152,7 +152,7 @@ if (!$connect) {
                         <div class="form-group has-feedback">
                             <label class="control-label col-sm-2" for="context">Context*</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="context" name="context"
+                                <select class="form-control" id="context" name="contextID"
                                         onchange="showContextDesc(this.value)" disabled='true' required>
                                     <option value="">Select site first</option>
                                 </select>

@@ -3,7 +3,7 @@ session_start();
 $userID=$_GET["user"];
 $siteCode=$_GET["site"];
 $trench=$_GET["trench"];
-$contextID=$_GET["context"];
+$contextID=$_GET["contextID"];
 $date=$_GET["date"];
 $type=$_GET["type"];
 $description=$_GET["description"];
@@ -27,6 +27,8 @@ else
   $query ="INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`)
   VALUES (NULL, '".$userID."', '".$contextID."', '".$description."', '".$type."', '".$date."');";
   mysqli_query($connect,$query);
+  
+  $sql = "SELECT MAX(FindID) AS maxFindID FROM Finds";
   //VALUES (NULL, '".$siteName."', '".$description."');");
 
   $_SESSION["addResult"] =  "A new record was added successfully";
