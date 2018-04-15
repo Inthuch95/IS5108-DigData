@@ -27,12 +27,7 @@ $connect= mysqli_connect($host,$username,$password);
 	if($found){
 		echo '<option value = "">Select context</option>';
 		while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC)) {
-			if (isset($_SESSION['currentContext']) and $_SESSION['currentContext'] == $row["ContextID"]) {
-					echo '<option selected="selected" value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
-					$_SESSION['currentContext'] = "";
-			} else {
-					echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
-			}
+				echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
 		}
 	}
 	else{

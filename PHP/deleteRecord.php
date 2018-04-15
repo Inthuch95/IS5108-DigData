@@ -32,6 +32,5 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
       echo "Error updating record: " . $connect->error;
   }
   $connect->close();
-  header("Location:../index.php");
 }
 ?>

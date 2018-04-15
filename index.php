@@ -60,19 +60,19 @@ if (!$connect) {
 } else {
     mysqli_select_db($connect, $db) or die("Can't select Database");
     //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-    $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds 
-	INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID 
-	INNER JOIN Site s ON s.SiteCode = cr.SiteCode 
-	INNER JOIN Users ON Finds.UserID = Users.UserID 
+    $sql = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds
+	INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID
+	INNER JOIN Site s ON s.SiteCode = cr.SiteCode
+	INNER JOIN Users ON Finds.UserID = Users.UserID
 	ORDER BY `Date` DESC ";
-	
-	
-	
+
+
+
     $find = mysqli_query($connect, $sql);
     $found = mysqli_num_rows($find);
     //echo $sql;
     //echo $found;
-	
+
 }
 
 ?>
@@ -84,8 +84,6 @@ if (!$connect) {
         $i = $i + 1;
 
         //printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
-        <form action="view_record.php" method="get">
-            <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table table-hover table-bordered">
@@ -105,10 +103,10 @@ if (!$connect) {
 							else{
 								print '<img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
                                      class="center-block" alt="Cinque Terre">';
-								
+
 							}
 							?>
-                                
+
                             </td>
                             <td>
                                 <table class="table table-bordered">
@@ -133,17 +131,26 @@ if (!$connect) {
                                 </table>
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <button class="btn btn-warning" type="submit" formaction="edit_record.php"><i
+                                      <form action="edit_record.php" method="get">
+                                        <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                        <button class="btn btn-warning" type="submit"><i
                                                     class="fas fa-edit"></i>&nbsp;Edit
                                         </button>
+                                      </form>
                                     </div>
                                     <div class="col-sm-2 col-sm-offset-3 text-center">
-                                        <button class="btn btn-info" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
-                                        </button>
+                                        <form action="view_record.php" method="get">
+                                          <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                          <button class="btn btn-info" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
+                                          </button>
+                                        </form>
                                     </div>
                                     <div class="col-sm-2 col-sm-offset-3">
-                                        <button class="btn btn-danger pull-right" type="submit" formaction="PHP/deleteRecord.php"><i
+                                      <form action="PHP/deleteRecord.php" method="get" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                        <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                        <button class="btn btn-danger pull-right" type="submit"><i
                                                     class="fas fa-trash-alt"></i>&nbsp;Delete</button>
+                                      </form>
                                     </div>
                                 </div>
                             </td>
@@ -152,7 +159,6 @@ if (!$connect) {
                     </table>
                 </div>
             </div>
-        </form>
     <?php } ?>
 </div>
 </body>
