@@ -117,7 +117,7 @@ if (!$connect) {
 
 <div class="container" style="margin-top:50px">
     <?php
-    if (!(isset($_SESSION['admin']) and $_SESSION['admin'] == true)) {
+    if ((isset($_SESSION['admin']) and $_SESSION['admin'] == true)) {
         ?>
         <h2>Add new Photo</h2>
         <div class="row">
