@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 $_SESSION["currentPage"] = '';
 $username = "is5108group-4";
@@ -92,7 +93,7 @@ if (!$connect) {
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-header">
+        <div class="navbar-header">php
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -107,9 +108,11 @@ if (!$connect) {
                 <li><a href="search.php">Search</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><?php
+                <li>
+                  <?php
                     include 'PHP/LoginButton.php';
-                    ?>
+                  ?>
+                </li>
             </ul>
         </div>
     </div>
@@ -128,14 +131,16 @@ if (!$connect) {
                             <label class="control-label col-sm-2" for="finder">Finder</label>
                             <div class="col-sm-3">
                                 <?php
-                                if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
+                                if (isset($_SESSION['user']) && $_SESSION['user'] != '') {
                                     print '<input class="form-control" type="" value="' . $_SESSION["user"] . '" readonly>';
                                     print '<input class="form-control" type="hidden" name="user" value="' . $_SESSION["UserID"] . '" display="">';
-                                } else {
-                                    $_SESSION['loginerror'] = "You have to login first";
-                                    $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+                                }
+                                else {
 
-                                    header("Location:login.php");
+                                    $_SESSION['loginerror'] = "You have to login first" ;
+                                    $_SESSION['currentPage'] = basename($_SERVER['PHP_SELF']);
+                                    header('Location:login.php');
+
                                 }
                                 ?>
                             </div>
