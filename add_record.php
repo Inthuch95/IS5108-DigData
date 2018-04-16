@@ -254,7 +254,7 @@ if (!$connect) {
                                     }
                                     ?>
                                 </div>
-                            </div>
+                            </div>`
                         </div>
                     </form>
                     <?php
