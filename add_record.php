@@ -56,20 +56,9 @@ if (!$connect) {
             butID = "moreImg" + numPic;
             numPic++;
             console.log("more image box: " + id);
-            //    $("#" + id).append('\
-            // <div class="row">\
-            // <div class="col-sm-4">\
-            // 	<input class="form-control" accept="image/*" onchange="checkSize(this)" type="file" name="' + id + '[]" >\
-            // </div>\
-            // <div class="col-sm-1">\
-            // 	<input class="btn" type=button id=' + butID + ' onclick=removeImg("' + butID + '") value ="X">\
-            // </div>\
-            // </div>\
-            // ');
 
-            $("#" + id + " .panel-body").append('\
-              <div class="form-group" id="' + butID + '-form">\
-                <label class="control-label col-sm-2" for="">Image ' + (numPic + 1) + '.</label>\
+            $('<div class="form-group" id="' + butID + '-form">\
+                <label class="control-label col-sm-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
                 <div class="col-sm-4">\
                   <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="\' + id + \'[]">\
                 </div>\
@@ -79,8 +68,7 @@ if (!$connect) {
                   </button>\
                 </div>\
               </div>\
-	        ');
-
+	        ').insertBefore("#imgs .add-butt-form");
 
         }
 
@@ -229,18 +217,21 @@ if (!$connect) {
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="control-label col-sm-2"
-                                                               for="">Image 1.</label>
+                                                        <label class="control-label col-sm-1"
+                                                               for="" style="padding-top: 2px"><i
+                                                                    class="fas fa-file-image fa-2x"></i></label>
                                                         <div class="col-sm-4">
                                                             <input class="form-control" accept="image/*"
                                                                    onchange="checkSize(this)" type="file"
                                                                    name="imgs[]">
                                                         </div>
-                                                        <div class="col-sm-1">
+                                                    </div>
+                                                    <div class="form-group add-butt-form">
+                                                        <div class="col-sm-offset-1 col-sm-4">
                                                             <button type="button"
-                                                                    class="btn btn-success pull-right"
+                                                                    class="btn btn-success btn-block"
                                                                     onclick=moreImage("imgs")>
-                                                                <i class="fas fa-plus"></i>
+                                                                <i class="fas fa-plus"></i>&nbsp;Another Image
                                                             </button>
                                                         </div>
                                                     </div>
