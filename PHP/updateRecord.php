@@ -3,6 +3,7 @@ session_start();
 $findID = intval($_GET["FindID"]);
 $contextID=$_GET["context"];
 $date=$_GET["date"];
+$lastModified = date("Y-m-d");
 $type=$_GET["type"];
 $description=$_GET["description"];
 $username="is5108group-4";
@@ -16,7 +17,8 @@ $connect = new mysqli($host, $username, $password, $db);
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
-$sql = "UPDATE $tb SET ContextID='".$contextID."', Description='".$description."', Type='".$type."', Date='".$date."' WHERE FindID=$findID";
+$sql = "UPDATE $tb SET ContextID='".$contextID."', Description='".$description."', Type='".$type."', Date='".$date."',
+LastModified='".$lastModified."', ModifiedBy='".$_SESSION['user']."' WHERE FindID=$findID";
 
 if ($connect->query($sql) === TRUE) {
     echo "Record updated successfully";

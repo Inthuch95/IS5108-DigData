@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 
 $username = "is5108group-4";
 $password = "b9iVc.9gS8c7NJ";
@@ -124,9 +125,15 @@ if (!$connect) {
                                         <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
-                                    </tr>
+                                    <?php
+                                    if($row["ModifiedBy"]===NULL){}
+                                    else
+                                    {?>
+                                      <tr>
+                                          <td><strong>Last modified: </strong><?php printf("%s", $row["ModifiedBy"]." ".$row["LastModified"]); ?></td>
+                                      </tr>
+                                    <?php
+                                    }?>
                                     </tbody>
                                 </table>
                                 <div class="row">
