@@ -40,49 +40,53 @@ if (!$connect) {
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
-			
-	<script>
-	
-	function checkSize(input){
-		if(input.files[0].size>8388608){
-		input.value="";
-		alert('This file is too large');
-		}
-	}
-	var numPic = 0;
-    function moreImage(id){
-		butID = "moreImg" + numPic;
-		numPic++;
-		console.log("more image box"+id);
-		$("#"+id).append('\
-		<div class="row">\
-		<div class="col-sm-4">\
-			<input class="form-control" accept="image/*" onchange="checkSize(this)" type="file" name="'+id+'[]" >\
-		</div>\
-		<div class="col-sm-1">\
-			<input class="btn" type=button id='+butID+' onclick=removeImg("'+butID+'") value ="X">\
-		</div>\
-		</div>\
-		') ;
-		
-		
-    }
 
-	function removeImg(id){
-		console.log("remove"+id);
-		$("#"+id).parent().parent().remove();
+    <script>
 
-	}
+        function checkSize(input) {
+            if (input.files[0].size > 8388608) {
+                input.value = "";
+                alert('This file is too large');
+            }
+        }
 
-	function showUploadBox(thisID,showid){
+        var numPic = 0;
 
-		if($("#"+thisID).is(":checked")){
-			$("#"+showid).show();
-		}
-		else{
-			$("#"+showid).hide();
-		}
-	}</script>
+        function moreImage(id) {
+            butID = "moreImg" + numPic;
+            numPic++;
+            console.log("more image box: " + id);
+
+            $('<div class="form-group" id="' + butID + '-form">\
+                <label class="control-label col-sm-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
+                <div class="col-sm-4">\
+                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="\' + id + \'[]">\
+                </div>\
+                <div class="col-sm-1">\
+                  <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID + '-form") >\
+                    <i class="fas fa-trash-alt"></i>\
+                  </button>\
+                </div>\
+              </div>\
+	        ').insertBefore("#imgs .add-butt-form");
+
+        }
+
+        function removeImg(id) {
+            console.log("remove" + id);
+            $("#" + id).remove();
+
+        }
+
+        function showUploadBox(thisID, showid) {
+
+            if ($("#" + thisID).is(":checked")) {
+                $("#" + showid).show();
+            }
+            else {
+                $("#" + showid).hide();
+            }
+        }</script>
 </head>
 <body>
 
@@ -118,7 +122,8 @@ if (!$connect) {
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" data-toggle="validator" method="post" role="form" action="PHP/addRecord.php" enctype="multipart/form-data">
+                    <form class="form-horizontal" data-toggle="validator" method="post" role="form"
+                          action="PHP/addRecord.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="finder">Finder</label>
                             <div class="col-sm-3">
@@ -196,29 +201,52 @@ if (!$connect) {
                         <div class="form-group has-feedback">
                             <label class="control-label col-sm-2" for="description">Description*</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" id="description" name="description" data-error="Please fill in this field" required></textarea>
+                                <textarea class="form-control" rows="5" id="description" name="description"
+                                          data-error="Please fill in this field" required></textarea>
                                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
-						
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
-                            <div class="col-sm-10" id="imgs">
-								<div class="row">
-									<div class="col-sm-4">
-										<input class="form-control" onchange="checkSize(this)" accept="image/*" type="file" name="imgs[]">
-									</div>
-									<div class="col-sm-1">
-										<input class="btn" type=button onclick=moreImage("imgs") value ="Add">
-									</div>
-								</div>
-							</div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
+                            <div class="col-sm-10">
+                                <div id="imgs">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-sm-1"
+                                                               for="" style="padding-top: 2px"><i
+                                                                    class="fas fa-file-image fa-2x"></i></label>
+                                                        <div class="col-sm-4">
+                                                            <input class="form-control" accept="image/*"
+                                                                   onchange="checkSize(this)" type="file"
+                                                                   name="imgs[]">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group add-butt-form">
+                                                        <div class="col-sm-offset-1 col-sm-4">
+                                                            <button type="button"
+                                                                    class="btn btn-success btn-block"
+                                                                    onclick=moreImage("imgs")>
+                                                                <i class="fas fa-plus"></i>&nbsp;Another Image
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-						
+
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>
+                                <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit
+                                </button>
                                 <div id="addResult"><?php
                                     if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
                                         print $_SESSION["addResult"];
@@ -226,7 +254,7 @@ if (!$connect) {
                                     }
                                     ?>
                                 </div>
-                            </div>
+                            </div>`
                         </div>
                     </form>
                     <?php
