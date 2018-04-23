@@ -30,6 +30,9 @@ else
   mysqli_query($connect,$sql);
 
   $sql = "SELECT MAX(FindID) AS maxFindID FROM Finds";
+	$find = mysqli_query($connect, $sql);
+  $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
+	$findID = $row["maxFindID"];
   //VALUES (NULL, '".$siteName."', '".$description."');");
 
   $_SESSION["addResult"] =  "A new record was added successfully";
@@ -42,67 +45,76 @@ else
   //echo $found;
 }
 
+
+
 uploadImg("imgs");
 
+
 function uploadImg($id){
-	global $photoSetID,$connect;
+	global $photoSetID,$connect,$findID;
 
-	insertPhotoSet();
-	echo "<br>PhotoSetID:".$photoSetID."</br>";
-	$target_dir = "../record images/";
-	foreach($_FILES[$id]["name"] as $f => $name){
-		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
-		$path = "record images/".basename($_FILES[$id]["name"][$f]);
+	print_r($_FILES[$id]);
+	if (isset($_FILES[$id]) && $_FILES[$id]['error'] != UPLOAD_ERR_NO_FILE && $_FILES[$id]["name"][0] != '')
+	{
+		insertPhotoSet();
+		echo "<br>PhotoSetID:".$photoSetID."</br>";
+		$target_dir = "../record images/";
 
-		$uploadOK = 1;
-		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		foreach($_FILES[$id]["name"] as $f => $name){
+			$target_file = $target_dir .$findID."_". basename($_FILES[$id]["name"][$f]);
+			$path = "record images/".$findID."_".basename($_FILES[$id]["name"][$f]);
 
-		$check = getimagesize($_FILES[$id]["tmp_name"][$f]);
-		 if($check !== false) {
-			 /*
-			 echo $target_file;
-			 echo "<br>".$path."<br>";
-			 echo "File is an image - " . $check["mime"] . ".";
-			 */
+			$uploadOK = 1;
+			$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-			 $uploadOk = 1;
-		 } else {
-			 echo "File is not an image.";
-			 $uploadOk = 0;
-		 }
+			$check = getimagesize($_FILES[$id]["tmp_name"][$f]);
+			 if($check !== false) {
+				 /*2018-04-23
+				 echo $target_file;
+				 echo "<br>".$path."<br>";
+				 echo "File is an image - " . $check["mime"] . ".";
+				 */
 
-		$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
-		mysqli_query($connect,$sql);
+				 $uploadOk = 1;
+			 } else {
+				 echo "File is not an image.";
+				 $uploadOk = 0;
+			 }
 
+			$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
+			echo $sql;
+			mysqli_query($connect,$sql);
 
-		// Check if file already exists
-		if (file_exists($target_file)) {
-		   echo "Sorry, file already exists.";
-		   $uploadOk = 0;
-		}
-		// Allow certain file formats
-		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-		&& $imageFileType != "gif" ) {
-			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-			$uploadOk = 0;
-		}
-
-		if ($uploadOk == 0) {
-			echo "Sorry, your file was not uploaded.";
-		// if everything is ok, try to upload file
-		} else {
-			if (move_uploaded_file($_FILES[$id]["tmp_name"][$f], $target_file)) {
-				echo "The file ". basename( $_FILES[$id]["name"][$f]). " has been uploaded.";
-				//
-				//INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '1', '/context images/Batman.jpeg');
-			} else {
-				echo "Sorry, there was an error uploading your file.";
+			// Check if file already exists
+			if (file_exists($target_file)) {
+			   echo "Sorry, file already exists.";
+			   $uploadOk = 0;
 			}
+			// Allow certain file formats
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			&& $imageFileType != "gif" ) {
+				echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+				$uploadOk = 0;
+			}
+
+			if ($uploadOk == 0) {
+				echo "Sorry, your file was not uploaded.";
+			// if everything is ok, try to upload file
+			} else {
+				if (move_uploaded_file($_FILES[$id]["tmp_name"][$f], $target_file)) {
+					echo "The file ". basename( $_FILES[$id]["name"][$f]). " has been uploaded.";
+					//
+					//INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '1', '/context images/Batman.jpeg');
+				} else {
+					echo "Sorry, there was an error uploading your file.";
+				}
+			}
+
+
 		}
-
-
+	    // cover_image is empty (and not an error)
 	}
-	 header("Location:../add_record.php");
+	//header("Location:../add_record.php");
 }
 
 function insertPhotoSet(){

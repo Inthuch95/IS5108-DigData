@@ -1,5 +1,13 @@
 <?php
 session_start();
+$sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
+      INNER JOIN `is5108group-4__digdata`.Context_Records cr on find.ContextID = cr.ContextID
+      INNER JOIN `is5108group-4__digdata`.Site s on s.SiteCode = cr.SiteCode
+      where LOWER(find.Name) LIKE '%%'
+      or LOWER(find.Description) LIKE '%%'
+      or LOWER(cr.Description) LIKE '%%'
+      or LOWER(s.SiteName) LIKE '%%'
+      or LOWER(s.Description) LIKE '%%';";
 ?>
 <!DOCTYPE html>
 <html lang="en">

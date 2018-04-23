@@ -28,31 +28,33 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
 
   $sql = "SELECT * FROM  $photos_tb  WHERE PhotoSetID=$photoSetID";
   $photosQuery = $connect->query($sql);
-  while($row = $photosQuery->fetch_assoc()) {
-    echo unlink("../".$row["Directory Path"]);
-  }
+  if($photosQuery -> num_rows >0){
+    while($row = $photosQuery->fetch_assoc()) {
+      echo unlink("../".$row["Directory Path"]);
+    }
 
-  $sql = "DELETE FROM `$photo_link_tb` WHERE FindID=$findID";
-  if ($connect->query($sql) === TRUE) {
-      echo "Record updated successfully";
-  } else {
-      echo "Error updating record: " . $connect->error;
-  }
 
-  $sql = "DELETE FROM $photos_tb WHERE PhotoSetID=$photoSetID";
-  if ($connect->query($sql) === TRUE) {
-      echo "Record updated successfully";
-  } else {
-      echo "Error updating record: " . $connect->error;
-  }
+    $sql = "DELETE FROM `$photo_link_tb` WHERE FindID=$findID";
+    if ($connect->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $connect->error;
+    }
 
-  $sql = "DELETE FROM $photo_sets_tb WHERE PhotoSetID=$photoSetID";
-  if ($connect->query($sql) === TRUE) {
-      echo "Record updated successfully";
-  } else {
-      echo "Error updating record: " . $connect->error;
-  }
+    $sql = "DELETE FROM $photos_tb WHERE PhotoSetID=$photoSetID";
+    if ($connect->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $connect->error;
+    }
 
+    $sql = "DELETE FROM $photo_sets_tb WHERE PhotoSetID=$photoSetID";
+    if ($connect->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $connect->error;
+    }
+  }
   $sql = "DELETE FROM $finds_tb WHERE FindID=$findID";
   if ($connect->query($sql) === TRUE) {
       echo "Record updated successfully";
@@ -63,7 +65,8 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
   $prevPage = $_SESSION["currentPage"];
   $_SESSION["currentPage"] ="";
   header("Location:../".$prevPage);
-} else {
+}
+  else {
   $_SESSION["currentID"] = intval($_GET["id"]);
   $_SESSION['loginerror'] = "You have to login first";
   $_SESSION["currentPage"] = "index.php";

@@ -20,7 +20,10 @@ if (!$connect) {
     $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
     //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
     //echo $found;
+    $findId = $row["FindID"];
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,14 +91,20 @@ if (!$connect) {
                                 <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
-                            </tr>
+                            <?php
+                            if($row["ModifiedBy"]===NULL){}
+                            else
+                            {?>
+                              <tr>
+                                  <td><strong>Last modified: </strong><?php printf("%s", $row["ModifiedBy"]." ".$row["LastModified"]); ?></td>
+                              </tr>
+                            <?php
+                            }?>
                             <tr>
                                 <td><strong>Photo Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                 </td>
                             </tr>
-                            </tbody>
+                          </tbody>Lorem ipsum donec id elit non mi porta gravida at eget metus.
                         </table>
                     </td>
                 </tr>
@@ -103,41 +112,28 @@ if (!$connect) {
             </table>
 
             <div class="row">
-                <div class="col-sm-6 col-md-2">
-                    <div class="thumbnail">
-                        <a href="#" class="pop">
-                            <img src="https://png.icons8.com/metro/1600/batman-new.png" height="200" width="200">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-2">
-                    <div class="thumbnail">
-                        <a href="#" class="pop">
-                            <img src="https://png.icons8.com/metro/1600/batman-new.png" height="200" width="200">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-2">
-                    <div class="thumbnail">
-                        <a href="#" class="pop">
-                            <img src="https://png.icons8.com/metro/1600/batman-new.png" height="200" width="200">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-2">
-                    <div class="thumbnail">
-                        <a href="#" class="pop">
-                            <img src="https://png.icons8.com/metro/1600/batman-new.png" height="200" width="200">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-2">
-                    <div class="thumbnail">
-                        <a href="#" class="pop">
-                            <img src="https://png.icons8.com/metro/1600/batman-new.png" height="200" width="200">
-                        </a>
-                    </div>
-                </div>
+              <?php
+              $sql = "SELECT * FROM `PhotoSet-Find Links` as link
+              INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+              INNER JOIN Photos ph on ph.PhotoSetID = ps.PhotoSetID
+              where FindID = $findId;";
+
+              $find2 = mysqli_query($connect, $sql);
+              while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+                print '  <div class="col-sm-6 col-md-2">
+                      <div class="thumbnail">
+                          <a href="#" class="pop">
+                              <img src="'.$row2['Directory Path'].'" height="200" width="200">
+                          </a>
+                      </div>
+                  </div>';
+
+              }
+
+
+              ?>
+
+
             </div>
 
             <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
