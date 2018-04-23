@@ -114,13 +114,13 @@ function uploadImg($id){
 		}
 	    // cover_image is empty (and not an error)
 	}
-	//header("Location:../add_record.php");
+	header("Location:../add_record.php");
 }
 
 function insertPhotoSet(){
-	global $site, $trench,$contextID, $connect, $direction, $date, $photoSetID;
+	global $site, $trench,$contextID, $connect, $direction, $date, $photoSetID, $FindID;
 	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
-	VALUES (NULL, '$site', '$trench', '', '', '$date')";
+	VALUES (NULL, '$site', '$trench', 'This photo set belongs to FindID:$FindID', '', '$date')";
 	echo "<br>".$sql."<br>";
 
 	if ($connect->query($sql) === TRUE) {

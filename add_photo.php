@@ -59,7 +59,7 @@ if (!$connect) {
             $('<div class="form-group" id="' + butID + '-form">\
                 <label class="control-label col-sm-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
                 <div class="col-sm-4">\
-                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="\' + id + \'[]">\
+                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
                 </div>\
                 <div class="col-sm-1">\
                   <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID + '-form") >\

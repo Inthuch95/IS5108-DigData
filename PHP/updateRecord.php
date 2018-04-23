@@ -5,6 +5,7 @@ $contextID=$_GET["context"];
 $date=$_GET["date"];
 $lastModified = date("Y-m-d");
 $type=$_GET["type"];
+$name = $_GET["name"];
 $description=$_GET["description"];
 $username="is5108group-4";
 $password="b9iVc.9gS8c7NJ";
@@ -17,10 +18,15 @@ $connect = new mysqli($host, $username, $password, $db);
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
-$sql = "UPDATE $tb SET ContextID='".$contextID."', Description='".$description."', Type='".$type."', Date='".$date."',
-LastModified='".$lastModified."', ModifiedBy='".$_SESSION['user']."' WHERE FindID=$findID";
 
-if ($connect->query($sql) === TRUE) {
+$sql = "UPDATE $tb SET ContextID=?, Description=?, Type=?, Date=?, Name=?, LastModified=?, ModifiedBy=? WHERE FindID=$findID";
+
+$stmt = $connect->prepare($sql);  //prepares the query for action
+$stmt->bind_param("issssss", $contextID, $description, $type, $date, $name, $lastModified, $_SESSION['user']);    
+
+
+
+if ($stmt->execute() === TRUE) {
     echo "Record updated successfully";
 } else {
     echo "Error updating record: " . $connect->error;

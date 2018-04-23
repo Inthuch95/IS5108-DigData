@@ -79,14 +79,14 @@ if(isset($cbSouth)&&$cbSouth=="on"){
 
 
 function uploadImg($id){
-	global $photoSetID,$connect;
+	global $photoSetID,$connect,$contextID;
 
 	insertPhotoSet();
 	echo "<br>PhotoSetID:".$photoSetID."</br>";
 	$target_dir = "../context images/";
 	foreach($_FILES[$id]["name"] as $f => $name){
-		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
-		$path = "context images/".basename($_FILES[$id]["name"][$f]);
+		$target_file = $target_dir .$contextID."_". basename($_FILES[$id]["name"][$f]);
+		$path = "context images/".$contextID."_".basename($_FILES[$id]["name"][$f]);
 
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -146,11 +146,18 @@ function uploadImg($id){
 
 function insertPhotoSet(){
 	global $site, $contextID, $trench, $connect, $direction, $addingDate, $photoSetID;
-	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
-	VALUES (NULL, '$site', '$trench', '$imgDesc', '$direction', '$addingDate')";
+	
+	
+	
+	$sql = "INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
+	VALUES (NULL, ?, ?, ?, ?, ?)";
 	echo "<br>".$sql."<br>";
 
-	if ($connect->query($sql) === TRUE) {
+	$stmt = $connect->prepare($sql);  //prepares the query for action
+	$stmt->bind_param("issss", $site, $trench, $imgDesc, $direction, $addingDate);    
+	
+
+	if ($stmt->execute() === TRUE) {
 		echo "New photoset created successfully";
 
 	} else {
@@ -177,10 +184,16 @@ function insertPhotoSet(){
 
 function insertContext(){
 	global $site, $contextNum, $trench, $connect, $description, $interpretation;
+	
+	
 	$sql = "INSERT INTO `is5108group-4__digdata`.Context_Records (`ContextID`, `SiteCode`, `Trench`, `ContextNum`, `Description`, `Interpretation`)
-	VALUES (NULL,$site,'$trench',$contextNum,'$description', '$interpretation')";
+	VALUES (NULL, ?, ?, ?, ?, ?)";
+
+	$stmt = $connect->prepare($sql);  //prepares the query for action
+	$stmt->bind_param("isiss", $site,$trench,$contextNum,$description, $interpretation);  
+	
 	echo $sql;
-	if ($connect->query($sql) === TRUE) {
+	if ($stmt->execute() === TRUE) {
 		echo "New record created successfully";
 		$_SESSION["addResult"] =  "A new context was added successfully";
 	} else {

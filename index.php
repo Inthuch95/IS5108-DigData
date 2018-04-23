@@ -113,7 +113,7 @@ if (!$connect) {
                                 <table class="table table-bordered">
                                     <tbody>
                                     <tr>
-                                        <td><strong>ID: </strong><?php printf("%s", $row["FindID"]) ?></td>
+                                        <td><strong>Name: </strong><?php printf("%s", $row["Name"]) ?></td>
                                     </tr>
                                     <tr>
                                         <td>

@@ -117,6 +117,13 @@ $context =  $connect->query($contextSQL);
                                 ?>
                             </div>
                         </div>
+						
+						 <div class="form-group">
+                            <label class="control-label col-sm-2" for="finder">Artifact name:</label>
+                            <div class="col-sm-3">
+                               <input class="form-control" name="name" value="<?php echo $currentRecord['Name']?>">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="location">Location:</label>
                             <div class="col-sm-3">

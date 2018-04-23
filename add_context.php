@@ -76,7 +76,7 @@ if (!$connect) {
             $('<div class="form-group" id="' + butID + '-form">\
                 <label class="control-label col-sm-2" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
                 <div class="col-sm-4">\
-                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="\' + id + \'[]">\
+                  <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
                 </div>\
                 <div class="col-sm-1">\
                   <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID +'-form") >\
@@ -181,7 +181,7 @@ if (!$connect) {
                                 <label class="control-label col-sm-2"></label>
                                 <div class="col-sm-3">
                                     <input class="form-control" type="" name="newTrench" id="newTrenchInput" value=""
-                                           required>
+                                           >
                                 </div>
                             </div>
 
@@ -213,7 +213,7 @@ if (!$connect) {
                             <div class="form-group has-feedback">
                                 <label class="control-label col-sm-2" for="interpretation">Interpretation*</label>
                                 <div class="col-sm-3">
-                                    <input class="form-control" id="Interpretation" name="Interpretation" required>
+                                    <input class="form-control" id="Interpretation" name="interpretation" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors"></div>
                                 </div>
