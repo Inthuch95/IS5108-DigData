@@ -146,6 +146,15 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
+                            <label class="control-label col-sm-2" for="finder">Artifact name*</label>
+                            <div class="col-sm-3">
+                              <input class="form-control" name="name" required>
+                              <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
                             <label class="control-label col-sm-2" for="location">Location*</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="location" placeholder="Select location" name="site"
