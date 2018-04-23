@@ -68,7 +68,7 @@ if (!$connect) {
 </nav>
 
 <div class="container" style="margin-top:50px">
-    <h2>Find Name</h2>
+    <h2>Artifact: <?php printf("%s", $row["Name"]) ?></h2>
     <div class="row">
         <div class="col-sm-12">
             <table class="table table-bordered">
@@ -82,8 +82,12 @@ if (!$connect) {
                             </tr>
                             <tr>
                                 <td>
-                                    
-                                    <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
+                                    <?php
+									$sql = "SELECT * FROM Users WHERE UserID = ".$row['UserID'];
+									$find2 = $connect->query($sql);
+									$row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC);
+									?>
+                                    <strong>Founder: </strong><?php printf("%s", $row2["First Name"]); ?>
                                     <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                 </td>
                             </tr>
@@ -100,10 +104,7 @@ if (!$connect) {
                               </tr>
                             <?php
                             }?>
-                            <tr>
-                                <td><strong>Photo Description: </strong> ##############
-                                </td>
-                            </tr>
+                         
                           </tbody>Lorem ipsum donec id elit non mi porta gravida at eget metus.
                         </table>
                     </td>
@@ -155,7 +156,7 @@ if (!$connect) {
                     <td>
                         <table class="table table-bordered noBottomMargin">
                             <tbody>
-                            <tr>
+                            <tr hidden>
                                 <td><strong class="text-danger">CONTEXT ID: </strong><?php printf("%s", $row["ContextID"]) ?></td>
                             </tr>
                             <tr>
@@ -169,97 +170,217 @@ if (!$connect) {
                             </tr>
                             
                             <tr>
-                                <td><strong>Photo Description: </strong><?php printf("%s", $row["FDESC"]) ?>
+                                <td><strong>Interpretation: </strong><?php printf("%s", $row["Interpretation"]) ?>
                                 </td>
                             </tr>
                             <tr>
+							
                                 <td>
                                     <div class="panel-group" id="accordion">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                        Collapsible Group 1</a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse1" class="panel-collapse collapse in">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                            commodo consequat.
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-md-2">
-                                                            <div class="thumbnail">
-                                                                <a href="#" class="pop">
-                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-2">
-                                                            <div class="thumbnail">
-                                                                <a href="#" class="pop">
-                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-2">
-                                                            <div class="thumbnail">
-                                                                <a href="#" class="pop">
-                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-2">
-                                                            <div class="thumbnail">
-                                                                <a href="#" class="pop">
-                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-2">
-                                                            <div class="thumbnail">
-                                                                <a href="#" class="pop">
-                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                                        Collapsible Group 2</a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse2" class="panel-collapse collapse">
-                                                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                    commodo consequat.</div>
-                                            </div>
-                                        </div>
+									<?php 
+									$sql = "SELECT * FROM `PhotoSet-Context Links` as link
+											INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+											INNER JOIN Photos ph on ps.PhotoSetID = ph.PhotoSetID 
+											WHERE ContextID =". $row['ContextID']." and ps.Direction = 'East';";
+									
+									$find2 = $connect->query($sql);
+									if($find2-> num_rows >0){
+									?>
+                                    <div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+													East</a>
+											</h4>
+										</div>
+										<div id="collapse1" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+													<?php 
+													$findDesc = $connect->query($sql);
+													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
+													echo $row2['Description'];
+													?>
+													</div>
+												</div>
+												<div class="row">
+												<?php 
+												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+												?>
+													<div class="col-sm-6 col-md-2">
+														<div class="thumbnail">
+															<a href="#" class="pop">
+																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
+															</a>
+														</div>
+													</div>
+												<?php	
+												}
+												?>
+													
+												
+												</div>
+											</div>
+										</div>
+									</div>
+									<?php
+											}
+									?>
+										
+                                        
+									<?php 
+									$sql = "SELECT * FROM `PhotoSet-Context Links` as link
+											INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+											INNER JOIN Photos ph on ps.PhotoSetID = ph.PhotoSetID 
+											WHERE ContextID =". $row['ContextID']." and ps.Direction = 'West';";
+									
+									$find2 = $connect->query($sql);
+									if($find2-> num_rows >0){
+									?>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+													West</a>
+											</h4>
+										</div>
+										<div id="collapse2" class="panel-collapse collapse">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+													<?php 
+													$findDesc = $connect->query($sql);
+													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
+													echo $row2['Description'];
+													?>
+													</div>
+												</div>
+												<div class="row">
+												<?php 
+												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+												?>
+													<div class="col-sm-6 col-md-2">
+														<div class="thumbnail">
+															<a href="#" class="pop">
+																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
+															</a>
+														</div>
+													</div>
+												<?php	
+												}
+												?>
+													
+												
+												</div>
+											</div>
+										</div>
+									 </div>
+									<?php
+									}
+									?>
+									<?php 
+									$sql = "SELECT * FROM `PhotoSet-Context Links` as link
+											INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+											INNER JOIN Photos ph on ps.PhotoSetID = ph.PhotoSetID 
+											WHERE ContextID =". $row['ContextID']." and ps.Direction = 'North';";
+									
+									$find2 = $connect->query($sql);
+									if($find2-> num_rows >0){
+									?>
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                                        Collapsible Group 3</a>
+                                                        North</a>
                                                 </h4>
                                             </div>
                                             <div id="collapse3" class="panel-collapse collapse">
-                                                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                    commodo consequat.</div>
+                                                <div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+													<?php 
+													$findDesc = $connect->query($sql);
+													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
+													echo $row2['Description'];
+													?>
+													</div>
+												</div>
+												<div class="row">
+												<?php 
+												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+												?>
+													<div class="col-sm-6 col-md-2">
+														<div class="thumbnail">
+															<a href="#" class="pop">
+																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
+															</a>
+														</div>
+													</div>
+												<?php	
+												}
+												?>
+													
+												
+												</div>
+											</div>
                                             </div>
                                         </div>
+										
+									<?php
+									}
+									?>
+									<?php 
+									$sql = "SELECT * FROM `PhotoSet-Context Links` as link
+											INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+											INNER JOIN Photos ph on ps.PhotoSetID = ph.PhotoSetID 
+											WHERE ContextID =". $row['ContextID']." and ps.Direction = 'South';";
+									
+									$find2 = $connect->query($sql);
+									if($find2-> num_rows >0){
+									?>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                                        South</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse4" class="panel-collapse collapse">
+                                                <div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+													<?php 
+													$findDesc = $connect->query($sql);
+													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
+													echo $row2['Description'];
+													?>
+													</div>
+												</div>
+												<div class="row">
+												<?php 
+												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+												?>
+													<div class="col-sm-6 col-md-2">
+														<div class="thumbnail">
+															<a href="#" class="pop">
+																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
+															</a>
+														</div>
+													</div>
+												<?php	
+												}
+												?>
+													
+												
+												</div>
+											</div>
+                                            </div>
+                                        </div>
+										
+									<?php
+									}
+									?>
                                     </div>
                                 </td>
                             </tr>

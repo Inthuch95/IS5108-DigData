@@ -23,20 +23,28 @@ if (!$connect )
   }
 else
 {
-  mysqli_select_db($connect,$db) or die("Can't select Database");
-  //SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
-  $sql ="INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`,`Name`)
-  VALUES (NULL, '".$userID."', '".$contextID."', '".$description."', '".$type."', '".$date."', '".$name."');";
-  mysqli_query($connect,$sql);
+	mysqli_select_db($connect,$db) or die("Can't select Database");
+	//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
+	$sql ="INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`,`Name`)
+	VALUES (NULL, '".$userID."', '".$contextID."', '".$description."', '".$type."', '".$date."', '".$name."');";
+  
+	$sql = "INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`,`Name`)
+	VALUES (NULL, '".$userID."', '".$contextID."', ?, '".$type."', '".$date."', '".$name."');";
+	echo "<br>".$sql."<br>";
 
-  $sql = "SELECT MAX(FindID) AS maxFindID FROM Finds";
+	$stmt = $connect->prepare($sql);  //prepares the query for action
+	$stmt->bind_param("s", $description); 
+	
+	$stmt->execute();
+
+	$sql = "SELECT MAX(FindID) AS maxFindID FROM Finds";
 	$find = mysqli_query($connect, $sql);
-  $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
+	$row = mysqli_fetch_array($find, MYSQLI_ASSOC);
 	$findID = $row["maxFindID"];
-  //VALUES (NULL, '".$siteName."', '".$description."');");
+	//VALUES (NULL, '".$siteName."', '".$description."');");
 
-  $_SESSION["addResult"] =  "A new record was added successfully";
-  //echo $query;
+	$_SESSION["addResult"] =  "A new record was added successfully";
+	//echo $query;
 
   // INSERT INTO `is5108group-4__digdata`.Finds (UserID,ContextID,Description,`Type`,`Date`)
   // VALUES (1,4,'Jack the ripper knife','Metal','2018-03-08') ;
