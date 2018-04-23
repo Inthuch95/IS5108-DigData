@@ -20,6 +20,7 @@ $db="is5108group-4__digdata";
 $recordTB = "Finds";
 $siteTB = "Site";
 $userTB = "Users";
+$contextTB = "Context_Records";
 
 $connect = new mysqli($host, $username, $password, $db);
 // Check connection
@@ -31,6 +32,14 @@ $recordSQL = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' F
 $sitesSQL = "SELECT * FROM $siteTB";
 $record = $connect->query($recordSQL);
 $sites = $connect->query($sitesSQL);
+$currentRecord = $record->fetch_assoc();
+$currentSite = $currentRecord["SiteCode"];
+$trenchSQL = "SELECT Distinct Trench FROM $contextTB WHERE SiteCode=$currentSite";
+$trench = $connect->query($trenchSQL);
+$currentTrench = $currentRecord["Trench"];
+$currentContext = $currentRecord["ContextID"];
+$contextSQL = "SELECT * FROM $contextTB WHERE SiteCode=$currentSite and Trench='".$currentTrench."'";
+$context =  $connect->query($contextSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +99,6 @@ $sites = $connect->query($sitesSQL);
                             <label class="control-label col-sm-2" for="finder">Finder:</label>
                             <div class="col-sm-3">
                                 <?php
-                                $currentRecord = $record->fetch_assoc();
                                 $LOGusername = $currentRecord["UserID"];
                                 $userSQL = "SELECT * FROM $userTB WHERE UserID='$LOGusername'";
                                 $user = $connect->query($userSQL);
@@ -109,6 +117,13 @@ $sites = $connect->query($sitesSQL);
                                 ?>
                             </div>
                         </div>
+						
+						 <div class="form-group">
+                            <label class="control-label col-sm-2" for="finder">Artifact name:</label>
+                            <div class="col-sm-3">
+                               <input class="form-control" name="name" value="<?php echo $currentRecord['Name']?>">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="location">Location:</label>
                             <div class="col-sm-3">
@@ -116,8 +131,6 @@ $sites = $connect->query($sitesSQL);
                                         onchange="showTrench(this.value)">
                                     <option value="">Select a site</option>
                                     <?php
-                                    $_SESSION['currentTrench'] = $currentRecord["Trench"];
-                                    $_SESSION['currentContext'] = $currentRecord["ContextID"];
                                     while ($row = $sites->fetch_assoc()) {
                                         if ($row["SiteCode"] == $currentRecord["SiteCode"]) {
                                             print '<option selected="selected" value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
@@ -133,8 +146,17 @@ $sites = $connect->query($sitesSQL);
                             <label class="control-label col-sm-2" for="trench">Trench:</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="trench" name="trench"
-                                        onchange="showContext(this.value)" disabled='true'>
-                                    <option value="">Select site first</option>
+                                        onchange="showContext(this.value)">
+                                        <option value="">Select trench</option>
+                                        <?php
+                                        while ($row=$trench->fetch_assoc()) {
+                                    			if ($currentTrench == $row["Trench"]) {
+                                    					echo '<option selected="selected" value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
+                                    			} else {
+                                    					echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
+                                    			}
+                                    		}
+                                        ?>
                                 </select>
                             </div>
                         </div>
@@ -142,8 +164,17 @@ $sites = $connect->query($sitesSQL);
                             <label class="control-label col-sm-2" for="context">Context:</label>
                             <div class="col-sm-3">
                                 <select class="form-control" id="context" name="context"
-                                        onchange="showContextDesc(this.value)" disabled='true'>
-                                    <option value="">Select site first</option>
+                                        onchange="showContextDesc(this.value)">
+                                        <option value="">Select context</option>
+                                        <?php
+                                        while ($row=$context->fetch_assoc()) {
+                                          if ($currentContext == $row["ContextID"]) {
+                                    					echo '<option selected="selected" value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
+                                    			} else {
+                                    					echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
+                                    			}
+                                    		}
+                                        ?>
                                 </select>
                                 <div id="contextDesc" hidden></div>
                             </div>
@@ -211,12 +242,9 @@ $sites = $connect->query($sitesSQL);
         $("#date-butt").click(function () {
             $('#date').datepicker("show");
         });
-        var currentTrench = <?php echo json_encode($currentRecord["Trench"]); ?>;
         var date = "<?php echo $currentRecord["Date"]; ?>";
         var type = "<?php echo $currentRecord["Type"]; ?>";
         var description = "<?php echo $currentRecord["FDESC"]; ?>";
-        showTrench(document.getElementById("location").value);
-        showContext(currentTrench);
         $('#date').val(date);
         $('#type').val(type);
         $('#description').val(description);

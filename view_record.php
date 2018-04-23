@@ -20,7 +20,10 @@ if (!$connect) {
     $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
     //echo "SELECT * FROM $tb WHERE Username='$LOGusername' AND Password='$LOGpassword'";
     //echo $found;
+    $findId = $row["FindID"];
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,24 +68,21 @@ if (!$connect) {
 </nav>
 
 <div class="container" style="margin-top:50px">
+    <h2>Find Name</h2>
     <div class="row">
         <div class="col-sm-12">
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <td width="100">
-                        <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
-                             class="center-block" alt="Cinque Terre">
-                    </td>
                     <td>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered noBottomMargin">
                             <tbody>
                             <tr>
-                                <td><strong>ID: </strong><?php printf("%s", $row["FindID"]) ?></td>
+                                <td><strong>Name: </strong><?php printf("%s", $row["Name"]) ?></td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?>
+                                    
                                     <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
                                     <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                 </td>
@@ -91,8 +91,177 @@ if (!$connect) {
                                 <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                 </td>
                             </tr>
+                            <?php
+                            if($row["ModifiedBy"]===NULL){}
+                            else
+                            {?>
+                              <tr>
+                                  <td><strong>Last modified: </strong><?php printf("%s", $row["ModifiedBy"]." ".$row["LastModified"]); ?></td>
+                              </tr>
+                            <?php
+                            }?>
                             <tr>
-                                <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
+                                <td><strong>Photo Description: </strong> ##############
+                                </td>
+                            </tr>
+                          </tbody>Lorem ipsum donec id elit non mi porta gravida at eget metus.
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+              <?php
+              $sql = "SELECT * FROM `PhotoSet-Find Links` as link
+              INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+              INNER JOIN Photos ph on ph.PhotoSetID = ps.PhotoSetID
+              where FindID = $findId;";
+
+              $find2 = mysqli_query($connect, $sql);
+              while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+                print '  <div class="col-sm-6 col-md-2">
+                      <div class="thumbnail">
+                          <a href="#" class="pop">
+                              <img src="'.$row2['Directory Path'].'" height="200" width="200">
+                          </a>
+                      </div>
+                  </div>';
+
+              }
+
+
+              ?>
+
+
+            </div>
+
+            <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <img src="" class="imagepreview" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>
+                        <table class="table table-bordered noBottomMargin">
+                            <tbody>
+                            <tr>
+                                <td><strong class="text-danger">CONTEXT ID: </strong><?php printf("%s", $row["ContextID"]) ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description: </strong><?php printf("%s", $row["CRDESC"]) ?>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>Photo Description: </strong><?php printf("%s", $row["FDESC"]) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                                        Collapsible Group 1</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                                            commodo consequat.
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-md-2">
+                                                            <div class="thumbnail">
+                                                                <a href="#" class="pop">
+                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-2">
+                                                            <div class="thumbnail">
+                                                                <a href="#" class="pop">
+                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-2">
+                                                            <div class="thumbnail">
+                                                                <a href="#" class="pop">
+                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-2">
+                                                            <div class="thumbnail">
+                                                                <a href="#" class="pop">
+                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-2">
+                                                            <div class="thumbnail">
+                                                                <a href="#" class="pop">
+                                                                    <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                                        Collapsible Group 2</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse2" class="panel-collapse collapse">
+                                                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                                    commodo consequat.</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                                        Collapsible Group 3</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse3" class="panel-collapse collapse">
+                                                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                                    commodo consequat.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -100,8 +269,17 @@ if (!$connect) {
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
-</div>
 </body>
 </html>
+
+<script>
+    $(function () {
+        $('.pop').on('click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('#imagemodal').modal('show');
+        });
+    });
+</script>

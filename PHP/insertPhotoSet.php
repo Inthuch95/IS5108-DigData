@@ -3,7 +3,7 @@ session_start();
 $site = $_POST["site"];
 $trench = $_POST["trench"];
 
-$contextNum = $_POST["contextNum"];
+//$contextNum = $_POST["contextNum"];
 $contextID = $_POST["contextID"];
 $description = $_POST["description"];
 
@@ -25,14 +25,15 @@ if ($connect->connect_error) {
 uploadImg("imgs");
 
 function uploadImg($id){
-	global $photoSetID,$connect;
+	global $photoSetID,$connect,$contextID;
 
+	print_r($_FILES[$id]);
 	insertPhotoSet();
 	echo "<br>PhotoSetID:".$photoSetID."</br>";
 	$target_dir = "../context images/";
 	foreach($_FILES[$id]["name"] as $f => $name){
-		$target_file = $target_dir . basename($_FILES[$id]["name"][$f]);
-		$path = "/context images/".basename($_FILES[$id]["name"][$f]);
+		$target_file = $target_dir .$contextID."_". basename($_FILES[$id]["name"][$f]);
+		$path = "context images/".$contextID."_".basename($_FILES[$id]["name"][$f]);
 
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -50,14 +51,11 @@ function uploadImg($id){
 			 echo "File is not an image.";
 			 $uploadOk = 0;
 		 }
-		if ($_FILES["fileToUpload"]["size"] > 8388608) {
-			echo "Sorry, your file is too large.";
-			$uploadOk = 0;
-		}
-		else{
-			$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
-			mysqli_query($connect,$sql);
-		}
+		
+		$sql = "INSERT INTO `Photos` (`FrameID`, `PhotoSetID`, `Directory Path`) VALUES (NULL, '$photoSetID', '$path')";
+		mysqli_query($connect,$sql);
+		
+		echo "<br>".$sql."<br>";
 
 		// Check if file already exists
 		if (file_exists($target_file)) {
@@ -86,16 +84,22 @@ function uploadImg($id){
 
 
 	}
+	$connect->close();
+	header("Location:../add_photo.php");
+	
 }
 
 
 function insertPhotoSet(){
-	global $site, $contextID, $trench, $connect, $description, $direction, $addingDate, $photoSetID;
+	global $site, $trench,$contextID, $connect, $description, $direction, $addingDate, $photoSetID;
 	$sql ="INSERT INTO `PhotoSets` (`PhotoSetID`, `SiteCode`, `Trench`, `Description`, `Direction`, `Date`)
-	VALUES (NULL, '$site', '$trench', '$description', '$direction', '$addingDate')";
+	VALUES (NULL, '$site', '$trench', ?, '$direction', '$addingDate')";
+
+	$stmt = $connect->prepare($sql);  //prepares the query for action
+	$stmt->bind_param("s", $description);  
 	echo "<br>".$sql."<br>";
 
-	if ($connect->query($sql) === TRUE) {
+	if ($stmt->execute() === TRUE) {
 		$_SESSION["addResult"] = "New photoset was added successfully";
 		echo "New photoset created successfully";
 
@@ -112,8 +116,10 @@ function insertPhotoSet(){
 
 	$row=mysqli_fetch_array($find,MYSQLI_ASSOC);
 	$photoSetID = intval($row["maxPhotoSetID"]);
-	//echo "<br>PhotoSetID:".$photoSetID."</br>";
+	
 
+	
+	//echo "<br>PhotoSetID:".$photoSetID."</br>";
 	$sql = "INSERT INTO `PhotoSet-Context Links` (`LinkID`, `PhotoSetID`, `ContextID`) VALUES (NULL, '$photoSetID', '$contextID')";
 	mysqli_query($connect,$sql);
 	echo "<br>".$sql."<br>";
@@ -123,6 +129,5 @@ function insertPhotoSet(){
 
 
 
-$connect->close();
-header("Location:../add_photo.php");
+
 ?>

@@ -27,12 +27,7 @@ $connect= mysqli_connect($host,$username,$password);
 	if($found){
 		echo '<option value = "">Select trench</option>';
 		while ($row=mysqli_fetch_array($find,MYSQLI_ASSOC)) {
-			if (isset($_SESSION['currentTrench']) and $_SESSION['currentTrench'] == $row["Trench"]) {
-					echo '<option selected="selected" value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
-					$_SESSION['currentTrench'] = "";
-			} else {
-					echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
-			}
+				echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
 		}
 	}
 	else{
