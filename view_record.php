@@ -82,7 +82,7 @@ if (!$connect) {
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?>
+                                    
                                     <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
                                     <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                 </td>
@@ -101,7 +101,7 @@ if (!$connect) {
                             <?php
                             }?>
                             <tr>
-                                <td><strong>Photo Description: </strong><?php printf("%s", $row["FDESC"]) ?>
+                                <td><strong>Photo Description: </strong> ##############
                                 </td>
                             </tr>
                           </tbody>Lorem ipsum donec id elit non mi porta gravida at eget metus.
@@ -156,22 +156,18 @@ if (!$connect) {
                         <table class="table table-bordered noBottomMargin">
                             <tbody>
                             <tr>
-                                <td><strong class="text-danger">CONTEXT (to be changed)</strong><?php printf("%s", $row["FindID"]) ?></td>
+                                <td><strong class="text-danger">CONTEXT ID: </strong><?php printf("%s", $row["ContextID"]) ?></td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?>
-                                    <strong>Founder: </strong><?php printf("%s", $row["UserID"]) ?>
-                                    <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
+                                <td><strong>Description: </strong><?php printf("%s", $row["CRDESC"]) ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Lorem ipsum donec id elit non mi porta gravida at eget metus.</td>
-                            </tr>
+                            
                             <tr>
                                 <td><strong>Photo Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                 </td>
