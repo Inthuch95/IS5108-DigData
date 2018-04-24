@@ -59,6 +59,72 @@ $context =  $connect->query($contextSQL);
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
+
+    <script>
+    function checkSize(input) {
+        if (input.files[0].size > 8388608) {
+            input.value = "";
+            alert('This file is too large');
+        }
+    }
+
+    var numPic = 0;
+
+    function moreImage(id) {
+        butID = "moreImg" + numPic;
+        numPic++;
+        console.log("more image box: " + id);
+
+        $('<div class="form-group" id="' + butID + '-form">\
+            <label class="control-label col-sm-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
+            <div class="col-sm-4">\
+              <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
+            </div>\
+            <div class="col-sm-1">\
+              <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID + '-form") >\
+                <i class="fas fa-trash-alt"></i>\
+              </button>\
+            </div>\
+          </div>\
+      ').insertBefore("#imgs .add-butt-form");
+
+    }
+
+    function removeImg(id) {
+        console.log("remove" + id);
+        $("#" + id).remove();
+
+    }
+
+    function deleteByFrameID(FrameID){
+      var xhttp;
+
+
+      if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+
+      } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+
+      xmlhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+          $("#delPicResponse").html(this.responseText);
+
+        }
+      };
+
+      xmlhttp.open("GET", "PHP/deleteSpecificImg.php?FrameID="+FrameID, true);
+      xmlhttp.send();
+
+    }
+
+
+    </script>
 </head>
 <body>
 
@@ -117,7 +183,7 @@ $context =  $connect->query($contextSQL);
                                 ?>
                             </div>
                         </div>
-						
+
 						 <div class="form-group">
                             <label class="control-label col-sm-2" for="finder">Artifact name:</label>
                             <div class="col-sm-3">
@@ -209,6 +275,75 @@ $context =  $connect->query($contextSQL);
                                 <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                             </div>
                         </div>
+
+                            <?php
+                            $sql = "SELECT * FROM `PhotoSet-Find Links` as link
+                            INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
+                            INNER JOIN Photos ph on ph.PhotoSetID = ps.PhotoSetID
+                            where FindID = ".$currentRecord['FindID'].";";
+
+                            $find2 = mysqli_query($connect, $sql);
+                            if(mysqli_num_rows($find2)>0){
+                              echo '<div class="form-group">
+                                <div class="row">
+                                <label class="control-label col-sm-2" >Images:</label>';
+
+                              while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
+                                print '  <div class="col-sm-6 col-md-2">
+                                      <div class="thumbnail">
+                                          <a href="#" class="pop">
+
+                                              <img src="'.$row2['Directory Path'].'" height="200" width="200">
+                                              <button value="'.$row2['FrameID'].'" onclick="deleteByFrameID(this.value)">X</button>
+                                          </a>
+                                          <p id="delPicResponse"></p>
+                                      </div>
+                                  </div>';
+
+                              }
+
+                              echo "</div>
+                              </div>";
+
+                            }
+
+                            ?>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
+                            <div class="col-sm-10">
+                                <div id="imgs">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-sm-1"
+                                                               for="" style="padding-top: 2px"><i
+                                                                    class="fas fa-file-image fa-2x"></i></label>
+                                                        <div class="col-sm-4">
+                                                            <input class="form-control" accept="image/*"
+                                                                   onchange="checkSize(this)" type="file"
+                                                                   name="imgs[]">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group add-butt-form">
+                                                        <div class="col-sm-offset-1 col-sm-4">
+                                                            <button type="button"
+                                                                    class="btn btn-success btn-block"
+                                                                    onclick=moreImage("imgs")>
+                                                                <i class="fas fa-plus"></i>&nbsp;Another Image
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>

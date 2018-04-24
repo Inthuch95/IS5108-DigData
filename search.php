@@ -24,8 +24,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 	function search(){
 		var xhttp;
 		var searchStr = $("#searchStr").val();
-		
-		
+
+
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp = new XMLHttpRequest();
@@ -45,20 +45,20 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 
 		xmlhttp.open("GET", "PHP/getSearchResult.php?searchStr="+searchStr, true);
 		xmlhttp.send();
-		
+
 
 	}
-	
+
 	function onload(){
 		var xhttp;
-		
-		
+
+
 		<?php if(isset($_SESSION["searchStr"])){
 		print 'var searchStr = "'.$_SESSION["searchStr"].'"';
-		
-		
+
+
 		?>
-			
+
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp = new XMLHttpRequest();
@@ -81,10 +81,10 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 		<?php
 		}
 		?>
-		
+
 
 	}
-	
+
 	</script>
 </head>
 <body onload=onload()>
@@ -193,9 +193,9 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                 <div id="searchBody" class="panel-body">
                     <div class="row">
                         <div class="col-sm-5">
-                            
+
                                 <div class="input-group">
-                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search"
+                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search" onkeypress="search()"
 									<?php
 									if(isset($_SESSION["searchStr"])){
 										print 'value="'.$_SESSION["searchStr"].'"';
@@ -208,14 +208,14 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                                         </button>
                                     </div>
                                 </div>
-                           
+
                         </div>
                         <div class="col-sm-4">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3">Found:</label>
+
                                     <div class="col-sm-9">
-                                        <p class="form-control-static">xxxx records</p>
+                                        <p class="form-control-static"></p>
                                     </div>
                                 </div>
                             </form>

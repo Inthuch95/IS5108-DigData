@@ -6,10 +6,7 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
     $_SESSION["currentID"] = intval($_GET["id"]);
   }
   $findID = $_SESSION["currentID"];
-  $username="is5108group-4";
-  $password="b9iVc.9gS8c7NJ";
-  $host="is5108group-4.host.cs.st-andrews.ac.uk";
-  $db="is5108group-4__digdata";
+  include 'databaseConfig.php';
   $finds_tb = "Finds";
   $photo_link_tb = "PhotoSet-Find Links";
   $photos_tb = "Photos";
@@ -32,7 +29,6 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
     while($row = $photosQuery->fetch_assoc()) {
       echo unlink("../".$row["Directory Path"]);
     }
-
 
     $sql = "DELETE FROM `$photo_link_tb` WHERE FindID=$findID";
     if ($connect->query($sql) === TRUE) {
