@@ -10,12 +10,7 @@ if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
 
-
-echo $frameID;
-
 deleteImg($frameID);
-
-
 function deleteImg($frameID){
 
   global $connect;
@@ -41,47 +36,31 @@ function deleteImg($frameID){
     if ($connect->query($sql) === TRUE) {
         echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . $connect->error;index
+        echo "Error updating record: " . $connect->error;
     }
   }
 
   else{
+
     $sql = "SELECT * FROM `Photos` WHERE FrameID=$frameID";
     $photosQuery = $connect->query($sql);
     $row = $photosQuery->fetch_assoc();
+
     $photoSetID = $row["PhotoSetID"];
     while($row = $photosQuery->fetch_assoc()) {
-      echo unlink("../".$row["Directory Path"]);
+        unlink("../".$row["Directory Path"]);
     }
 
     $sql = "DELETE FROM `$photo_link_tb` WHERE PhotoSetID=$photoSetID";
-    if ($connect->query($sql) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $connect->error;
-    }
+    $connect->query($sql);
 
     $sql = "DELETE FROM $photos_tb WHERE PhotoSetID=$photoSetID";
-    if ($connect->query($sql) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $connect->error;
-    }
+    $connect->query($sql);
 
     $sql = "DELETE FROM $photo_sets_tb WHERE PhotoSetID=$photoSetID";
-    if ($connect->query($sql) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $connect->error;
-    }
-
-
+    $connect->query($sql);
+    echo "hidden";
   }
-
-
-
+$connect->close();
 }
-
-
 ?>
-<html><head></head></html>

@@ -114,8 +114,12 @@ $context =  $connect->query($contextSQL);
         xmlhttp.onreadystatechange = function() {
 
           if (this.readyState == 4 && this.status == 200) {
-            //$("#delPicResponse").html(this.responseText);
-
+            alert(this.responseText);
+            if(this.responseText.includes("hidden")){
+              $("#imgPanel").hide();
+            }else{
+              $("#"+FrameID).hide();
+            }
           }
         };
 
@@ -285,19 +289,19 @@ $context =  $connect->query($contextSQL);
 
                             $find2 = mysqli_query($connect, $sql);
                             if(mysqli_num_rows($find2)>0){
-                              echo '<div class="form-group">
+                              echo '<div class="form-group" id="imgPanel">
                                 <div class="row">
                                 <label class="control-label col-sm-2" >Images:</label>';
 
                               while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
-                                print '  <div class="col-sm-6 col-md-2">
+                                print '<div class="col-sm-6 col-md-2" id='.$row2['FrameID'].'>
                                       <div class="thumbnail">
                                       <button class="btn btn-danger pull-right" type="button" value="'.$row2['FrameID'].'" onclick="deleteByFrameID(this.value)">X</button>
                                         <a href="#" class="pop">
 
                                               <img src="'.$row2['Directory Path'].'" height="200" width="200">
                                           </a>
-                                          
+
                                       </div>
                                   </div>';
 
