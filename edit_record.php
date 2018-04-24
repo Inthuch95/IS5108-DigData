@@ -114,7 +114,7 @@ $context =  $connect->query($contextSQL);
         xmlhttp.onreadystatechange = function() {
 
           if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+            //alert(this.responseText);
             if(this.responseText.includes("hidden")){
               $("#imgPanel").hide();
             }else{
@@ -165,7 +165,7 @@ $context =  $connect->query($contextSQL);
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" action="PHP/updateRecord.php">
+                    <form class="form-horizontal" method="post" action="PHP/updateRecord.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="finder">Finder:</label>
                             <div class="col-sm-3">
