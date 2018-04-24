@@ -275,3 +275,16 @@ if (!$connect) {
 
 </body>
 </html>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#date').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0
+        });
+        $("#date-butt").click(function () {
+            $('#date').datepicker("show");
+        });
+    });
+</script>

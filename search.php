@@ -192,42 +192,23 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
             <div class="panel panel-default">
                 <div id="searchBody" class="panel-body">
                     <div class="row">
-                        <div class="col-sm-5">
-
+                        <div class="col-sm-12">
+                            <div class="panel panel-default noBorder">
                                 <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                                     <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search" onkeypress="search()"
-									<?php
-									if(isset($_SESSION["searchStr"])){
-										print 'value="'.$_SESSION["searchStr"].'"';
-									}
-									?>
-									>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" onclick="search()" type="submit">
-                                            <i class="glyphicon glyphicon-search"></i>
-                                        </button>
-                                    </div>
+                                        <?php
+                                        if(isset($_SESSION["searchStr"])){
+                                            print 'value="'.$_SESSION["searchStr"].'"';
+                                        }
+                                        ?>
+                                    >
                                 </div>
-
-                        </div>
-                        <div class="col-sm-4">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-
-                                    <div class="col-sm-9">
-                                        <p class="form-control-static"></p>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-default pull-right">
-                                Sort&nbsp;<i class="fas fa-sort-up"></i>
-                            </button>
+                            </div>
                         </div>
                     </div>
 					<div id="searchRes">
-                    <table class="table table-hover table-bordered noBottomMargin">
+                        <table class="table table-hover table-bordered noBottomMargin">
                         <tbody>
                         <tr>
                             <td width="100">
