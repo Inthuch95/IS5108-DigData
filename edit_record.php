@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION["currentPage"] = '';
+
 $findID = 0;
 if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
   if (isset($_GET["id"])) {
@@ -237,6 +237,7 @@ $context =  $connect->query($contextSQL);
 <script type="text/javascript">
     $(function () {
         $('#date').datepicker({
+			dateFormat: 'yy-mm-dd',
             maxDate: 0
         });
         $("#date-butt").click(function () {

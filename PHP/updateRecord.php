@@ -30,5 +30,10 @@ if ($stmt->execute() === TRUE) {
     echo "Error updating record: " . $connect->error;
 }
 $connect->close();
-header("Location:../index.php");
+
+$prevPage = $_SESSION["currentPage"];
+$_SESSION["currentPage"] ='';
+//echo $prevPage;
+header("Location:../".$prevPage);
+//header("Location:../index.php");
 ?>

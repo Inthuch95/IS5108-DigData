@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,9 +48,47 @@ session_start();
 		
 
 	}
+	
+	function onload(){
+		var xhttp;
+		
+		
+		<?php if(isset($_SESSION["searchStr"])){
+		print 'var searchStr = "'.$_SESSION["searchStr"].'"';
+		
+		
+		?>
+			
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+
+		xmlhttp.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+				$("#searchRes").html(this.responseText);
+			}
+		};
+
+		xmlhttp.open("GET", "PHP/getSearchResult.php?searchStr="+searchStr, true);
+		xmlhttp.send();
+		<?php
+		}
+		?>
+		
+
+	}
+	
 	</script>
 </head>
-<body>
+<body onload=onload()>
+
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -157,7 +195,13 @@ session_start();
                         <div class="col-sm-5">
                             
                                 <div class="input-group">
-                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search">
+                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search"
+									<?php
+									if(isset($_SESSION["searchStr"])){
+										print 'value="'.$_SESSION["searchStr"].'"';
+									}
+									?>
+									>
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" onclick="search()" type="submit">
                                             <i class="glyphicon glyphicon-search"></i>
@@ -187,9 +231,9 @@ session_start();
                         <tbody>
                         <tr>
                             <td width="100">
-                                <img src="https://png.icons8.com/metro/1600/batman-new.png" height="100"
+                                <img src="" height="100"
                                      width="100"
-                                     class="center-block" alt="Cinque Terre">
+                                     class="center-block" alt="Picture">
                             </td>
                             <td>
                                 <table class="table table-bordered">
