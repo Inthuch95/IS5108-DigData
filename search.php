@@ -1,13 +1,6 @@
 <?php
 session_start();
-$sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
-      INNER JOIN `is5108group-4__digdata`.Context_Records cr on find.ContextID = cr.ContextID
-      INNER JOIN `is5108group-4__digdata`.Site s on s.SiteCode = cr.SiteCode
-      where LOWER(find.Name) LIKE '%%'
-      or LOWER(find.Description) LIKE '%%'
-      or LOWER(cr.Description) LIKE '%%'
-      or LOWER(s.SiteName) LIKE '%%'
-      or LOWER(s.Description) LIKE '%%';";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +20,35 @@ $sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
             integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
             crossorigin="anonymous"></script>
+	<script>
+	function search(){
+		var xhttp;
+		var searchStr = $("#searchStr").val();
+		
+		
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+
+		xmlhttp.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+				$("#searchRes").html(this.responseText);
+			}
+		};
+
+		xmlhttp.open("GET", "PHP/getSearchResult.php?searchStr="+searchStr, true);
+		xmlhttp.send();
+		
+
+	}
+	</script>
 </head>
 <body>
 
@@ -130,19 +152,19 @@ $sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
         </div>
         <div class="col-sm-8">
             <div class="panel panel-default">
-                <div class="panel-body">
+                <div id="searchBody" class="panel-body">
                     <div class="row">
                         <div class="col-sm-5">
-                            <form action="#">
+                            
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
+                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-default" type="submit">
+                                        <button class="btn btn-default" onclick="search()" type="submit">
                                             <i class="glyphicon glyphicon-search"></i>
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                           
                         </div>
                         <div class="col-sm-4">
                             <form class="form-horizontal">
@@ -160,6 +182,7 @@ $sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
                             </button>
                         </div>
                     </div>
+					<div id="searchRes">
                     <table class="table table-hover table-bordered noBottomMargin">
                         <tbody>
                         <tr>
@@ -197,6 +220,7 @@ $sql = "SELECT * FROM `is5108group-4__digdata`.Finds as find
                         </tr>
                         </tbody>
                     </table>
+					</div>
                 </div>
             </div>
         </div>
