@@ -90,7 +90,7 @@ if (!$connect) {
                     <table class="table table-hover table-bordered">
                         <tbody>
                         <tr>
-                            <td width="100">
+                            <td width="300">
 							<?php
 							$findID = $row["FindID"];
 							$sql1 = "SELECT * FROM `PhotoSet-Find Links` as link INNER JOIN Photos on link.PhotoSetID = Photos.PhotoSetID WHERE FindID = $findID";
@@ -98,12 +98,19 @@ if (!$connect) {
 							$numrow = mysqli_num_rows($findPics);
 							if($numrow>0){
 								$pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
-								print '<img src="'.$pic["Directory Path"].'" height="100" width="100"
-								class="center-block" alt="Cinque Terre">';
+                                print '<div class="thumbnail">
+                                          <a href="#" class="pop">
+                                              <img src="'.$pic["Directory Path"].'" height="300" width="300" class="center-block" alt="Cinque Terre">
+                                          </a>
+                                       </div>';
 							}
 							else{
-								print '<img src="https://png.icons8.com/metro/1600/batman-new.png" height="100" width="100"
-                                     class="center-block" alt="Cinque Terre">';
+                                print '<div class="thumbnail">
+                                          <a href="#" class="pop">
+                                              <img src="https://png.icons8.com/metro/1600/batman-new.png" height="300" width="300"
+                                     class="center-block" alt="Cinque Terre">
+                                          </a>
+                                       </div>';
 
 							}
 							?>
@@ -167,6 +174,28 @@ if (!$connect) {
                 </div>
             </div>
     <?php } ?>
+
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <img src="" class="imagepreview" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
+
+<script>
+    $(function () {
+        $('.pop').on('click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('#imagemodal').modal('show');
+        });
+    });
+</script>
