@@ -99,28 +99,29 @@ $context =  $connect->query($contextSQL);
     function deleteByFrameID(FrameID){
       var xhttp;
 
+      if(confirm("Are you sure?")){
 
-      if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
+        if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp = new XMLHttpRequest();
 
-      } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-
-
-      xmlhttp.onreadystatechange = function() {
-
-        if (this.readyState == 4 && this.status == 200) {
-          $("#delPicResponse").html(this.responseText);
-
+        } else {
+          // code for IE6, IE5
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-      };
 
-      xmlhttp.open("GET", "PHP/deleteSpecificImg.php?FrameID="+FrameID, true);
-      xmlhttp.send();
 
+        xmlhttp.onreadystatechange = function() {
+
+          if (this.readyState == 4 && this.status == 200) {
+            //$("#delPicResponse").html(this.responseText);
+
+          }
+        };
+
+        xmlhttp.open("GET", "PHP/deleteSpecificImg.php?FrameID="+FrameID, true);
+        xmlhttp.send();
+      }
     }
 
 
@@ -291,12 +292,12 @@ $context =  $connect->query($contextSQL);
                               while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
                                 print '  <div class="col-sm-6 col-md-2">
                                       <div class="thumbnail">
-                                          <a href="#" class="pop">
+                                      <button class="btn btn-danger pull-right" type="button" value="'.$row2['FrameID'].'" onclick="deleteByFrameID(this.value)">X</button>
+                                        <a href="#" class="pop">
 
                                               <img src="'.$row2['Directory Path'].'" height="200" width="200">
-                                              <button value="'.$row2['FrameID'].'" onclick="deleteByFrameID(this.value)">X</button>
                                           </a>
-                                          <p id="delPicResponse"></p>
+                                          
                                       </div>
                                   </div>';
 

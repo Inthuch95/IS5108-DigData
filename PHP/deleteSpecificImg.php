@@ -13,7 +13,7 @@ if ($connect->connect_error) {
 
 echo $frameID;
 
-//deleteImg($frameID);
+deleteImg($frameID);
 
 
 function deleteImg($frameID){
@@ -41,7 +41,7 @@ function deleteImg($frameID){
     if ($connect->query($sql) === TRUE) {
         echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . $connect->error;
+        echo "Error updating record: " . $connect->error;index
     }
   }
 
