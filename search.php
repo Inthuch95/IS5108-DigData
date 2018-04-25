@@ -37,9 +37,12 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 
 
 		xmlhttp.onreadystatechange = function() {
-
 			if (this.readyState == 4 && this.status == 200) {
-				$("#searchRes").html(this.responseText);
+        if (this.responseText.includes("no result")) {
+            $("#searchRes").html("No result");
+        } else {
+            $("#searchRes").html(this.responseText);
+        }
 			}
 		};
 
@@ -196,7 +199,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             <div class="panel panel-default noBorder">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search" onkeypress="search()"
+                                    <input type="text" id="searchStr" name="searchStr" class="form-control" placeholder="Search" onkeyup="search()"
                                         <?php
                                         if(isset($_SESSION["searchStr"])){
                                             print 'value="'.$_SESSION["searchStr"].'"';
@@ -208,43 +211,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                         </div>
                     </div>
 					<div id="searchRes">
-                        <table class="table table-hover table-bordered noBottomMargin">
-                        <tbody>
-                        <tr>
-                            <td width="100">
-                                <img src="" height="100"
-                                     width="100"
-                                     class="center-block" alt="Picture">
-                            </td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <td><strong>ID: </strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Location: </strong>
-                                            <strong>Founder: </strong>
-                                            <strong>Date: </strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Description: </strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lorem ipsum donec id elit non mi porta gravida at eget
-                                            metus.
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-info pull-right" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
 					</div>
                 </div>
             </div>
