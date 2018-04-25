@@ -1,6 +1,16 @@
 <?php
 session_start();
 $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+include 'PHP/databaseConfig.php';
+$connect = new mysqli($host, $username, $password, $db);
+// Check connection
+if ($connect->connect_error) {
+  die("Connection failed: " . $connect->connect_error);
+}
+$sql = "SELECT * FROM Users";
+$users = $connect->query($sql);
+$sql = "SELECT * FROM Site";
+$sites = $connect->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +57,40 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 		};
 
 		xmlhttp.open("GET", "PHP/getSearchResult.php?searchStr="+searchStr, true);
+		xmlhttp.send();
+
+
+	}
+
+  function searchWithFilter(){
+		var xhttp;
+		var searchStr = $("#searchStr").val();
+    var site = $("#location").val();
+    var finder = $("#finder").val();
+    var from = $("#from").val();
+    var to = $("#to").val();
+
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+        if (this.responseText.includes("no result")) {
+            $("#searchRes").html("No result");
+        } else {
+            $("#searchRes").html(this.responseText);
+        }
+			}
+		};
+
+		xmlhttp.open("GET", "PHP/getSearchFilter.php?searchStr="+searchStr+"&site="+site+"&finder="+finder+"&from="+from+"&to="+to, true);
 		xmlhttp.send();
 
 
@@ -128,20 +172,15 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                 <div class="panel-body">
                     <form class="form-horizontal" action="#">
                         <div class="form-group">
-                            <label class="control-label col-md-3" for="id">ID</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="id" placeholder="Enter ID">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="control-label col-md-3" for="location">Location</label>
                             <div class="col-md-9">
                                 <select class="form-control" id="location">
-                                    <option>John Honey Building</option>
-                                    <option>Thanon - Thai Restaurant</option>
-                                    <option>The Tailend Restaurant and Fish Bar</option>
-                                    <option>Little Italy</option>
-                                    <option>Tesco</option>
+                                    <option value="all">All</option>
+                                    <?php
+                                    while ($row = $sites->fetch_assoc()) {
+                                        print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -149,10 +188,12 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             <label class="control-label col-md-3" for="finder">Finder</label>
                             <div class="col-md-9">
                                 <select class="form-control" id="finder">
-                                    <option>Nattasan</option>
-                                    <option>Inthuch</option>
-                                    <option>Turk</option>
-                                    <option>Anna</option>
+                                  <option value="all">All</option>
+                                  <?php
+                                  while ($row = $users->fetch_assoc()) {
+                                      print '<option value="' . $row["UserID"] . '">' . $row["First Name"] . '</option>';
+                                  }
+                                  ?>
                                 </select>
                             </div>
                         </div>
@@ -160,7 +201,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             <label class="control-label col-md-3" for="from">From</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="date" id="from">
+                                    <input type="text" class="form-control" placeholder="date" name="from" id="from">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="from-butt">
                                             <i class="far fa-calendar-alt"></i>
@@ -173,7 +214,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             <label class="control-label col-md-3" for="to">To</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="date" id="to">
+                                    <input type="text" class="form-control" placeholder="date" name="to" id="to">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="button" id="to-butt">
                                             <i class="far fa-calendar-alt"></i>
@@ -184,7 +225,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                         </div>
                         <div class="form-group noBottomMargin">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary pull-right">Apply</button>
+                                <button type="button" onclick="searchWithFilter()" class="btn btn-primary pull-right">Apply</button>
                             </div>
                         </div>
                     </form>
@@ -225,6 +266,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 <script type="text/javascript">
     $(function () {
         $('#from').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0,
             onSelect: function (selectedDate) {
                 var min = $('#from').datepicker('getDate');
                 min.setDate(min.getDate() + 1);
@@ -232,6 +275,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
             }
         });
         $('#to').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: 0,
             onSelect: function (selectedDate) {
                 var max = $('#to').datepicker('getDate');
                 max.setDate(max.getDate() - 1);
