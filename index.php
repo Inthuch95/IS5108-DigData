@@ -114,14 +114,14 @@ if (!$connect) {
                                     $pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
                                     print '<div class="thumbnail">
                                           <a href="#" class="pop">
-                                              <img src="'.$pic["Directory Path"].'" width="300" class="center-block" alt="Cinque Terre">
+                                              <img src="'.$pic["Directory Path"].'" class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
                                 }
                                 else{
                                     print '<div class="thumbnail">
                                           <a href="#" class="pop">
-                                              <img src="https://png.icons8.com/metro/1600/batman-new.png" width="300"
+                                              <img src="https://png.icons8.com/metro/1600/batman-new.png"
                                      class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
@@ -200,7 +200,7 @@ if (!$connect) {
 
 <script>
     $(function () {
-        $('.pop').on('click', function () {
+        $('.container').delegate('.pop', 'click', function () {
             $('.imagepreview').attr('src', $(this).find('img').attr('src'));
             $('#imagemodal').modal('show');
         });

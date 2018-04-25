@@ -3,20 +3,20 @@ session_start();
 
 $findID = 0;
 if ((isset($_SESSION['user']) and $_SESSION['user'] != '')) {
-  if (isset($_GET["id"])) {
-    $_SESSION["currentID"] = intval($_GET["id"]);
-  }
-  $findID = $_SESSION["currentID"];
+    if (isset($_GET["id"])) {
+        $_SESSION["currentID"] = intval($_GET["id"]);
+    }
+    $findID = $_SESSION["currentID"];
 } else {
-  $_SESSION["currentID"] = intval($_GET["id"]);
-  $_SESSION['loginerror'] = "You have to login first";
-  $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
-  header("Location:login.php");
+    $_SESSION["currentID"] = intval($_GET["id"]);
+    $_SESSION['loginerror'] = "You have to login first";
+    $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+    header("Location:login.php");
 }
-$username="is5108group-4";
-$password="b9iVc.9gS8c7NJ";
-$host="is5108group-4.host.cs.st-andrews.ac.uk";
-$db="is5108group-4__digdata";
+$username = "is5108group-4";
+$password = "b9iVc.9gS8c7NJ";
+$host = "is5108group-4.host.cs.st-andrews.ac.uk";
+$db = "is5108group-4__digdata";
 $recordTB = "Finds";
 $siteTB = "Site";
 $userTB = "Users";
@@ -25,7 +25,7 @@ $contextTB = "Context_Records";
 $connect = new mysqli($host, $username, $password, $db);
 // Check connection
 if ($connect->connect_error) {
-  die("Connection failed: " . $connect->connect_error);
+    die("Connection failed: " . $connect->connect_error);
 }
 $recordSQL = "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $recordTB INNER JOIN Context_Records cr
   ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode WHERE $recordTB.FindID = $findID";
@@ -38,8 +38,8 @@ $trenchSQL = "SELECT Distinct Trench FROM $contextTB WHERE SiteCode=$currentSite
 $trench = $connect->query($trenchSQL);
 $currentTrench = $currentRecord["Trench"];
 $currentContext = $currentRecord["ContextID"];
-$contextSQL = "SELECT * FROM $contextTB WHERE SiteCode=$currentSite and Trench='".$currentTrench."'";
-$context =  $connect->query($contextSQL);
+$contextSQL = "SELECT * FROM $contextTB WHERE SiteCode=$currentSite and Trench='" . $currentTrench . "'";
+$context = $connect->query($contextSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,21 +61,21 @@ $context =  $connect->query($contextSQL);
             crossorigin="anonymous"></script>
 
     <script>
-    function checkSize(input) {
-        if (input.files[0].size > 8388608) {
-            input.value = "";
-            alert('This file is too large');
+        function checkSize(input) {
+            if (input.files[0].size > 8388608) {
+                input.value = "";
+                alert('This file is too large');
+            }
         }
-    }
 
-    var numPic = 0;
+        var numPic = 0;
 
-    function moreImage(id) {
-        butID = "moreImg" + numPic;
-        numPic++;
-        console.log("more image box: " + id);
+        function moreImage(id) {
+            butID = "moreImg" + numPic;
+            numPic++;
+            console.log("more image box: " + id);
 
-        $('<div class="form-group" id="' + butID + '-form">\
+            $('<div class="form-group" id="' + butID + '-form">\
             <label class="control-label col-md-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
             <div class="col-md-4">\
               <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
@@ -88,45 +88,45 @@ $context =  $connect->query($contextSQL);
           </div>\
       ').insertBefore("#imgs .add-butt-form");
 
-    }
-
-    function removeImg(id) {
-        console.log("remove" + id);
-        $("#" + id).remove();
-
-    }
-
-    function deleteByFrameID(FrameID){
-      var xhttp;
-
-      if(confirm("Are you sure?")){
-
-        if (window.XMLHttpRequest) {
-          // code for IE7+, Firefox, Chrome, Opera, Safari
-          xmlhttp = new XMLHttpRequest();
-
-        } else {
-          // code for IE6, IE5
-          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
+        function removeImg(id) {
+            console.log("remove" + id);
+            $("#" + id).remove();
 
-        xmlhttp.onreadystatechange = function() {
+        }
 
-          if (this.readyState == 4 && this.status == 200) {
-            //alert(this.responseText);
-            if(this.responseText.includes("hidden")){
-              $("#imgPanel").hide();
-            }else{
-              $("#"+FrameID).hide();
+        function deleteByFrameID(FrameID) {
+            var xhttp;
+
+            if (confirm("Are you sure?")) {
+
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+
+                } else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+
+                xmlhttp.onreadystatechange = function () {
+
+                    if (this.readyState == 4 && this.status == 200) {
+                        //alert(this.responseText);
+                        if (this.responseText.includes("hidden")) {
+                            $("#imgPanel").hide();
+                        } else {
+                            $("#" + FrameID).hide();
+                        }
+                    }
+                };
+
+                xmlhttp.open("GET", "PHP/deleteSpecificImg.php?FrameID=" + FrameID, true);
+                xmlhttp.send();
             }
-          }
-        };
-
-        xmlhttp.open("GET", "PHP/deleteSpecificImg.php?FrameID="+FrameID, true);
-        xmlhttp.send();
-      }
-    }
+        }
 
 
     </script>
@@ -158,187 +158,202 @@ $context =  $connect->query($contextSQL);
     </div>
 </nav>
 
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <img src="" class="imagepreview" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="container" style="margin-top:50px">
-    <h2>Edit record</h2>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="PHP/updateRecord.php" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="finder">Finder:</label>
-                            <div class="col-md-3">
-                                <?php
-                                $LOGusername = $currentRecord["UserID"];
-                                $userSQL = "SELECT * FROM $userTB WHERE UserID='$LOGusername'";
-                                $user = $connect->query($userSQL);
-                                $currentUser = $user->fetch_assoc();
-                                if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
-
-                                    print '<input class="form-control" type="" value="' . $currentUser["Username"] . '" readonly>';
-                                    print '<input class="form-control" type="hidden" name="user" value="' . $currentUser["UserID"] . '" display="">';
-                                    print '<input class="form-control" type="hidden" name="FindID" value="' . $currentRecord["FindID"] . '" display="">';
-                                } else {
-                                    $_SESSION['loginerror'] = "You have to login first";
-                                    $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
-
-                                    header("Location:login.php");
-                                }
-                                ?>
-                            </div>
-                        </div>
-
-						 <div class="form-group">
-                            <label class="control-label col-md-2" for="finder">Artifact name:</label>
-                            <div class="col-md-3">
-                               <input class="form-control" name="name" value="<?php echo $currentRecord['Name']?>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="location">Location:</label>
-                            <div class="col-md-3">
-                                <select class="form-control" id="location" placeholder="Select location" name="site"
-                                        onchange="showTrench(this.value)">
-                                    <option value="">Select a site</option>
+<div class="background-content">
+    <div class="container" style="margin-top:50px">
+        <h2>Edit record</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="post" action="PHP/updateRecord.php"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="finder">Finder:</label>
+                                <div class="col-md-3">
                                     <?php
-                                    while ($row = $sites->fetch_assoc()) {
-                                        if ($row["SiteCode"] == $currentRecord["SiteCode"]) {
-                                            print '<option selected="selected" value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
-                                        } else{
-                                            print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
-                                        }
+                                    $LOGusername = $currentRecord["UserID"];
+                                    $userSQL = "SELECT * FROM $userTB WHERE UserID='$LOGusername'";
+                                    $user = $connect->query($userSQL);
+                                    $currentUser = $user->fetch_assoc();
+                                    if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
+
+                                        print '<input class="form-control" type="" value="' . $currentUser["Username"] . '" readonly>';
+                                        print '<input class="form-control" type="hidden" name="user" value="' . $currentUser["UserID"] . '" display="">';
+                                        print '<input class="form-control" type="hidden" name="FindID" value="' . $currentRecord["FindID"] . '" display="">';
+                                    } else {
+                                        $_SESSION['loginerror'] = "You have to login first";
+                                        $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
+
+                                        header("Location:login.php");
                                     }
                                     ?>
-                                </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="trench">Trench:</label>
-                            <div class="col-md-3">
-                                <select class="form-control" id="trench" name="trench"
-                                        onchange="showContext(this.value)">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="finder">Artifact name:</label>
+                                <div class="col-md-3">
+                                    <input class="form-control" name="name"
+                                           value="<?php echo $currentRecord['Name'] ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="location">Location:</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="location" placeholder="Select location" name="site"
+                                            onchange="showTrench(this.value)">
+                                        <option value="">Select a site</option>
+                                        <?php
+                                        while ($row = $sites->fetch_assoc()) {
+                                            if ($row["SiteCode"] == $currentRecord["SiteCode"]) {
+                                                print '<option selected="selected" value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                            } else {
+                                                print '<option value="' . $row["SiteCode"] . '">' . $row["SiteCode"] . " - " . $row["SiteName"] . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="trench">Trench:</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="trench" name="trench"
+                                            onchange="showContext(this.value)">
                                         <option value="">Select trench</option>
                                         <?php
-                                        while ($row=$trench->fetch_assoc()) {
-                                    			if ($currentTrench == $row["Trench"]) {
-                                    					echo '<option selected="selected" value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
-                                    			} else {
-                                    					echo '<option value="'.$row["Trench"].'">'.$row["Trench"].'</option>';
-                                    			}
-                                    		}
+                                        while ($row = $trench->fetch_assoc()) {
+                                            if ($currentTrench == $row["Trench"]) {
+                                                echo '<option selected="selected" value="' . $row["Trench"] . '">' . $row["Trench"] . '</option>';
+                                            } else {
+                                                echo '<option value="' . $row["Trench"] . '">' . $row["Trench"] . '</option>';
+                                            }
+                                        }
                                         ?>
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="context">Context:</label>
-                            <div class="col-md-3">
-                                <select class="form-control" id="context" name="context"
-                                        onchange="showContextDesc(this.value)">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="context">Context:</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="context" name="context"
+                                            onchange="showContextDesc(this.value)">
                                         <option value="">Select context</option>
                                         <?php
-                                        while ($row=$context->fetch_assoc()) {
-                                          if ($currentContext == $row["ContextID"]) {
-                                    					echo '<option selected="selected" value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
-                                    			} else {
-                                    					echo '<option value="'.$row["ContextID"].'">'.$row["ContextNum"].'</option>';
-                                    			}
-                                    		}
+                                        while ($row = $context->fetch_assoc()) {
+                                            if ($currentContext == $row["ContextID"]) {
+                                                echo '<option selected="selected" value="' . $row["ContextID"] . '">' . $row["ContextNum"] . '</option>';
+                                            } else {
+                                                echo '<option value="' . $row["ContextID"] . '">' . $row["ContextNum"] . '</option>';
+                                            }
+                                        }
                                         ?>
-                                </select>
-                                <div id="contextDesc" hidden></div>
+                                    </select>
+                                    <div id="contextDesc" hidden></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="date">From:</label>
-                            <div class="col-md-3">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="date" id="date"
-                                           value="<?php echo date('Y-m-d'); ?>">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" type="button" id="date-butt">
-                                            <i class="far fa-calendar-alt"></i>
-                                        </button>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="date">From:</label>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="date" id="date"
+                                               value="<?php echo date('Y-m-d'); ?>">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default" type="button" id="date-butt">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="type">Type:</label>
-                            <div class="col-md-3">
-                                <select class="form-control" id="type" name="type">
-                                    <option value="Metal">Metal</option>
-                                    <option value="Wood">Wood</option>
-                                    <option value="Rock">Rock</option>
-                                </select>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="type">Type:</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="Metal">Metal</option>
+                                        <option value="Wood">Wood</option>
+                                        <option value="Rock">Rock</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="description">Description:</label>
-                            <div class="col-md-10">
-                                <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="description">Description:</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" rows="5" id="description"
+                                              name="description"></textarea>
+                                </div>
                             </div>
-                        </div>
 
                             <?php
                             $sql = "SELECT * FROM `PhotoSet-Find Links` as link
                             INNER JOIN PhotoSets ps on link.PhotoSetID = ps.PhotoSetID
                             INNER JOIN Photos ph on ph.PhotoSetID = ps.PhotoSetID
-                            where FindID = ".$currentRecord['FindID'].";";
+                            where FindID = " . $currentRecord['FindID'] . ";";
 
                             $find2 = mysqli_query($connect, $sql);
-                            if(mysqli_num_rows($find2)>0){
-                              echo '<div class="form-group" id="imgPanel">
+                            if (mysqli_num_rows($find2) > 0) {
+                                echo '<div class="form-group" id="imgPanel">
                                 <div class="row">
                                 <label class="control-label col-md-2" >Images:</label>';
 
-                              while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
-                                print '<div class="col-md-6 col-md-2" id='.$row2['FrameID'].'>
+                                while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)) {
+                                    print '<div class="col-sm-6 col-md-3" id=' . $row2['FrameID'] . '>
                                       <div class="thumbnail">
-                                      <button class="btn btn-danger pull-right" type="button" value="'.$row2['FrameID'].'" onclick="deleteByFrameID(this.value)">X</button>
+                                      <button class="btn btn-danger btn-sm pull-right" style="position:absolute; right: 1.5em;" type="button" value="' . $row2['FrameID'] . '" onclick="deleteByFrameID(this.value)"><i class="far fa-trash-alt"></i></button>
                                         <a href="#" class="pop">
-
-                                              <img src="'.$row2['Directory Path'].'" height="200" width="200">
+                                              <img src="' . $row2['Directory Path'] . '">
                                           </a>
-
                                       </div>
                                   </div>';
 
-                              }
+                                }
 
-                              echo "</div>
+                                echo "</div>
                               </div>";
 
                             }
 
                             ?>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="fileToUpload">Uploaded image(s)</label>
-                            <div class="col-md-10">
-                                <div id="imgs">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-1"
-                                                               for="" style="padding-top: 2px"><i
-                                                                    class="fas fa-file-image fa-2x"></i></label>
-                                                        <div class="col-md-4">
-                                                            <input class="form-control" accept="image/*"
-                                                                   onchange="checkSize(this)" type="file"
-                                                                   name="imgs[]">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="fileToUpload">Uploaded image(s)</label>
+                                <div class="col-md-10">
+                                    <div id="imgs">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-1"
+                                                                   for="" style="padding-top: 2px"><i
+                                                                        class="fas fa-file-image fa-2x"></i></label>
+                                                            <div class="col-md-4">
+                                                                <input class="form-control" accept="image/*"
+                                                                       onchange="checkSize(this)" type="file"
+                                                                       name="imgs[]">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group add-butt-form">
-                                                        <div class="col-md-offset-1 col-md-4">
-                                                            <button type="button"
-                                                                    class="btn btn-success btn-block"
-                                                                    onclick=moreImage("imgs")>
-                                                                <i class="fas fa-plus"></i>&nbsp;Another Image
-                                                            </button>
+                                                        <div class="form-group add-butt-form">
+                                                            <div class="col-md-offset-1 col-md-4">
+                                                                <button type="button"
+                                                                        class="btn btn-success btn-block"
+                                                                        onclick=moreImage("imgs")>
+                                                                    <i class="fas fa-plus"></i>&nbsp;Another Image
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -347,29 +362,33 @@ $context =  $connect->query($contextSQL);
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit</button>
-                                <div id="addResult"><?php
-                                    if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
-                                        print $_SESSION["addResult"];
-                                        $_SESSION["addResult"] = "";
-                                    }
-                                    ?>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success pull-right"><i
+                                                class="fas fa-upload"></i>&nbsp;Submit
+                                    </button>
+                                    <div id="addResult"><?php
+                                        if (isset($_SESSION["addResult"]) and $_SESSION["addResult"] != "") {
+                                            print $_SESSION["addResult"];
+                                            $_SESSION["addResult"] = "";
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <?php
-                    mysqli_close($connect);
-                    ?>
+                        </form>
+                        <?php
+                        mysqli_close($connect);
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+
 
 </body>
 </html>
@@ -377,7 +396,7 @@ $context =  $connect->query($contextSQL);
 <script type="text/javascript">
     $(function () {
         $('#date').datepicker({
-			dateFormat: 'yy-mm-dd',
+            dateFormat: 'yy-mm-dd',
             maxDate: 0
         });
         $("#date-butt").click(function () {
@@ -389,5 +408,10 @@ $context =  $connect->query($contextSQL);
         $('#date').val(date);
         $('#type').val(type);
         $('#description').val(description);
+
+        $('.container').delegate('.pop', 'click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('#imagemodal').modal('show');
+        });
     });
 </script>
