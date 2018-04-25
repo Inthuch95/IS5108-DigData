@@ -74,11 +74,11 @@ if (!$connect) {
                     break;
             }
             $('<div class="form-group" id="' + butID + '-form">\
-                <label class="control-label col-sm-2" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
-                <div class="col-sm-4">\
+                <label class="control-label col-md-2" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
+                <div class="col-md-4">\
                   <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
                 </div>\
-                <div class="col-sm-1">\
+                <div class="col-md-1">\
                   <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID +'-form") >\
                     <i class="fas fa-trash-alt"></i>\
                   </button>\
@@ -144,15 +144,15 @@ if (!$connect) {
         ?>
         <h2>Add new context</h2>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form class="form-horizontal" data-toggle="validator" role="form" action="PHP/insertContext.php"
                               method='post' enctype="multipart/form-data">
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="location">Location*</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2" for="location">Location*</label>
+                                <div class="col-md-3">
                                     <select class="form-control" id="location" placeholder="Select location" name="site"
                                             onchange="showTrench_AddContext(this.value)" required>
                                         <option value="">Select a site</option>
@@ -168,8 +168,8 @@ if (!$connect) {
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="trench">Trench*</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2" for="trench">Trench*</label>
+                                <div class="col-md-3">
                                     <select class="form-control" id="trench" name="trench"
                                             onchange="showNewTrench_Addcontext(this.value)" disabled required>
                                         <option value="">Select site first</option>
@@ -178,16 +178,16 @@ if (!$connect) {
                             </div>
 
                             <div class="form-group" id="newTrench" hidden>
-                                <label class="control-label col-sm-2"></label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2"></label>
+                                <div class="col-md-3">
                                     <input class="form-control" type="" name="newTrench" id="newTrenchInput" value=""
                                            >
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="context">Context*</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2" for="context">Context*</label>
+                                <div class="col-md-3">
                                     <input class="form-control" name="contextNum" id="context" value="Select site first"
                                            readonly>
                                     <?php
@@ -202,8 +202,8 @@ if (!$connect) {
 
 
                             <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="description">Description*</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-md-2" for="description">Description*</label>
+                                <div class="col-md-10">
                                     <textarea class="form-control" rows="5" id="description" name="description"
                                               required></textarea>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -211,8 +211,8 @@ if (!$connect) {
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="interpretation">Interpretation*</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2" for="interpretation">Interpretation*</label>
+                                <div class="col-md-3">
                                     <input class="form-control" id="Interpretation" name="interpretation" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors"></div>
@@ -221,30 +221,30 @@ if (!$connect) {
 
                             <div class="form-group">
 
-                                <label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-md-2" for="fileToUpload">Uploaded image(s)</label>
+                                <div class="col-md-10">
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="cbEast" id="cbEast"
                                                       onchange=showUploadBox(this.id,"imgsEast")>East
                                         </label>
                                         <div id="imgsEast" hidden>
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-md-12">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="descriptionEast">Description</label>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-md-7">
                                                                         <textarea class="form-control" rows="5"
                                                                                   id="descriptionEast"
                                                                                   name="descriptionEast"></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="date">Date</label>
-                                                                <div class="col-sm-3">
+                                                                <div class="col-md-3">
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control"
                                                                                name="dateEast"
@@ -261,17 +261,17 @@ if (!$connect) {
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="" style="padding-top: 2px"><i
                                                                             class="fas fa-file-image fa-2x"></i></label>
-                                                                <div class="col-sm-4">
+                                                                <div class="col-md-4">
                                                                     <input class="form-control" accept="image/*"
                                                                            onchange="checkSize(this)" type="file"
                                                                            name="imgsEast[]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group add-butt-form">
-                                                                <div class="col-sm-offset-2 col-sm-4">
+                                                                <div class="col-md-offset-2 col-md-4">
                                                                     <button type="button"
                                                                             class="btn btn-success btn-block"
                                                                             onclick=moreImage("imgsEast")>
@@ -291,22 +291,22 @@ if (!$connect) {
                                         </label>
                                         <div id="imgsWest" hidden>
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-md-12">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="descriptionWest">Description</label>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-md-7">
                                                                         <textarea class="form-control" rows="5"
                                                                                   id="descriptionWest"
                                                                                   name="descriptionWest"></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="date">Date</label>
-                                                                <div class="col-sm-3">
+                                                                <div class="col-md-3">
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control"
                                                                                name="dateWest"
@@ -323,17 +323,17 @@ if (!$connect) {
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="" style="padding-top: 2px"><i
                                                                             class="fas fa-file-image fa-2x"></i></label>
-                                                                <div class="col-sm-4">
+                                                                <div class="col-md-4">
                                                                     <input class="form-control" accept="image/*"
                                                                            onchange="checkSize(this)" type="file"
                                                                            name="imgsWest[]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group add-butt-form">
-                                                                <div class="col-sm-offset-2 col-sm-4">
+                                                                <div class="col-md-offset-2 col-md-4">
                                                                     <button type="button"
                                                                             class="btn btn-success btn-block"
                                                                             onclick=moreImage("imgsWest")>
@@ -353,22 +353,22 @@ if (!$connect) {
                                         </label>
                                         <div id="imgsNorth" hidden>
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-md-12">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="descriptionNorth">Description</label>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-md-7">
                                                                         <textarea class="form-control" rows="5"
                                                                                   id="descriptionNorth"
                                                                                   name="descriptionNorth"></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="date">Date</label>
-                                                                <div class="col-sm-3">
+                                                                <div class="col-md-3">
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control"
                                                                                name="dateNorth"
@@ -385,17 +385,17 @@ if (!$connect) {
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="" style="padding-top: 2px"><i
                                                                             class="fas fa-file-image fa-2x"></i></label>
-                                                                <div class="col-sm-4">
+                                                                <div class="col-md-4">
                                                                     <input class="form-control" accept="image/*"
                                                                            onchange="checkSize(this)" type="file"
                                                                            name="imgsNorth[]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group add-butt-form">
-                                                                <div class="col-sm-offset-2 col-sm-4">
+                                                                <div class="col-md-offset-2 col-md-4">
                                                                     <button type="button"
                                                                             class="btn btn-success btn-block"
                                                                             onclick=moreImage("imgsNorth")>
@@ -415,22 +415,22 @@ if (!$connect) {
                                         </label>
                                         <div id="imgsSouth" hidden>
                                             <div class="row">
-                                                <div class="col-sm-12">
+                                                <div class="col-md-12">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="descriptionSouth">Description</label>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-md-7">
                                                                         <textarea class="form-control" rows="5"
                                                                                   id="descriptionSouth"
                                                                                   name="descriptionSouth"></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="date">Date</label>
-                                                                <div class="col-sm-3">
+                                                                <div class="col-md-3">
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control"
                                                                                name="dateSouth"
@@ -447,17 +447,17 @@ if (!$connect) {
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-2"
+                                                                <label class="control-label col-md-2"
                                                                        for="" style="padding-top: 2px"><i
                                                                             class="fas fa-file-image fa-2x"></i></label>
-                                                                <div class="col-sm-4">
+                                                                <div class="col-md-4">
                                                                     <input class="form-control" accept="image/*"
                                                                            onchange="checkSize(this)" type="file"
                                                                            name="imgsSouth[]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group add-butt-form">
-                                                                <div class="col-sm-offset-2 col-sm-4">
+                                                                <div class="col-md-offset-2 col-md-4">
                                                                     <button type="button"
                                                                             class="btn btn-success btn-block"
                                                                             onclick=moreImage("imgsSouth")>
@@ -475,7 +475,7 @@ if (!$connect) {
                             </div>
 
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
+                                <div class="col-md-offset-2 col-md-10">
                                     <button type="submit" class="btn btn-success pull-right"><i
                                                 class="fas fa-upload"></i>&nbsp;Submit
                                     </button>

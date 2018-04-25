@@ -59,11 +59,11 @@ if (!$connect) {
             console.log("more image box: " + id);
 
             $('<div class="form-group" id="' + butID + '-form">\
-                <label class="control-label col-sm-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
-                <div class="col-sm-4">\
+                <label class="control-label col-md-1" for="" style="padding-top: 2px"><i class="fas fa-file-image fa-2x"></i></label>\
+                <div class="col-md-4">\
                   <input class="form-control" accept="image/*" onchange="checkSize(this)"  type="file" name="' + id + '[]">\
                 </div>\
-                <div class="col-sm-1">\
+                <div class="col-md-1">\
                   <button type="button" class="btn btn-danger pull-right" id=\' + butID + \' onclick=removeImg("' + butID + '-form") >\
                     <i class="fas fa-trash-alt"></i>\
                   </button>\
@@ -122,16 +122,16 @@ if (!$connect) {
 <div class="container" style="margin-top:50px">
     <h2>Add record</h2>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form class="form-horizontal" data-toggle="validator" method="post" role="form"
                           action="PHP/addRecord.php" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="finder">Finder</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="finder">Finder</label>
+                            <div class="col-md-3">
                                 <?php
-                                if (isset($_SESSION['user']) && $_SESSION['user'] != '') {
+                                if ((isset($_SESSION['user']) && $_SESSION['user'] != '')) {
                                     print '<input class="form-control" type="" value="' . $_SESSION["user"] . '" readonly>';
                                     print '<input class="form-control" type="hidden" name="user" value="' . $_SESSION["UserID"] . '" display="">';
                                 }
@@ -146,8 +146,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="finder">Artifact name*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="finder">Artifact name*</label>
+                            <div class="col-md-3">
                               <input class="form-control" name="name" required>
                               <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                               <div class="help-block with-errors"></div>
@@ -155,8 +155,8 @@ if (!$connect) {
                         </div>
 
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="location">Location*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="location">Location*</label>
+                            <div class="col-md-3">
                                 <select class="form-control" id="location" placeholder="Select location" name="site"
                                         onchange="showTrench(this.value)" required>
                                     <option value="">Select a site</option>
@@ -169,8 +169,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="trench">Trench*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="trench">Trench*</label>
+                            <div class="col-md-3">
                                 <select class="form-control" id="trench" name="trench"
                                         onchange="showContext(this.value)" disabled='true' required>
                                     <option value="">Select site first</option>
@@ -178,8 +178,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="context">Context*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="context">Context*</label>
+                            <div class="col-md-3">
                                 <select class="form-control" id="context" name="contextID"
                                         onchange="showContextDesc(this.value)" disabled='true' required>
                                     <option value="">Select site first</option>
@@ -188,8 +188,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="date">From*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="date">From*</label>
+                            <div class="col-md-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="date" id="date"
                                            value="<?php echo date('Y-m-d'); ?>" required>
@@ -202,8 +202,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="type">Type*</label>
-                            <div class="col-sm-3">
+                            <label class="control-label col-md-2" for="type">Type*</label>
+                            <div class="col-md-3">
                                 <select class="form-control" id="type" name="type" required>
                                     <option value="Metal">Metal</option>
                                     <option value="Wood">Wood</option>
@@ -213,8 +213,8 @@ if (!$connect) {
                             </div>
                         </div>
                         <div class="form-group has-feedback">
-                            <label class="control-label col-sm-2" for="description">Description*</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-md-2" for="description">Description*</label>
+                            <div class="col-md-10">
                                 <textarea class="form-control" rows="5" id="description" name="description"
                                           data-error="Please fill in this field" required></textarea>
                                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -223,25 +223,25 @@ if (!$connect) {
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="fileToUpload">Uploaded image(s)</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-md-2" for="fileToUpload">Uploaded image(s)</label>
+                            <div class="col-md-10">
                                 <div id="imgs">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="control-label col-sm-1"
+                                                        <label class="control-label col-md-1"
                                                                for="" style="padding-top: 2px"><i
                                                                     class="fas fa-file-image fa-2x"></i></label>
-                                                        <div class="col-sm-4">
+                                                        <div class="col-md-4">
                                                             <input class="form-control" accept="image/*"
                                                                    onchange="checkSize(this)" type="file"
                                                                    name="imgs[]">
                                                         </div>
                                                     </div>
                                                     <div class="form-group add-butt-form">
-                                                        <div class="col-sm-offset-1 col-sm-4">
+                                                        <div class="col-md-offset-1 col-md-4">
                                                             <button type="button"
                                                                     class="btn btn-success btn-block"
                                                                     onclick=moreImage("imgs")>
@@ -258,7 +258,7 @@ if (!$connect) {
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fas fa-upload"></i>&nbsp;Submit
                                 </button>
                                 <div id="addResult"><?php

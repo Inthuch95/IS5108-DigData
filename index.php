@@ -86,11 +86,11 @@ if (!$connect) {
 
         //printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-md-12">
                     <table class="table table-hover table-bordered">
                         <tbody>
                         <tr>
-                            <td width="300">
+                            <td width="30%">
 							<?php
 							$findID = $row["FindID"];
 							$sql1 = "SELECT * FROM `PhotoSet-Find Links` as link INNER JOIN Photos on link.PhotoSetID = Photos.PhotoSetID WHERE FindID = $findID";
@@ -100,14 +100,14 @@ if (!$connect) {
 								$pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
                                 print '<div class="thumbnail">
                                           <a href="#" class="pop">
-                                              <img src="'.$pic["Directory Path"].'" height="300" width="300" class="center-block" alt="Cinque Terre">
+                                              <img src="'.$pic["Directory Path"].'" width="300" class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
 							}
 							else{
                                 print '<div class="thumbnail">
                                           <a href="#" class="pop">
-                                              <img src="https://png.icons8.com/metro/1600/batman-new.png" height="300" width="300"
+                                              <img src="https://png.icons8.com/metro/1600/batman-new.png" width="300"
                                      class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
@@ -144,25 +144,25 @@ if (!$connect) {
                                     </tbody>
                                 </table>
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3 col-md-2">
                                       <form action="edit_record.php" method="get">
                                         <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                        <button class="btn btn-warning" type="submit"><i
+                                        <button class="btn btn-warning btn-block" type="submit"><i
                                                     class="fas fa-edit"></i>&nbsp;Edit
                                         </button>
                                       </form>
                                     </div>
-                                    <div class="col-sm-2 col-sm-offset-3 text-center">
+                                    <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-2  text-center">
                                         <form action="view_record.php" method="get">
                                           <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                          <button class="btn btn-info" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
+                                          <button class="btn btn-info btn-block" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
                                           </button>
                                         </form>
                                     </div>
-                                    <div class="col-sm-2 col-sm-offset-3">
+                                    <div class="col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-2">
                                       <form action="PHP/deleteRecord.php" method="get" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                         <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                        <button class="btn btn-danger pull-right" type="submit"><i
+                                        <button class="btn btn-danger btn-block pull-right" type="submit"><i
                                                     class="fas fa-trash-alt"></i>&nbsp;Delete</button>
                                       </form>
                                     </div>

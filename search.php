@@ -118,21 +118,21 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
 <div class="container" style="margin-top:50px">
     <h3>Search</h3>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><h4 class="text-center">Search Filter&nbsp;<i class="fas fa-filter"></i></h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" action="#">
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="id">ID</label>
-                            <div class="col-sm-9">
+                            <label class="control-label col-md-3" for="id">ID</label>
+                            <div class="col-md-9">
                                 <input type="text" class="form-control" id="id" placeholder="Enter ID">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="location">Location</label>
-                            <div class="col-sm-9">
+                            <label class="control-label col-md-3" for="location">Location</label>
+                            <div class="col-md-9">
                                 <select class="form-control" id="location">
                                     <option>John Honey Building</option>
                                     <option>Thanon - Thai Restaurant</option>
@@ -143,8 +143,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="finder">Finder</label>
-                            <div class="col-sm-9">
+                            <label class="control-label col-md-3" for="finder">Finder</label>
+                            <div class="col-md-9">
                                 <select class="form-control" id="finder">
                                     <option>Nattasan</option>
                                     <option>Inthuch</option>
@@ -154,8 +154,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="from">From</label>
-                            <div class="col-sm-9">
+                            <label class="control-label col-md-3" for="from">From</label>
+                            <div class="col-md-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="date" id="from">
                                     <div class="input-group-btn">
@@ -167,8 +167,8 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="to">To</label>
-                            <div class="col-sm-9">
+                            <label class="control-label col-md-3" for="to">To</label>
+                            <div class="col-md-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="date" id="to">
                                     <div class="input-group-btn">
@@ -180,7 +180,7 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                             </div>
                         </div>
                         <div class="form-group noBottomMargin">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary pull-right">Apply</button>
                             </div>
                         </div>
@@ -188,11 +188,11 @@ $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div id="searchBody" class="panel-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="panel panel-default noBorder">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>

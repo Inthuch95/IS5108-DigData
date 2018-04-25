@@ -53,27 +53,27 @@ session_start();
         ?>
         <h2>Add new site</h2>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form class="form-horizontal" data-toggle="validator" role="form">
                             <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="name">Name*</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-md-2" for="name">Name*</label>
+                                <div class="col-md-3">
                                     <input class="form-control" id="name" placeholder="Site name" name="name" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
-                                <label class="control-label col-sm-2" for="description">Description*</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-md-2" for="description">Description*</label>
+                                <div class="col-md-10">
                                  <textarea class="form-control" placeholder="Site description" rows="5" id="description"
                                            name="description" required></textarea>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
+                                <div class="col-md-offset-2 col-md-10">
                                     <button type="submit" class="btn btn-success pull-right" onclick="confirmAddSite()"><i class="fas fa-upload"></i>&nbsp;Submit
                                     </button>
                                     <div id="addResult"><?php

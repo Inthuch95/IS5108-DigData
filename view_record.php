@@ -70,7 +70,7 @@ if (!$connect) {
 <div class="container" style="margin-top:50px">
     <h2>Artifact: <?php printf("%s", $row["Name"]) ?></h2>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <table class="table table-bordered">
                 <tbody>
                 <tr>
@@ -121,10 +121,10 @@ if (!$connect) {
 
               $find2 = mysqli_query($connect, $sql);
               while ($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
-                print '  <div class="col-sm-6 col-md-2">
+                print '  <div class="col-sm-4 col-md-2">
                       <div class="thumbnail">
                           <a href="#" class="pop">
-                              <img src="'.$row2['Directory Path'].'" height="200" width="200">
+                              <img src="'.$row2['Directory Path'].'" width="200">
                           </a>
                       </div>
                   </div>';
@@ -182,7 +182,7 @@ if (!$connect) {
 										<div id="collapse1" class="panel-collapse collapse in">
 											<div class="panel-body">
 												<div class="row">
-													<div class="col-sm-12">
+													<div class="col-md-12">
 													<?php 
 													$findDesc = $connect->query($sql);
 													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
@@ -194,7 +194,7 @@ if (!$connect) {
 												<?php 
 												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
 												?>
-													<div class="col-sm-6 col-md-2">
+													<div class="col-sm-4 col-md-2">
 														<div class="thumbnail">
 															<a href="#" class="pop">
 																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
@@ -234,7 +234,7 @@ if (!$connect) {
 										<div id="collapse2" class="panel-collapse collapse">
 											<div class="panel-body">
 												<div class="row">
-													<div class="col-sm-12">
+													<div class="col-md-12">
 													<?php 
 													$findDesc = $connect->query($sql);
 													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
@@ -284,7 +284,7 @@ if (!$connect) {
                                             <div id="collapse3" class="panel-collapse collapse">
                                                 <div class="panel-body">
 												<div class="row">
-													<div class="col-sm-12">
+													<div class="col-md-12">
 													<?php 
 													$findDesc = $connect->query($sql);
 													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
@@ -296,7 +296,7 @@ if (!$connect) {
 												<?php 
 												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
 												?>
-													<div class="col-sm-6 col-md-2">
+													<div class="col-md-6 col-md-2">
 														<div class="thumbnail">
 															<a href="#" class="pop">
 																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
@@ -335,7 +335,7 @@ if (!$connect) {
                                             <div id="collapse4" class="panel-collapse collapse">
                                                 <div class="panel-body">
 												<div class="row">
-													<div class="col-sm-12">
+													<div class="col-md-12">
 													<?php 
 													$findDesc = $connect->query($sql);
 													$row2 = mysqli_fetch_array($findDesc, MYSQLI_ASSOC);
@@ -347,7 +347,7 @@ if (!$connect) {
 												<?php 
 												while($row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC)){
 												?>
-													<div class="col-sm-6 col-md-2">
+													<div class="col-md-6 col-md-2">
 														<div class="thumbnail">
 															<a href="#" class="pop">
 																<img src="<?php print $row2['Directory Path']; ?>" height="200" width="200">
