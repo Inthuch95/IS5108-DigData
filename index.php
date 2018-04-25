@@ -77,43 +77,57 @@ if (!$connect) {
 }
 
 ?>
-<div class="container" style="margin-top:50px">
-    <h3>Welcome to Dig Data</h3>
-    <?php
-    $i = 0;
-    while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC) and $i < 5) {
-        $i = $i + 1;
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <img src="" class="imagepreview" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
 
-        //printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
+<div class="background-content">
+    <div class="container" style="margin-top:50px">
+        <h3>Welcome to Dig Data</h3>
+        <?php
+        $i = 0;
+        while ($row = mysqli_fetch_array($find, MYSQLI_ASSOC) and $i < 5) {
+            $i = $i + 1;
+
+            //printf ("%s (%s) %s %s %s %s\n",$row["FindID"],$row["UserID"],$row["ContextID"],$row["FDESC"],$row["Type"],$row["Date"]);?>
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-hover table-bordered">
                         <tbody>
                         <tr>
                             <td width="30%">
-							<?php
-							$findID = $row["FindID"];
-							$sql1 = "SELECT * FROM `PhotoSet-Find Links` as link INNER JOIN Photos on link.PhotoSetID = Photos.PhotoSetID WHERE FindID = $findID";
-							$findPics = mysqli_query($connect, $sql1);
-							$numrow = mysqli_num_rows($findPics);
-							if($numrow>0){
-								$pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
-                                print '<div class="thumbnail">
+                                <?php
+                                $findID = $row["FindID"];
+                                $sql1 = "SELECT * FROM `PhotoSet-Find Links` as link INNER JOIN Photos on link.PhotoSetID = Photos.PhotoSetID WHERE FindID = $findID";
+                                $findPics = mysqli_query($connect, $sql1);
+                                $numrow = mysqli_num_rows($findPics);
+                                if($numrow>0){
+                                    $pic=mysqli_fetch_array($findPics,MYSQLI_ASSOC);
+                                    print '<div class="thumbnail">
                                           <a href="#" class="pop">
                                               <img src="'.$pic["Directory Path"].'" width="300" class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
-							}
-							else{
-                                print '<div class="thumbnail">
+                                }
+                                else{
+                                    print '<div class="thumbnail">
                                           <a href="#" class="pop">
                                               <img src="https://png.icons8.com/metro/1600/batman-new.png" width="300"
                                      class="center-block" alt="Cinque Terre">
                                           </a>
                                        </div>';
 
-							}
-							?>
+                                }
+                                ?>
 
                             </td>
                             <td>
@@ -136,35 +150,35 @@ if (!$connect) {
                                     if($row["ModifiedBy"]===NULL){}
                                     else
                                     {?>
-                                      <tr>
-                                          <td><strong>Last modified: </strong><?php printf("%s", $row["ModifiedBy"]." ".$row["LastModified"]); ?></td>
-                                      </tr>
-                                    <?php
+                                        <tr>
+                                            <td><strong>Last modified: </strong><?php printf("%s", $row["ModifiedBy"]." ".$row["LastModified"]); ?></td>
+                                        </tr>
+                                        <?php
                                     }?>
                                     </tbody>
                                 </table>
                                 <div class="row">
                                     <div class="col-sm-3 col-md-2">
-                                      <form action="edit_record.php" method="get">
-                                        <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                        <button class="btn btn-warning btn-block" type="submit"><i
-                                                    class="fas fa-edit"></i>&nbsp;Edit
-                                        </button>
-                                      </form>
+                                        <form action="edit_record.php" method="get">
+                                            <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                            <button class="btn btn-warning btn-block" type="submit"><i
+                                                        class="fas fa-edit"></i>&nbsp;Edit
+                                            </button>
+                                        </form>
                                     </div>
                                     <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-2  text-center">
                                         <form action="view_record.php" method="get">
-                                          <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                          <button class="btn btn-info btn-block" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
-                                          </button>
+                                            <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                            <button class="btn btn-info btn-block" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
+                                            </button>
                                         </form>
                                     </div>
                                     <div class="col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-2">
-                                      <form action="PHP/deleteRecord.php" method="get" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                        <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
-                                        <button class="btn btn-danger btn-block pull-right" type="submit"><i
-                                                    class="fas fa-trash-alt"></i>&nbsp;Delete</button>
-                                      </form>
+                                        <form action="PHP/deleteRecord.php" method="get" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                            <input type="hidden" name="id" value="<?php printf("%s", $row["FindID"]) ?>"/>
+                                            <button class="btn btn-danger btn-block pull-right" type="submit"><i
+                                                        class="fas fa-trash-alt"></i>&nbsp;Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
@@ -173,21 +187,14 @@ if (!$connect) {
                     </table>
                 </div>
             </div>
-    <?php } ?>
+        <?php } ?>
 
-    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <img src="" class="imagepreview" style="width: 100%;">
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
+
+
+
 </body>
 </html>
 
