@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION["currentPage"] = '';
 if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
   if (isset($_GET["id"])) {
     $_SESSION["currentID"] = intval($_GET["id"]);

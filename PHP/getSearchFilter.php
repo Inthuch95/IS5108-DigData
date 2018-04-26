@@ -112,6 +112,11 @@ if ($row_count > 0) {
             <button class="btn btn-info pull-right" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
             </button>
               </form>
+              <form action="PHP/deleteRecord.php" method="get" onsubmit="'."return confirm('Are you sure you want to delete this record?');".'">
+                  <input type="hidden" name="id" value="' . $row["FindID"] . '"/>
+                  <button class="btn btn-danger" type="submit"><i
+                              class="fas fa-trash-alt"></i>&nbsp;Delete</button>
+              </form>
 
       </td>
     </tr>
