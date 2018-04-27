@@ -91,7 +91,7 @@ if ($row_count > 0) {
           </tr>
           <tr>
             <td>
-              <strong>Founder: </strong>'.$row["First Name"].'
+              <strong>Finder: </strong>'.$row["First Name"].'
               <strong>Date: </strong>'.$row["Date"].'
             </td>
           </tr>

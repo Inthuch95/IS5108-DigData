@@ -13,10 +13,8 @@ if ((isset($_SESSION['user']) and $_SESSION['user'] != '')) {
     $_SESSION["currentPage"] = basename($_SERVER['PHP_SELF']);
     header("Location:login.php");
 }
-$username = "is5108group-4";
-$password = "b9iVc.9gS8c7NJ";
-$host = "is5108group-4.host.cs.st-andrews.ac.uk";
-$db = "is5108group-4__digdata";
+include 'PHP/databaseConfig.php';
+
 $recordTB = "Finds";
 $siteTB = "Site";
 $userTB = "Users";
@@ -284,8 +282,18 @@ $context = $connect->query($contextSQL);
                                 <div class="col-md-3">
                                     <select class="form-control" id="type" name="type">
                                         <option value="Metal">Metal</option>
-                                        <option value="Wood">Wood</option>
-                                        <option value="Rock">Rock</option>
+										<option value="Wood">Wood</option>
+										<option value="Baked">Baked clay</option>
+										<option value="Stone">Stone</option>
+										<option value="Pod">Pod</option>
+										<option value="Shell">Shell</option>
+										<option value="Glass">Glass</option>
+										<option value="Copper">Copper</option>
+										<option value="Animal Bone">Animal Bone</option>
+										<option value="Human Bone">Human Bone</option>
+										<option value="Lead">Lead</option>
+										<option value="Flint">Flint</option>
+										<option value="Slag">Slag</option>
                                     </select>
                                 </div>
                             </div>

@@ -95,7 +95,7 @@ function showTrench(site) {
 
 			if (this.readyState == 4 && this.status == 200) {
 
-				if(this.responseText != "No trench"){
+				if(!this.responseText.includes("No trench")){
 					document.getElementById("trench").innerHTML = this.responseText;
 					document.getElementById("trench").disabled = false;
 					document.getElementById("context").disabled = false;

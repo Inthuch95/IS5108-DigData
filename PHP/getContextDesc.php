@@ -2,10 +2,7 @@
 $context = intval($_GET['q']);
 
 
-$username="is5108group-4";
-$password="b9iVc.9gS8c7NJ";
-$host="is5108group-4.host.cs.st-andrews.ac.uk";
-$db="is5108group-4__digdata";
+include 'databaseConfig.php';
 $tb = "Context_Records";
 
 $connect= mysqli_connect($host,$username,$password);

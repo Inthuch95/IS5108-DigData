@@ -2,10 +2,7 @@
 ob_start();
 session_start();
 $_SESSION["currentPage"] = '';
-$username = "is5108group-4";
-$password = "b9iVc.9gS8c7NJ";
-$host = "is5108group-4.host.cs.st-andrews.ac.uk";
-$db = "is5108group-4__digdata";
+include 'PHP/databaseConfig.php';
 $tb = "Site";
 
 $connect = mysqli_connect($host, $username, $password);
@@ -209,6 +206,15 @@ if (!$connect) {
                                     <option value="Wood">Wood</option>
                                     <option value="Baked">Baked clay</option>
                                     <option value="Stone">Stone</option>
+                                    <option value="Pod">Pod</option>
+                                    <option value="Shell">Shell</option>
+                                    <option value="Glass">Glass</option>
+                                    <option value="Copper">Copper</option>
+                                    <option value="Animal Bone">Animal Bone</option>
+                                    <option value="Human Bone">Human Bone</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Flint">Flint</option>
+                                    <option value="Slag">Slag</option>
                                 </select>
                             </div>
                         </div>

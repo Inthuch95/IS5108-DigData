@@ -140,6 +140,10 @@ if (!$connect) {
                                             <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
                                         </td>
                                     </tr>
+									<tr>
+                                        <td><strong>Type: </strong><?php printf("%s", $row["Type"]) ?>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td><strong>Description: </strong><?php printf("%s", $row["FDESC"]) ?>
                                         </td>

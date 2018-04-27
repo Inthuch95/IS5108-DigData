@@ -1,10 +1,9 @@
 <?php
 session_start();
 $_SESSION["currentPage"] = '';
-$username = "is5108group-4";
-$password = "b9iVc.9gS8c7NJ";
-$host = "is5108group-4.host.cs.st-andrews.ac.uk";
-$db = "is5108group-4__digdata";
+
+include 'PHP/databaseConfig.php';
+
 $tb = "Site";
 
 $connect = mysqli_connect($host, $username, $password);
@@ -204,7 +203,7 @@ if (!$connect) {
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="fileToUpload">Uploaded Images</label>
+                                <label class="control-label col-md-2" for="fileToUpload">Uploaded Image(s)</label>
                                 <div class="col-md-10" id="imgs">
                                     <div id="imgs">
                                         <div class="row">

@@ -12,8 +12,10 @@ if (!$connect) {
     exit();
 } else {
     mysqli_select_db($connect, $db) or die("Can't select Database");
-    $find = mysqli_query($connect, "SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb INNER JOIN Context_Records cr
-      ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode WHERE $tb.FindID = $findID");
+    $find = mysqli_query($connect, "SELECT *,s.Description AS 'STDESC',Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM $tb 
+	INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID 
+	INNER JOIN Site s ON s.SiteCode = cr.SiteCode 
+	WHERE $tb.FindID = $findID");
     $row = mysqli_fetch_array($find, MYSQLI_ASSOC);
    
     $findId = $row["FindID"];
@@ -83,8 +85,12 @@ if (!$connect) {
 									$find2 = $connect->query($sql);
 									$row2 = mysqli_fetch_array($find2, MYSQLI_ASSOC);
 									?>
-                                    <strong>Founder: </strong><?php printf("%s", $row2["First Name"]); ?>
+                                    <strong>Finder: </strong><?php printf("%s", $row2["First Name"]); ?>
                                     <strong>Date: </strong><?php printf("%s", $row["Date"]) ?>
+                                </td>
+                            </tr>
+							<tr>
+                                <td><strong>Type: </strong><?php printf("%s", $row["Type"]) ?>
                                 </td>
                             </tr>
                             <tr>
@@ -146,17 +152,23 @@ if (!$connect) {
                                     <strong>Location: </strong><?php printf("%s", $row["SiteName"]) ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><strong>Description: </strong><?php printf("%s", $row["CRDESC"]) ?>
+							<tr>
+                                <td>
+                                    <strong>Site description: </strong><?php printf("%s", $row["STDESC"]) ?>
                                 </td>
                             </tr>
-                            <?php if($row["Interpretation"]!="")
+							<?php if($row["Interpretation"]!="")
 							{
 								?>
                             <tr>
                                 <td><strong>Interpretation: </strong><?php printf("%s", $row["Interpretation"]) ?>
                                 </td>
                             </tr><?php } ?>
+                            <tr>
+                                <td><strong>Context description: </strong><?php printf("%s", $row["CRDESC"]) ?>
+                                </td>
+                            </tr>
+                            
                             <tr>
 							
                                 <td>
