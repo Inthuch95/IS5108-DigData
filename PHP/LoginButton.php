@@ -8,7 +8,7 @@ if (isset($_SESSION['user']) and $_SESSION['user'] != '') {
     if ($_SESSION['admin'] == true && isset($_SESSION['admin'])) {
         print '<li><a href="add_site.php">Add site</a></li>';
         print '<li><a href="add_context.php">Add context</a></li>';
-		print '<li><a href="add_photo.php">Add photo</a></li>';
+		print '<li><a href="add_photo.php">Add context photo</a></li>';
     }
     print "</ui></li>";
     print '<li><a href="PHP/LogOut.php">LogOut</a></li>';

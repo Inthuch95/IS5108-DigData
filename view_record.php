@@ -150,11 +150,13 @@ if (!$connect) {
                                 <td><strong>Description: </strong><?php printf("%s", $row["CRDESC"]) ?>
                                 </td>
                             </tr>
-                            
+                            <?php if($row["Interpretation"]!="")
+							{
+								?>
                             <tr>
                                 <td><strong>Interpretation: </strong><?php printf("%s", $row["Interpretation"]) ?>
                                 </td>
-                            </tr>
+                            </tr><?php } ?>
                             <tr>
 							
                                 <td>

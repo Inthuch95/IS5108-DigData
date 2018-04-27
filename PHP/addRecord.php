@@ -23,13 +23,14 @@ else
 	//SELECT *,Finds.Description AS 'FDESC',cr.Description AS 'CRDESC' FROM Finds INNER JOIN Context_Records cr ON Finds.ContextID = cr.ContextID INNER JOIN Site s ON s.SiteCode = cr.SiteCode ORDER BY `Date` DESC
 	$sql ="INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`,`Name`)
 	VALUES (NULL, '".$userID."', '".$contextID."', '".$description."', '".$type."', '".$date."', '".$name."');";
+
   
 	$sql = "INSERT INTO $tb (`FindID`,`UserID`, `ContextID`, `Description`,`Type`,`Date`,`Name`)
-	VALUES (NULL, '".$userID."', '".$contextID."', ?, '".$type."', '".$date."', '".$name."');";
+	VALUES (NULL, '".$userID."', '".$contextID."', ?, '".$type."', '".$date."', ?);";
 	echo "<br>".$sql."<br>";
 
 	$stmt = $connect->prepare($sql);  //prepares the query for action
-	$stmt->bind_param("s", $description); 
+	$stmt->bind_param("ss", $description, $name); 
 	
 	$stmt->execute();
 
