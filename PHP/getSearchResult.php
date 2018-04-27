@@ -101,23 +101,30 @@ if ($row_count > 0) {
           </tr>
           </tbody>
         </table>
-        <form action="edit_record.php" method="get">
-          <input type="hidden" name="id" value="' . $row["FindID"] . '"/>
-          <button class="btn btn-warning pull-left" type="submit"><i
-                class="fas fa-edit"></i>&nbsp;Edit
-          </button>
+        <div class="row">
+          <div class="col-sm-3 col-md-3">
+              <form action="edit_record.php" method="get">
+                  <input type="hidden" name="id" value="'.$row["FindID"].'"/>
+                  <button class="btn btn-warning btn-block" type="submit"><i
+                              class="fas fa-edit"></i>&nbsp;Edit
+                  </button>
               </form>
-        <form action="view_record.php" method="get">
-            <input type="hidden" name="id" value="' . $row["FindID"] . '"/>
-            <button class="btn btn-info pull-right" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
-            </button>
+          </div>
+          <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1  text-center">
+              <form action="view_record.php" method="get">
+                  <input type="hidden" name="id" value="'.$row["FindID"].'"/>
+                  <button class="btn btn-info btn-block" type="submit"><i class="fas fa-info-circle fa-lg"></i>&nbsp;Details
+                  </button>
               </form>
-              <form action="PHP/deleteRecord.php" method="get" onsubmit="'."return confirm('Are you sure you want to delete this record?');".'">
+          </div>
+          <div class="col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1">
+              <form action="PHP/deleteRecord.php" method="get" onsubmit="return confirm(\'Are you sure you want to delete this record?\');">
                   <input type="hidden" name="id" value="' . $row["FindID"] . '"/>
-                  <button class="btn btn-danger" type="submit"><i
+                  <button class="btn btn-danger btn-block pull-right" type="submit"><i
                               class="fas fa-trash-alt"></i>&nbsp;Delete</button>
               </form>
-
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>
